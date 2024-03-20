@@ -1,0 +1,30 @@
+<?php
+
+use App\Http\Controllers\Api\Restraunt\AuthController as RestrauntAuthController;
+use App\Http\Controllers\Api\Restraunt\DriverController;
+use App\Http\Controllers\Api\User\AuthController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+
+Route::group(['prefix' => 'user'], function () {
+    Route::post('register', [AuthController::class, 'createUser']);
+    Route::post('login', [AuthController::class, 'loginUser']);
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/get', function (Request $request) {
+            return $request->user();
+        });
+    });
+});
+
+Route::group(['prefix' => 'restraunt'], function () {
+    Route::post('register', [RestrauntAuthController::class, 'createRestraunt']);
+    Route::post('login', [RestrauntAuthController::class, 'login']);
+
+    Route::group(['middleware' => 'auth:restraunt'], function () {
+        Route::post('driver/store', [DriverController::class, 'storeDriver']);
+    });
+});
+
+
