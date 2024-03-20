@@ -29,9 +29,4 @@ class UserCreateRequest extends FormRequest
             'password' => 'required'
         ];
     }
-
-    public function failedValidation(Validator $validator)
-    {
-        return response()->json($validator->errors());
-    }
 }
