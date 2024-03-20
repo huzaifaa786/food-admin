@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserCreateRequest extends FormRequest
@@ -27,5 +28,10 @@ class UserCreateRequest extends FormRequest
             'phone' => 'required',
             'password' => 'required'
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        return response()->json($validator->errors());
     }
 }
