@@ -15,17 +15,17 @@ class CategorySeeder extends Seeder
     {
         Category::insert([
             ['name' => 'Indian' ,'image' => 'images/categories/cat1.png'],
-            ['name' => 'Chinese' ,'image' => 'images/categoris/cat2.png'],
-            ['name' => 'Brazilian' ,'image' => 'images/categoris/cat3.png'],
-            ['name' => 'Italian' ,'image' => 'images/categoris/cat1.png'],
-            ['name' => 'Egyption' ,'image' => 'images/categoris/cat3.png'],
-            ['name' => 'Japanese' ,'image' => 'images/categoris/2.png'],
-            ['name' => 'Lebanese' ,'image' => 'images/categoris/cat1.png'],
-            ['name' => 'Lebanese' ,'image' => 'images/categoris/1.png'],
-            ['name' => 'American' ,'image' => 'images/categoris/cat1.png'],
-            ['name' => 'Arabian' ,'image' => 'images/categoris/cat3.png'],
-            ['name' => 'Greek' ,'image' => 'images/categoris/cat2.png'],
-            ['name' => 'Asian' ,'image' => 'images/categoris/cat2.png'],
+            ['name' => 'Chinese' ,'image' => 'images/categories/cat2.png'],
+            ['name' => 'Brazilian' ,'image' => 'images/categories/cat3.png'],
+            ['name' => 'Italian' ,'image' => 'images/categories/cat1.png'],
+            ['name' => 'Egyption' ,'image' => 'images/categories/cat3.png'],
+            ['name' => 'Japanese' ,'image' => 'images/categories/2.png'],
+            ['name' => 'Lebanese' ,'image' => 'images/categories/cat1.png'],
+            ['name' => 'Lebanese' ,'image' => 'images/categories/1.png'],
+            ['name' => 'American' ,'image' => 'images/categories/cat1.png'],
+            ['name' => 'Arabian' ,'image' => 'images/categories/cat3.png'],
+            ['name' => 'Greek' ,'image' => 'images/categories/cat2.png'],
+            ['name' => 'Asian' ,'image' => 'images/categories/cat2.png'],
         ]);
     }
 }

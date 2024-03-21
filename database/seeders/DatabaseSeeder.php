@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
             'phone' => '897563355',
         ]);
         $this->call(CategorySeeder::class);
+        $this->call(RestrauntSeeder::class);
     }
 }

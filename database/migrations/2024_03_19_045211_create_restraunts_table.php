@@ -17,13 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('description');
-            $table->string('logo');
-            $table->string('cover');
-            $table->string('license');
+            $table->string('logo')->default('images/restraunt/img.jpg');
+            $table->string('cover')->default('images/restraunt/img.jpg');
+            $table->string('license')->default('images/restraunt/img.jpg');
             $table->string('password');
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lng', 10, 7)->nullable();
             $table->decimal('radius')->nullable();
+            $table->foreignId('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
