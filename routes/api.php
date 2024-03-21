@@ -13,7 +13,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('login', [AuthController::class, 'loginUser']);
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::post('restaurants', [RestrauntController::class, 'index']);
+        Route::get('restaurants', [RestrauntController::class, 'index']);
     });
 });
 
