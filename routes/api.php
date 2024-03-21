@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Restraunt\AuthController as RestrauntAuthController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
 use App\Http\Controllers\Api\User\AuthController;
+use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,9 +13,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('login', [AuthController::class, 'loginUser']);
 
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/get', function (Request $request) {
-            return $request->user();
-        });
+        Route::post('restaurants', [RestrauntController::class, 'index']);
     });
 });
 
