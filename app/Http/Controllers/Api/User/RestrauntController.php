@@ -11,7 +11,7 @@ class RestrauntController extends Controller
 {
     public function index()
     {
-        $restraunts = Restraunt::all();
-        return Api::setResponse('restraunts', $restraunts);
+        $restaurants = Restraunt::all();
+        return Api::setResponse('restaurants', $restaurants);
     }
 }
