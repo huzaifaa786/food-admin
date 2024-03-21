@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Models\User;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class AuthController extends Controller
     {
         try {
             $user = User::create($request->all());
-
+            $user->address =  UserAddress::create(['user_id' => $user->id] + $request->all());
             $user->token = $user->createToken("mobile")->plainTextToken;
 
            return Api::setResponse('user' , $user);
