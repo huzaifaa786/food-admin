@@ -32,6 +32,6 @@ class DriverController extends Controller
 
     public function index(){
         $drivers = Driver::all();
-        return Api::setResponse('driver', $drivers);
+        return Api::setResponse('drivers', $drivers);
     }
 }

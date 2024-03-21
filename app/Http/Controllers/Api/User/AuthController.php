@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -23,7 +25,7 @@ class AuthController extends Controller
         try {
             $user = User::create($request->all());
             $user->address =  UserAddress::create(['user_id' => $user->id] + $request->all());
-            $user->token = $user->createToken("mobile")->plainTextToken;
+            $user->token = $user->createToken("mobile", ['role:user'])->plainTextToken;
 
            return Api::setResponse('user' , $user);
 
@@ -41,12 +43,15 @@ class AuthController extends Controller
     {
         try {
 
-            if (!Auth::guard('user')->attempt($request->only(['email', 'password']))) {
-                return Api::setError('Invalid credentials');
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['Invalid credentials'],
+                ]);
             }
 
-            $user = User::where('email', $request->email)->first();
-            $user->token = $user->createToken("mobile")->plainTextToken;
+            $user->token = $user->createToken("mobile", ['role:user'])->plainTextToken;
 
             return Api::setResponse('user', $user);
         } catch (\Throwable $th) {

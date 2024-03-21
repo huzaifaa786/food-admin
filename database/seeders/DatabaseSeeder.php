@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
             'password' => '1234',
             'phone' => '897563355',
         ]);
+        $this->call(CategorySeeder::class);
     }
 }

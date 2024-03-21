@@ -9,6 +9,8 @@ use App\Http\Requests\RestrauntLoginRequest;
 use App\Models\Restraunt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -22,7 +24,7 @@ class AuthController extends Controller
         try {
             $restraunt = Restraunt::create($request->all());
 
-            $restraunt->token = $restraunt->createToken("mobile")->plainTextToken;
+            $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
 
             return Api::setResponse('restraunt', $restraunt);
         } catch (\Throwable $th) {
@@ -39,12 +41,14 @@ class AuthController extends Controller
     {
         try {
 
-            if (!Auth::guard('restraunt')->attempt($request->only(['email', 'password']))) {
-                return Api::setError('Invalid credentials');
-            }
-
             $restraunt = Restraunt::where('email', $request->email)->first();
-            $restraunt->token = $restraunt->createToken("mobile")->plainTextToken;
+
+            if (!$restraunt || !Hash::check($request->password, $restraunt->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['Invalid credentials'],
+                ]);
+            }
+            $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
 
             return Api::setResponse('restraunt', $restraunt);
         } catch (\Throwable $th) {
