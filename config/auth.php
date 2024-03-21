@@ -43,8 +43,13 @@ return [
             'provider' => 'users',
         ],
 
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
         'restraunt' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'restraunts',
         ],
     ],
