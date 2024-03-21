@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\ImageHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -74,11 +75,12 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    public function setLogoAttribute($value)
+    protected function logo(): Attribute
     {
-        if ($value)
-            return $this->attributes['logo'] = ImageHelper::saveImageFromApi($value, 'images/restraunt/logo');
-        return null;
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/logo')
+        );
     }
 
     /**
@@ -88,11 +90,12 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    public function setCoverAttribute($value)
+    protected function cover(): Attribute
     {
-        if ($value)
-            return $this->attributes['cover'] = ImageHelper::saveImageFromApi($value, 'images/restraunt/cover');
-        return null;
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/cover')
+        );
     }
 
     /**
@@ -102,10 +105,11 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    public function setLicenseAttribute($value)
+    protected function licens(): Attribute
     {
-        if ($value)
-            return $this->attributes['license'] = ImageHelper::saveImageFromApi($value, 'images/restraunt/license');
-        return null;
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/license')
+        );
     }
 }

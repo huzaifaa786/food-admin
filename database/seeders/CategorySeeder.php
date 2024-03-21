@@ -14,18 +14,18 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::insert([
-            ['name' => 'Indian' ,'image' => 'cat1.png'],
-            ['name' => 'Chinese' ,'image' => 'cat2.png'],
-            ['name' => 'Brazilian' ,'image' => 'cat3.png'],
-            ['name' => 'Italian' ,'image' => 'cat1.png'],
-            ['name' => 'Egyption' ,'image' => 'cat3.png'],
-            ['name' => 'Japanese' ,'image' => '2.png'],
-            ['name' => 'Lebanese' ,'image' => 'cat1.png'],
-            ['name' => 'Lebanese' ,'image' => '1.png'],
-            ['name' => 'American' ,'image' => 'cat1.png'],
-            ['name' => 'Arabian' ,'image' => 'cat3.png'],
-            ['name' => 'Greek' ,'image' => 'cat2.png'],
-            ['name' => 'Asian' ,'image' => 'cat2.png'],
+            ['name' => 'Indian' ,'image' => 'images/categories/cat1.png'],
+            ['name' => 'Chinese' ,'image' => 'images/categoris/cat2.png'],
+            ['name' => 'Brazilian' ,'image' => 'images/categoris/cat3.png'],
+            ['name' => 'Italian' ,'image' => 'images/categoris/cat1.png'],
+            ['name' => 'Egyption' ,'image' => 'images/categoris/cat3.png'],
+            ['name' => 'Japanese' ,'image' => 'images/categoris/2.png'],
+            ['name' => 'Lebanese' ,'image' => 'images/categoris/cat1.png'],
+            ['name' => 'Lebanese' ,'image' => 'images/categoris/1.png'],
+            ['name' => 'American' ,'image' => 'images/categoris/cat1.png'],
+            ['name' => 'Arabian' ,'image' => 'images/categoris/cat3.png'],
+            ['name' => 'Greek' ,'image' => 'images/categoris/cat2.png'],
+            ['name' => 'Asian' ,'image' => 'images/categoris/cat2.png'],
         ]);
     }
 }
