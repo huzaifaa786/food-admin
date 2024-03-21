@@ -23,6 +23,7 @@ return new class extends Migration
             $table->boolean('apartment_number')->nullable();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
