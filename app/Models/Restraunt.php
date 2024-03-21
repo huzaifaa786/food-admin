@@ -105,7 +105,7 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    protected function licens(): Attribute
+    protected function license(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => asset($value),
