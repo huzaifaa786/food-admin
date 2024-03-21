@@ -12,8 +12,8 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('register', [AuthController::class, 'createUser']);
     Route::post('login', [AuthController::class, 'loginUser']);
 
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('restaurants', [RestrauntController::class, 'index']);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('restaurants', [RestrauntController::class, 'index']);
     });
 });
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lng', 10, 7)->nullable();
+            $table->decimal('radius')->nullable();
             $table->timestamps();
         });
     }

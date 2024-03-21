@@ -28,7 +28,8 @@ class Restraunt extends Authenticatable
         'license',
         'password',
         'lat',
-        'lng'
+        'lng',
+        'radius',
     ];
 
     /**
