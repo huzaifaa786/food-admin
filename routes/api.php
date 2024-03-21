@@ -21,12 +21,10 @@ Route::group(['prefix' => 'user'], function () {
 Route::group(['prefix' => 'restraunt'], function () {
     Route::post('register', [RestrauntAuthController::class, 'createRestraunt']);
     Route::post('login', [RestrauntAuthController::class, 'login']);
+    Route::get('categories', [CategoryController::class, 'index']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
         Route::get('drivers', [DriverController::class, 'index']);
-        Route::get('categories', [CategoryController::class, 'index']);
     });
 });
-
-
