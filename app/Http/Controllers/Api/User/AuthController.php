@@ -41,7 +41,7 @@ class AuthController extends Controller
     {
         try {
 
-            if (!Auth::attempt($request->only(['email', 'password']))) {
+            if (!Auth::guard('user')->attempt($request->only(['email', 'password']))) {
                 return Api::setError('Invalid credentials');
             }
 

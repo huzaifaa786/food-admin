@@ -12,7 +12,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('register', [AuthController::class, 'createUser']);
     Route::post('login', [AuthController::class, 'loginUser']);
 
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth:user'], function () {
         Route::get('restaurants', [RestrauntController::class, 'index']);
     });
 });
@@ -23,6 +23,7 @@ Route::group(['prefix' => 'restraunt'], function () {
 
     Route::group(['middleware' => 'auth:restraunt'], function () {
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
+        Route::get('drivers', [DriverController::class, 'index']);
     });
 });
 

@@ -19,14 +19,19 @@ class DriverController extends Controller
      */
     public function storeDriver(DriverStoreRequest $request)
     {
-        // try {
+        try {
             $driver = Driver::create([
                 'restraunt_id' => auth()->id()
             ] + $request->all());
 
             return Api::setResponse('driver', $driver);
-        // } catch (\Throwable $th) {
-        //     return Api::setError($th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            return Api::setError($th->getMessage());
+        }
+    }
+
+    public function index(){
+        $drivers = Driver::all();
+        return Api::setResponse('driver', $drivers);
     }
 }
