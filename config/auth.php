@@ -49,7 +49,7 @@ return [
         ],
 
         'restraunt' => [
-            'driver' => 'sanctum',
+            'driver' => 'session',
             'provider' => 'restraunts',
         ],
     ],
