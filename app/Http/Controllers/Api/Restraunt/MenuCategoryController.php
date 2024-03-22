@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\api\Restraunt;
+namespace App\Http\Controllers\Api\Restraunt;
 
 use App\Helpers\Api;
 use App\Http\Controllers\Controller;

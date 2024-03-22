@@ -3,8 +3,8 @@
 use App\Http\Controllers\Api\Restraunt\AuthController as RestrauntAuthController;
 use App\Http\Controllers\Api\Restraunt\CategoryController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
-use App\Http\Controllers\api\Restraunt\MenuCategoryController;
-use App\Http\Controllers\api\Restraunt\MenuItemController;
+use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
+use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
