@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\Restraunt\AuthController as RestrauntAuthController;
 use App\Http\Controllers\Api\Restraunt\CategoryController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
+use App\Http\Controllers\api\Restraunt\MenuCategoryController;
+use App\Http\Controllers\api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
@@ -26,5 +28,7 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
         Route::get('drivers', [DriverController::class, 'index']);
+        Route::post('menuCategory/create', [MenuCategoryController::class, 'create']);
+        Route::post('menuItem/create', [MenuItemController::class, 'create']);
     });
 });

@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call(CategorySeeder::class);
         $this->call(RestrauntSeeder::class);
+        $this->call(MenuCategorySeeder::class);
+        $this->call(MenuItemSeeder::class);
     }
 }

@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * Method index
+     *
+     * @return void
+     */
     public function index()
     {
         $categories = Category::all();
