@@ -131,10 +131,8 @@ class Restraunt extends Authenticatable
      *
      * @return Attribute
      */
-    protected function status(): Attribute
+    public function getStatusAttribute()
     {
-        return Attribute::get(
-            fn ($value) => $this->attributes['status'] ?? $value,
-        );
+        return $this->status->getName();
     }
 }
