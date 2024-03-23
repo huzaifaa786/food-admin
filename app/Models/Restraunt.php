@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RestrauntStatus;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -120,8 +121,20 @@ class Restraunt extends Authenticatable
      *
      * @return BelongsTo
      */
-    public function category() : BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Method getStatusAttribute
+     *
+     * @param $value $value [explicite description]
+     *
+     * @return RestrauntStatus
+     */
+    public function getStatusAttribute($value): RestrauntStatus
+    {
+        return RestrauntStatus::getKey($value);
     }
 }
