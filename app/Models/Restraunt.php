@@ -36,6 +36,10 @@ class Restraunt extends Authenticatable
         'category_id',
     ];
 
+    protected $enums = [
+        'status' => RestrauntStatus::class,
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -135,6 +139,6 @@ class Restraunt extends Authenticatable
      */
     public function getStatusAttribute($value): RestrauntStatus
     {
-        return RestrauntStatus::getKey($value);
+        return $this->enums['status']::getKey($value);
     }
 }
