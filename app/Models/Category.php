@@ -6,6 +6,7 @@ use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -27,5 +28,15 @@ class Category extends Model
             get: fn (string $value) => asset($value),
             set: fn (string $value) => ImageHelper::saveImage($value, 'images/categories')
         );
+    }
+
+    /**
+     * Method restaurants
+     *
+     * @return HasMany
+     */
+    public function restaurants(): HasMany
+    {
+        return $this->hasMany(Restraunt::class);
     }
 }
