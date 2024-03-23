@@ -23,4 +23,10 @@ class MenuCategoryController extends Controller
         ] + $request->all());
         return Api::setResponse('menu_category', $menu_category);
     }
+
+    public function index()
+    {
+        $menuCategories = MenuCategory::where('restraunt_id', auth()->user()->id)->get();
+        return Api::setResponse('menu_categories', $menuCategories);
+    }
 }
