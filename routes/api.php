@@ -28,6 +28,7 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::get('categories', [CategoryController::class, 'index']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
+        Route::get('profile', [RestrauntAuthController::class, 'profile']);
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
         Route::get('drivers', [DriverController::class, 'index']);
         Route::post('driver/update/{id}', [DriverController::class, 'udpateDriver']);

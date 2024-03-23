@@ -55,4 +55,15 @@ class AuthController extends Controller
             return Api::setError($th->getMessage());
         }
     }
+
+    /**
+     * Method profile
+     *
+     * @return void
+     */
+    public function profile()
+    {
+        $restraunt = Restraunt::find(auth()->user()->id);
+        return Api::setResponse('restraunt', $restraunt);
+    }
 }
