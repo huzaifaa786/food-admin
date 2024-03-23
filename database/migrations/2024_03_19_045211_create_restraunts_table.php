@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('lng', 10, 7)->nullable();
             $table->decimal('radius')->nullable();
+            $table->integer('status')->default(1);
             $table->foreignId('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();

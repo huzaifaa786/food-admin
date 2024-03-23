@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('menu_category_id')->references('id')->on('menu_categories');
             $table->foreignId('restraunt_id');
             $table->foreign('restraunt_id')->references('id')->on('restraunts');
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

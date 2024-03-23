@@ -25,6 +25,7 @@ class Driver extends Authenticatable
         'phone',
         'image',
         'password',
+        'active',
         'restraunt_id',
     ];
 

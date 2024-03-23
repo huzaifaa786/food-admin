@@ -20,6 +20,7 @@ class MenuItem extends Model
         'price',
         'menu_category_id',
         'discount',
+        'available',
         'discount_till_date'
     ];
 

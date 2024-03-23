@@ -30,6 +30,8 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
         Route::get('drivers', [DriverController::class, 'index']);
+        Route::post('driver/update/{id}', [DriverController::class, 'udpateDriver']);
+        Route::get('driver/delete/{id}', [DriverController::class, 'deleteDriver']);
         Route::post('menuCategory/create', [MenuCategoryController::class, 'create']);
         Route::post('menuItem/create', [MenuItemController::class, 'create']);
     });
