@@ -36,10 +36,6 @@ class Restraunt extends Authenticatable
         'category_id',
     ];
 
-    protected $casts = [
-        'status' => RestrauntStatus::class
-    ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
