@@ -66,4 +66,18 @@ class AuthController extends Controller
         $restraunt = Restraunt::find(auth()->user()->id);
         return Api::setResponse('restraunt', $restraunt);
     }
+
+    /**
+     * Method updateProdile
+     *
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function profileUpdate(Request $request)
+    {
+        $restraunt = Restraunt::find(auth()->user()->id);
+        $restraunt->update($request->all());
+        return Api::setResponse('restraunt', $restraunt);
+    }
 }
