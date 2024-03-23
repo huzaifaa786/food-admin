@@ -36,8 +36,8 @@ class Restraunt extends Authenticatable
         'category_id',
     ];
 
-    protected $enums = [
-        'status' => RestrauntStatus::class,
+    protected $casts = [
+        'status' => RestrauntStatus::class
     ];
 
     /**
@@ -125,20 +125,8 @@ class Restraunt extends Authenticatable
      *
      * @return BelongsTo
      */
-    public function category(): BelongsTo
+    public function category() : BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Method getStatusAttribute
-     *
-     * @param $value $value [explicite description]
-     *
-     * @return RestrauntStatus
-     */
-    public function getStatusAttribute($value): RestrauntStatus
-    {
-        return $this->enums['status']::getKey($value);
     }
 }
