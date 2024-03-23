@@ -63,7 +63,7 @@ class AuthController extends Controller
      */
     public function profile()
     {
-        $restraunt = Restraunt::find(auth()->user()->id);
+        $restraunt = Restraunt::find(auth()->user()->id)->with('category');
         return Api::setResponse('restraunt', $restraunt);
     }
 

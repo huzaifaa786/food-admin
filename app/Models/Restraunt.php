@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -112,5 +113,15 @@ class Restraunt extends Authenticatable
             get: fn (string $value) => asset($value),
             set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/license')
         );
+    }
+
+    /**
+     * Method category
+     *
+     * @return BelongsTo
+     */
+    public function category() : BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }
