@@ -129,4 +129,16 @@ class Restraunt extends Authenticatable
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Method status
+     *
+     * @return Attribute
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => RestrauntStatus::tryFrom($value)
+        );
+    }
 }
