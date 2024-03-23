@@ -137,8 +137,8 @@ class Restraunt extends Authenticatable
      */
     protected function status(): Attribute
     {
-        return Attribute::make(
-            get: fn ($value) => RestrauntStatus::tryFrom($value)
+        return Attribute::get(
+            fn ($value) => $this->attributes['status'] ?? $value,
         );
     }
 }
