@@ -33,6 +33,7 @@ class Restraunt extends Authenticatable
         'lat',
         'lng',
         'radius',
+        'status',
         'category_id',
     ];
 
