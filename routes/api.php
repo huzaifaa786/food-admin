@@ -38,7 +38,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::post('menuCategory/create', [MenuCategoryController::class, 'create']);
         Route::get('menucategories', [MenuCategoryController::class, 'index']);
         Route::get('menuItems', [MenuItemController::class, 'index']);
-        Route::get('menuItem/updateAvailability/{id}', [MenuItemController::class, 'updateAvailability']);
+        Route::post('menuItem/updateAvailability/{id}', [MenuItemController::class, 'updateAvailability']);
         Route::post('menuItem/create', [MenuItemController::class, 'create']);
         Route::post('menuItem/udpate/{id}', [MenuItemController::class, 'update']);
     });
