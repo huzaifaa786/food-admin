@@ -32,9 +32,8 @@ class MenuItem extends Model
      *
      * @return void
      */
-    public function toggleAvailable(bool $availble)
+    public function toggleAvailable($availble)
     {
-        dd($availble);
         $this->available = $availble;
         $this->save();
     }
