@@ -36,6 +36,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('driver/delete/{id}', [DriverController::class, 'deleteDriver']);
         Route::post('menuCategory/create', [MenuCategoryController::class, 'create']);
         Route::get('menucategories', [MenuCategoryController::class, 'index']);
+        Route::post('menuItems', [MenuItemController::class, 'index']);
         Route::post('menuItem/create', [MenuItemController::class, 'create']);
         Route::post('menuItem/udpate/{id}', [MenuItemController::class, 'update']);
     });
