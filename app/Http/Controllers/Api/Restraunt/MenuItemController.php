@@ -51,20 +51,29 @@ class MenuItemController extends Controller
         $menuItem = MenuItem::find($id);
         $menuItem->update($request->all());
 
-        if (!isEmpty($request->extras)) {
-            foreach ($request->extras as $extra) {
-                $mextra = Extra::find($extra->id);
-                $mextra->update([
-                    'menu_item_id' => $menuItem->id,
-                    'name' => $extra['name'],
-                    'price' => $extra['price']
-                ]);
-            }
+        foreach ($menuItem->extras as $extra) {
+            $extra->delete();
+        }
+        
+        foreach ($request->extras as $extra) {
+            Extra::create([
+                'menu_item_id' => $menuItem->id,
+                'name' => $extra['name'],
+                'price' => $extra['price']
+            ]);
         }
 
         return Api::setResponse('menuItem', $menuItem);
     }
 
+    /**
+     * Method updateAvailability
+     *
+     * @param $id $id [explicite description]
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
     public function updateAvailability($id, Request $request)
     {
         $menuItem = MenuItem::find($id);
