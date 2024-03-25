@@ -26,6 +26,19 @@ class MenuItem extends Model
     ];
 
     /**
+     * Method toggleAvailable
+     *
+     * @param bool $available [explicite description]
+     *
+     * @return void
+     */
+    public function toggleAvailable(bool $available)
+    {
+        $this->available = $available;
+        $this->save();
+    }
+
+    /**
      * Method extras
      *
      * @return HasMany
