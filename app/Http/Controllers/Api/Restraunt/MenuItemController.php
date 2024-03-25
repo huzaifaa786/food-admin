@@ -27,6 +27,8 @@ class MenuItemController extends Controller
             'discount_till_date' => Carbon::today()->addDays($request->discount_days)
         ] + $request->all());
 
+        $menuItem->extras;
+        
         foreach ($request->extras as $extra) {
             Extra::create([
                 'menu_item_id' => $menuItem->id,
@@ -54,7 +56,7 @@ class MenuItemController extends Controller
         foreach ($menuItem->extras as $extra) {
             $extra->delete();
         }
-        
+
         foreach ($request->extras as $extra) {
             Extra::create([
                 'menu_item_id' => $menuItem->id,
