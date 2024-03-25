@@ -16,17 +16,17 @@ class MenuItemSeeder extends Seeder
     public function run(): void
     {
         MenuItem::insert([
-            ['name' => 'spanish salad' , 'description' => 'spanish salad with cheese', 'price' => '20' , 'menu_category_id' => 1, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'spanish salad' , 'description' => 'spanish salad with cheese', 'price' => '20' , 'menu_category_id' => 1, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5, 'restraunt_id' => 1],
 
-            ['name' => 'spanish salad2' , 'description' => 'spanish salad with cheese', 'price' => '20' , 'menu_category_id' => 1, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'spanish salad2' , 'description' => 'spanish salad with cheese', 'price' => '20' , 'menu_category_id' => 1, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5,  'restraunt_id' => 1],
 
-            ['name' => 'Italilan salad' , 'description' => 'italilan salad with cheese', 'price' => '20' , 'menu_category_id' => 2, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'Italilan salad' , 'description' => 'italilan salad with cheese', 'price' => '20' , 'menu_category_id' => 2, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5,  'restraunt_id' => 1],
 
-            ['name' => 'Italilan salad2' , 'description' => 'italilan salad with cheese', 'price' => '20' , 'menu_category_id' => 2, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'Italilan salad2' , 'description' => 'italilan salad with cheese', 'price' => '20' , 'menu_category_id' => 2, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5,  'restraunt_id' => 1],
 
-            ['name' => 'Pakistani salad' , 'description' => 'pakistan salad with cheese', 'price' => '20' , 'menu_category_id' => 3, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'Pakistani salad' , 'description' => 'pakistan salad with cheese', 'price' => '20' , 'menu_category_id' => 3, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5,  'restraunt_id' => 1],
 
-            ['name' => 'Pakistani salad2' , 'description' => 'pakistan salad with cheese', 'price' => '20' , 'menu_category_id' => 3, 'discount' =>12 , 'discount_till_date' => Carbon::today(), 'restraunt_id' => 1],
+            ['name' => 'Pakistani salad2' , 'description' => 'pakistan salad with cheese', 'price' => '20' , 'menu_category_id' => 3, 'discount' =>12 , 'discount_till_date' => Carbon::today()->addDays(5), 'discount_days' => 5,  'restraunt_id' => 1],
         ]);
 
         Extra::insert([
