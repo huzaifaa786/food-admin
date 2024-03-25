@@ -10,6 +10,6 @@ class Extra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'price', 'menu_item_id'
+        'name', 'price', 'menu_item_id',  'discount_days'
     ];
 }

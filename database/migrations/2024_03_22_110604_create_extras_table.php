@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
+            $table->string('discount_days');
             $table->foreignId('menu_item_id');
             $table->foreign('menu_item_id')->references('id')->on('menu_items');
             $table->timestamps();

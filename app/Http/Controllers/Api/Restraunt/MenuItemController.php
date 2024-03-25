@@ -9,6 +9,8 @@ use App\Models\MenuItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class MenuItemController extends Controller
 {
     /**
@@ -27,8 +29,37 @@ class MenuItemController extends Controller
 
         foreach ($request->extras as $extra) {
             Extra::create([
-                'menu_item_id' => $menuItem->id
-            ] + $request->all());
+                'menu_item_id' => $menuItem->id,
+                'name' => $extra->name,
+                'price' => $extra->price
+            ]);
+        }
+
+        return Api::setResponse('menuItem', $menuItem);
+    }
+
+    /**
+     * Method udpate
+     *
+     * @param $id $id [explicite description]
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function update($id, Request $request)
+    {
+        $menuItem = MenuItem::find($id);
+        $menuItem->update($request->all());
+
+        if (!isEmpty($request->extras)) {
+            foreach ($request->extras as $extra) {
+                $mextra = Extra::find($extra->id);
+                $mextra->update([
+                'menu_item_id' => $menuItem->id,
+                'name' => $extra->name,
+                'price' => $extra->price
+            ]);
+            }
         }
 
         return Api::setResponse('menuItem', $menuItem);
