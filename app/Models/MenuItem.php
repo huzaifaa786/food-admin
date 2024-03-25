@@ -25,6 +25,10 @@ class MenuItem extends Model
         'discount_days',
     ];
 
+    protected $casts = [
+        'available' => 'boolean'
+    ];
+
     /**
      * Method toggleAvailable
      *
