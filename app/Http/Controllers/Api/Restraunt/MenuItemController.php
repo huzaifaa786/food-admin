@@ -68,7 +68,7 @@ class MenuItemController extends Controller
     public function updateAvailability($id, Request $request)
     {
         $menuItem = MenuItem::find($id);
-        $menuItem->toggleAvailability($request->availability);
+        $menuItem->toggleAvailable($request->availability);
         return Api::setResponse('menuItem', $menuItem);
     }
 
