@@ -21,7 +21,8 @@ class MenuItem extends Model
         'menu_category_id',
         'discount',
         'available',
-        'discount_till_date'
+        'discount_till_date',
+        'discount_days',
     ];
 
     /**
