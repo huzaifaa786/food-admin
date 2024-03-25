@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('image')->default('images/restraunt/img.jpg');
             $table->double('price');
+            $table->string('discount_days');
             $table->double('discount')->nullable();
             $table->date('discount_till_date')->nullable();
             $table->foreignId('menu_category_id');
