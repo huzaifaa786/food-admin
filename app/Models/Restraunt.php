@@ -82,10 +82,7 @@ class Restraunt extends Authenticatable
     {
         return Attribute::make(
             get: fn (string $value) => asset($value),
-            set: function(?string $value) {
-                if($value)
-                    ImageHelper::saveImageFromApi($value, 'images/restraunt/logo');
-            }
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/logo')
         );
     }
 
@@ -96,15 +93,11 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    protected function cover($value): Attribute
+    protected function cover(): Attribute
     {
-        dd($value);
         return Attribute::make(
             get: fn (string $value) => asset($value),
-            set: function (?string $value) {
-                if ($value)
-                    ImageHelper::saveImageFromApi($value, 'images/restraunt/cover');
-            }
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/cover')
         );
     }
 
