@@ -30,8 +30,8 @@ class MenuItemController extends Controller
         foreach ($request->extras as $extra) {
             Extra::create([
                 'menu_item_id' => $menuItem->id,
-                'name' => $extra->name,
-                'price' => $extra->price
+                'name' => $extra['name'],
+                'price' => $extra['price']
             ]);
         }
 
@@ -55,10 +55,10 @@ class MenuItemController extends Controller
             foreach ($request->extras as $extra) {
                 $mextra = Extra::find($extra->id);
                 $mextra->update([
-                'menu_item_id' => $menuItem->id,
-                'name' => $extra->name,
-                'price' => $extra->price
-            ]);
+                    'menu_item_id' => $menuItem->id,
+                    'name' => $extra['name'],
+                    'price' => $extra['price']
+                ]);
             }
         }
 
