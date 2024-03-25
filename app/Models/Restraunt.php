@@ -101,6 +101,7 @@ class Restraunt extends Authenticatable
         return Attribute::make(
             get: fn (string $value) => asset($value),
             set: function (?string $value) {
+                dd($value);
                 if ($value)
                     ImageHelper::saveImageFromApi($value, 'images/restraunt/cover');
             }
