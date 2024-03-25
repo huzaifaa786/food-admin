@@ -96,8 +96,9 @@ class Restraunt extends Authenticatable
      *
      * @return void
      */
-    protected function cover(): Attribute
+    protected function cover($value): Attribute
     {
+        dd($value);
         return Attribute::make(
             get: fn (string $value) => asset($value),
             set: function (?string $value) {
