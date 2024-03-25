@@ -74,7 +74,7 @@ class MenuItemController extends Controller
      */
     public function index(Request $request)
     {
-        $menuItems = MenuItem::with('extras')->where('resturant_id', $request->restaurant_id)->get();
+        $menuItems = MenuItem::with('extras')->where('restraunt_id', $request->restaurant_id)->get();
         return Api::setResponse('menu_items', $menuItems);
     }
 }
