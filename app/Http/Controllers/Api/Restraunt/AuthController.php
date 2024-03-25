@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         $currentPasswordStatus = Hash::check($request->password, auth()->user()->password);
         if ($currentPasswordStatus) {
-            $restraunt = Restraunt::find(auth()->user());
+            $restraunt = Restraunt::find(auth()->user()->id);
             if (!$restraunt) {
                 return Api::setResponse('error', 'restraunt not found');
             } else {
