@@ -33,6 +33,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::post('profile/update', [RestrauntAuthController::class, 'profileUpdate']);
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
         Route::get('drivers', [DriverController::class, 'index']);
+        Route::get('driver/{id}', [DriverController::class, 'show']);
         Route::post('driver/update/{id}', [DriverController::class, 'udpateDriver']);
         Route::get('driver/delete/{id}', [DriverController::class, 'deleteDriver']);
         Route::post('menuCategory/create', [MenuCategoryController::class, 'create']);

@@ -45,6 +45,11 @@ class DriverController extends Controller
         return Api::setMessage('driver deleted successfully');
     }
 
+    public function show($id)
+    {
+        $driver = Driver::find($id);
+        return Api::setResponse('driver', $driver);
+    }
     /**
      * Method updateDriver
      *
