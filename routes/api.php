@@ -19,6 +19,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::group(['middleware' =>  ['auth:sanctum', 'user']], function () {
         Route::get('restaurants', [RestrauntController::class, 'index']);
         Route::get('category/restaurants/{id}', [RestrauntController::class, 'restaurantByCategory']);
+        Route::get('restaurant-detail/{id}', [RestrauntController::class, 'restaurantDetail']);
         Route::get('home', [HomeController::class, 'index']);
     });
 });

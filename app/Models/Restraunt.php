@@ -7,6 +7,7 @@ use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -135,5 +136,15 @@ class Restraunt extends Authenticatable
     public function getStatusAttribute($value)
     {
         return RestrauntStatus::from($value)->name;
+    }
+
+    /**
+     * Method categories
+     *
+     * @return HasMany
+     */
+    public function menu_categories() : HasMany
+    {
+        return $this->hasMany(MenuCategory::class)->with('menu_items');
     }
 }
