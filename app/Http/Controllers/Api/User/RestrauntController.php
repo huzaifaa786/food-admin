@@ -14,4 +14,10 @@ class RestrauntController extends Controller
         $restaurants = Restraunt::all();
         return Api::setResponse('restaurants', $restaurants);
     }
+
+    public function restaurantByCategory($id)
+    {
+        $restaurants = Restraunt::where('category_id', $id)->get();
+        return Api::setResponse('restaurants', $restaurants);
+    }
 }
