@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('image');
             $table->foreignId('restraunt_id');
-            $table->foreign('restraunt_id')->references('id')->on('restraunts');
+            $table->foreign('restraunt_id')->references('id')->on('restraunts')->onDelete('cascade');
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

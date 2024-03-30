@@ -21,9 +21,9 @@ return new class extends Migration
             $table->double('discount')->nullable();
             $table->date('discount_till_date')->nullable();
             $table->foreignId('menu_category_id');
-            $table->foreign('menu_category_id')->references('id')->on('menu_categories');
+            $table->foreign('menu_category_id')->references('id')->on('menu_categories')->onDelete('cascade');
             $table->foreignId('restraunt_id');
-            $table->foreign('restraunt_id')->references('id')->on('restraunts');
+            $table->foreign('restraunt_id')->references('id')->on('restraunts')->onDelete('cascade');
             $table->boolean('available')->default(true);
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Restraunt\CategoryController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
 use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
 use App\Http\Controllers\Api\Restraunt\MenuItemController;
+use App\Http\Controllers\Api\Restraunt\PosterController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\HomeController;
 use App\Http\Controllers\Api\User\RestrauntController;
@@ -21,6 +22,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('category/restaurants/{id}', [RestrauntController::class, 'restaurantByCategory']);
         Route::get('restaurant-detail/{id}', [RestrauntController::class, 'restaurantDetail']);
         Route::get('home', [HomeController::class, 'index']);
+        Route::get('profile', [AuthController::class, 'profile']);
     });
 });
 
@@ -44,5 +46,6 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::post('menuItem/updateAvailability/{id}', [MenuItemController::class, 'updateAvailability']);
         Route::post('menuItem/create', [MenuItemController::class, 'create']);
         Route::post('menuItem/udpate/{id}', [MenuItemController::class, 'update']);
+        Route::post('add/poster', [PosterController::class, 'addPoster']);
     });
 });

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('floor_number')->nullable();
             $table->string('apartment_number')->nullable();
             $table->foreignId('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

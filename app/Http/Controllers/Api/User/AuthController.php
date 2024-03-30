@@ -58,4 +58,16 @@ class AuthController extends Controller
             return Api::setError($th->getMessage());
         }
     }
+
+    /**
+     * Method profile
+     *
+     * @return void
+     */
+    public function profile()
+    {
+        $user = User::find(auth()->user()->id);
+        return Api::setResponse('user', $user);
+    }
+
 }

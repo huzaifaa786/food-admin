@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_categories', function (Blueprint $table) {
+        Schema::create('posters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('restraunt_id');
             $table->foreign('restraunt_id')->references('id')->on('restraunts')->onDelete('cascade');
+            $table->string('poster');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_categories');
+        Schema::dropIfExists('posters');
     }
 };

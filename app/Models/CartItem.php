@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class CartItem extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'lat', 'lng', 'address', 'active' . 'building_name', 'building_number', 'floor_number', 'apartment_number', 'user_id'
+        'cart_id', 'menu_item_id', 'notes'
     ];
 }
