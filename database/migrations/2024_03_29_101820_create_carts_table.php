@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('restraunt_id');
             $table->foreign('restraunt_id')->references('id')->on('restraunts')->onDelete('cascade');
+            $table->decimal('total_amount')->nullable();
+            $table->integer('total_quantity')->nullable();
             $table->timestamps();
         });
     }

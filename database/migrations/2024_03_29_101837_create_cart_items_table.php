@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
             $table->string('notes')->nullable();
-            $table->foreignId('cart_id')->unique();
+            $table->foreignId('cart_id');
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
-            $table->foreignId('menu_item_id')->unique();
+            $table->foreignId('menu_item_id');
             $table->foreign('menu_item_id')->references('id')->on('menu_items')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->decimal('subtotal')->default(0.00);
             $table->timestamps();
         });
     }

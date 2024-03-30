@@ -2,73 +2,81 @@
 
 namespace App\Helpers;
 
+use App\Http\Requests\CartRequest;
 use App\Models\Cart;
-use App\Models\CartItems;
+use App\Models\CartItem;
+use App\Models\CartItemExtra;
+use Illuminate\Http\Request;
 
 class CartHelper
 {
-    public static function addToCart($userId, $gamecode_id, $quantity)
+    public static function addToCart(CartRequest $request)
     {
-        $cart = Cart::where('user_id', $userId)->first();
+        $cart = Cart::where('user_id', auth()->user()->id)->first();
 
         if (!$cart) {
             $cart = Cart::create([
-                'user_id' => $userId,
+                'user_id' => auth()->user()->id,
+                'restraunt_id' => $request->restraunt_id
+
             ]);
         }
 
-        if ($gamecode_id) {
-            $existingCartItem = $cart->items()->where('gamecode_id', $gamecode_id)->first();
+        $cartItem = CartItem::updateOrCreate([
+            'cart_id' => $cart->id,
+            'quantity' => $request->menu_item['quantity'],
+            'menu_item_id' => $request->menu_item['id'],
+        ], [
+            'notes' => $request->menu_item['notes'] ?? null
+        ]);
 
-            if ($existingCartItem) {
-                $existingCartItem->quantity += $quantity ?? 1;
-                $existingCartItem->calculateSubtotal();
-            } else {
-                $cartItem = CartItems::create([
-                    'cart_id' => $cart->id,
-                    'gamecode_id' => $gamecode_id,
-                    'quantity' => $quantity ?? 1,
-                ]);
-                $cartItem->calculateSubtotal();
-            }
+        $cartItem->calculateSubtotal();
+
+        foreach ($request->menu_item['extras'] as $extra) {
+            CartItemExtra::create([
+                'cart_item_id' => $cartItem->id,
+                'extra_id' => $extra['id']
+            ]);
         }
+
 
         $cart->calculateTotals();
 
         // Fetch the cart with the user ID and its associated items
-        $userCart = Cart::with('items')->with('items.gamecode')->with('items.gamecode.game')->where('user_id', $userId)->first();
+        $userCart = Cart::with('items')->where('user_id', auth()->user()->id)->first();
 
         return $userCart;
     }
-    public static function updateCartItem($gamecode_id, $user_id, $quantity)
+
+    public static function updateCartItem(Request $request)
     {
-        $cartItem = CartItems::whereHas('cart', function ($query) use ($user_id) {
-            $query->where('user_id', $user_id);
-        })->where('gamecode_id', $gamecode_id)->first();
+        $cartItem = CartItem::whereHas('cart', function ($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->where('menu_item_id', $request->menu_item_id)->first();
 
         if (!$cartItem) {
             return ['message' => 'Item not found in the cart'];
         }
 
-        $cartItem->quantity = $quantity;
+        $cartItem->quantity = $request->quantity;
         $cartItem->calculateSubtotal();
         $cartItem->save();
 
         $cartItem->cart->calculateTotals();
-        $userCart = Cart::with('items')->with('items.gamecode')->with('items.gamecode.game')->where('user_id', $user_id)->first();
+        $userCart = Cart::with('items')->where('user_id', auth()->user()->id)->first();
 
         return $userCart ? $userCart : ['message' => 'Cart item not updated'];
     }
 
-    public static function removeFromCart($userId, $gamecode_id)
+    public static function removeFromCart(CartRequest $request)
     {
-        $cart = Cart::where('user_id', $userId)->first();
+        $cart = Cart::where('user_id', auth()->user()->id)->first();
 
         if (!$cart) {
             return null;
         }
 
-        $cartItem = $cart->items()->where('gamecode_id', $gamecode_id)->first();
+        $cartItem = $cart->items()->where('menu_item_id', $request->menu_item_id)->first();
 
         if ($cartItem) {
             $cartItem->delete();
@@ -76,20 +84,20 @@ class CartHelper
         } else {
             return response()->json(['message' => 'Item not found in the cart'], 404);
         }
-        $userCart = Cart::with('items')->with('items.gamecode')->with('items.gamecode.game')->where('user_id', $userId)->first();
+        $userCart = Cart::with('items')->where('user_id', auth()->user()->id)->first();
         return $userCart;
     }
 
-    public static function clearCart($user_id)
+    public static function clearCart()
     {
-        $cart = Cart::where('user_id', $user_id)->first();
-    
+        $cart = Cart::where('user_id', auth()->user()->id)->first();
+
         if (!$cart) {
             return null;
         }
         // $cart->items()->delete();
         $cart->delete();
-    
+
         return ['message' => 'Cart cleared successfully'];
     }
 }

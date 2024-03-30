@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\Restraunt\DriverController;
 use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
 use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
+use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
+use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
@@ -23,6 +25,10 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('restaurant-detail/{id}', [RestrauntController::class, 'restaurantDetail']);
         Route::get('home', [HomeController::class, 'index']);
         Route::get('profile', [AuthController::class, 'profile']);
+        Route::post('add/cart', [CartController::class, 'add']);
+        Route::post('update/cart', [CartController::class, 'update']);
+        Route::get('get/cart', [CartController::class, 'get']);
+        Route::post('add/address', [AddressController::class, 'create']);
     });
 });
 

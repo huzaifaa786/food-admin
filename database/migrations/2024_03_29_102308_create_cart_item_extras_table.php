@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('cart_item_extras', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cart_item_id')->unique();
+            $table->foreignId('cart_item_id');
             $table->foreign('cart_item_id')->references('id')->on('cart_items')->onDelete('cascade');
-            $table->foreignId('extra_id')->unique();
+            $table->foreignId('extra_id');
             $table->foreign('extra_id')->references('id')->on('extras')->onDelete('cascade');
             $table->timestamps();
         });

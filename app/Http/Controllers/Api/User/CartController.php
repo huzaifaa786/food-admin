@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Helpers\Api;
+use App\Helpers\CartHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\Models\Cart;
@@ -21,27 +22,33 @@ class CartController extends Controller
      */
     public function add(CartRequest $request)
     {
-        $cart = Cart::where('user_id', auth()->user()->id);
-        if($cart){
-            $cartItem = CartItem::updateOrCreate([
-                'cart_id' => $cart->id,
-                'menu_item_id' => $request->menu_item_id,
-            ],[
-                'notes' => $request->notes
-            ]);
-
-            foreach($request->extras as $extra){
-                CartItemExtra::create([
-                    'cart_item_id' => $cartItem->id,
-                     'extra_id' => $extra->id
-                ]);
-            }
-        }
-         $cart = Cart::create([
-            'user_id' => auth()->user->id,
-            'restraunt_id' => $request->restaurant_id
-         ]);
+        $cart = CartHelper::addToCart($request);
 
          return Api::setResponse('cart', $cart);
+    }
+
+    /**
+     * Method update
+     *
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function update(Request $request)
+    {
+        $cart = CartHelper::updateCartItem($request);
+
+        return Api::setResponse('cart', $cart);
+    }
+
+    /**
+     * Method get
+     *
+     * @return void
+     */
+    public function get()
+    {
+        $cart = Cart::with('items')->with('items.extras')->where('user_id', auth()->user()->id)->first();
+        return Api::setResponse('cart', $cart);
     }
 }
