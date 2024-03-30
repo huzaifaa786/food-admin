@@ -30,7 +30,6 @@ class CartHelper
             'notes' => $request->menu_item['notes'] ?? null
         ]);
 
-        $cartItem->calculateSubtotal();
 
         foreach ($request->menu_item['extras'] as $extra) {
             CartItemExtra::create([
@@ -38,6 +37,7 @@ class CartHelper
                 'extra_id' => $extra['id']
             ]);
         }
+        $cartItem->calculateSubtotal();
 
 
         $cart->calculateTotals();
