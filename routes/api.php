@@ -32,6 +32,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('addressess', [AddressController::class, 'get']);
         Route::post('address/main', [AddressController::class, 'setMain']);
         Route::post('address/remove', [AddressController::class, 'delete']);
+        Route::post('address/update/{id}', [AddressController::class, 'update']);
     });
 });
 

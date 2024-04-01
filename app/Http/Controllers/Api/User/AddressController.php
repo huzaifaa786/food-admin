@@ -74,4 +74,23 @@ class AddressController extends Controller
 
         return Api::setMessage('Address not found');
     }
+
+    /**
+     * Method update
+     *
+     * @param $id $id [explicite description]
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function update($id, Request $request)
+    {
+        $address = UserAddress::find($id);
+        if ($address){
+            $address->update($request->all());
+            return Api::setResponse('address', $address);
+        }
+
+        return Api::setMessage('Address not found');
+    }
 }
