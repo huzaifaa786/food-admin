@@ -23,6 +23,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('restaurants', [RestrauntController::class, 'index']);
         Route::get('category/restaurants/{id}', [RestrauntController::class, 'restaurantByCategory']);
         Route::get('restaurant-detail/{id}', [RestrauntController::class, 'restaurantDetail']);
+        Route::post('updatePassword', [AuthController::class, 'updatePassword']);
         Route::get('home', [HomeController::class, 'index']);
         Route::get('profile', [AuthController::class, 'profile']);
         Route::post('add/cart', [CartController::class, 'add']);
