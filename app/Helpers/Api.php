@@ -43,7 +43,7 @@ class Api
     public static function setMessage($message)
     {
         $obj = new Api();
-        $obj->data['error_data'] = $message;
+        $obj->data['message'] = $message;
         return response()->json($obj->data);
     }
 
