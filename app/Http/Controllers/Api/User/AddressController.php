@@ -42,11 +42,11 @@ class AddressController extends Controller
         if($address)
             $address->update(['active' => false]);
 
-        $maddress = UserAddress::where('address_id', $request->address_id)->first();
-        if ($address)
-            $address->update(['active' => true]);
+        $maddress = UserAddress::find($request->address_id);
+        if ($maddress)
+            $maddress->update(['active' => true]);
 
-        return Api::setResponse('address', $address);
+        return Api::setResponse('address', $maddress);
 
     }
 }
