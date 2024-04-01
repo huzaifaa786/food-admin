@@ -38,6 +38,15 @@ class AddressController extends Controller
 
     public function setMain(Request $request)
     {
-        $addressess = UserAddress::where('user_id', auth()->user()->id)->get();
+        $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
+        if($address)
+            $address->update(['active' => false]);
+
+        $maddress = UserAddress::where('address_id', $request->address_id)->first();
+        if ($address)
+            $address->update(['active' => true]);
+
+        return Api::setResponse('address', $address);
+
     }
 }
