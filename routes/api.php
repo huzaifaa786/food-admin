@@ -29,7 +29,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('update/cart', [CartController::class, 'update']);
         Route::get('get/cart', [CartController::class, 'get']);
         Route::post('add/address', [AddressController::class, 'create']);
-        Route::post('addressess', [AddressController::class, 'get']);
+        Route::get('addressess', [AddressController::class, 'get']);
         Route::post('address/main', [AddressController::class, 'setMain']);
     });
 });
