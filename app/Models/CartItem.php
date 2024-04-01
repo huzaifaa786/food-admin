@@ -54,8 +54,8 @@ class CartItem extends Model
     {
         $subtotal = $this->quantity * $this->menu_item->price;
 
-        foreach ($this->extras as $extra) {
-            $subtotal += $extra->price;
+        foreach ($this->extras as $cartExtra) {
+            $subtotal += $cartExtra->extra->price;
         }
         $this->subtotal = $subtotal;
         $this->save();

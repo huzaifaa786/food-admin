@@ -24,4 +24,20 @@ class AddressController extends Controller
 
         return Api::setResponse('address', $address);
     }
+
+    /**
+     * Method get
+     *
+     * @return void
+     */
+    public function get()
+    {
+        $addressess = UserAddress::where('user_id', auth()->user()->id)->get();
+        return Api::setResponse('addressess', $addressess);
+    }
+
+    public function setMain(Request $request)
+    {
+        $addressess = UserAddress::where('user_id', auth()->user()->id)->get();
+    }
 }

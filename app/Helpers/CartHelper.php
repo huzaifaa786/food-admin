@@ -24,15 +24,15 @@ class CartHelper
 
         $cartItem = CartItem::updateOrCreate([
             'cart_id' => $cart->id,
-            'quantity' => $request->menu_item['quantity'],
             'menu_item_id' => $request->menu_item['id'],
         ], [
+            'quantity' => $request->menu_item['quantity'],
             'notes' => $request->menu_item['notes'] ?? null
         ]);
 
 
         foreach ($request->menu_item['extras'] as $extra) {
-            CartItemExtra::create([
+            CartItemExtra::firstOrCreate([
                 'cart_item_id' => $cartItem->id,
                 'extra_id' => $extra['id']
             ]);
