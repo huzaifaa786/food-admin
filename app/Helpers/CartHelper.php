@@ -7,6 +7,8 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemExtra;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class CartHelper
 {
@@ -52,18 +54,18 @@ class CartHelper
     {
         $cartItem = CartItem::whereHas('cart', function ($query) {
             $query->where('user_id', auth()->user()->id);
-        })->where('menu_item_id', $request->menu_item_id)->first();
+        })->where('id', $request->cart_item_id)->first();
 
         if (!$cartItem) {
             return ['message' => 'Item not found in the cart'];
         }
 
+
         $cartItem->quantity = $request->quantity;
         $cartItem->calculateSubtotal();
-        $cartItem->save();
 
         $cartItem->cart->calculateTotals();
-        $userCart = Cart::with('items')->where('user_id', auth()->user()->id)->first();
+        $userCart = self::getCart();
 
         return $userCart ? $userCart : ['message' => 'Cart item not updated'];
     }
@@ -99,5 +101,73 @@ class CartHelper
         $cart->delete();
 
         return ['message' => 'Cart cleared successfully'];
+    }
+
+    public static function getCart()
+    {
+        $userId = auth()->user()->id;
+
+        $cart = Cache::remember('user_cart_' . $userId, now()->addMinutes(10), function () use ($userId) {
+            return DB::table('carts')
+            ->select(
+                'carts.id',
+                'carts.user_id',
+                'carts.restraunt_id',
+                'carts.total_amount',
+                'carts.total_quantity',
+                'restraunts.name as restaurant_name',
+                DB::raw("CONCAT('" . asset('') . "', restraunts.cover) as restaurant_image")
+            )
+                ->join('restraunts', 'carts.restraunt_id', '=', 'restraunts.id')
+                ->where('carts.user_id', $userId)
+                ->first();
+        });
+
+        if (!$cart) {
+
+            return null;
+        }
+
+        $items = Cache::remember('cart_items_' . $cart->id, now()->addMinutes(10), function () use ($cart) {
+            return DB::table('cart_items')
+            ->select(
+                'cart_items.id as id',
+                'cart_items.notes',
+                'cart_items.cart_id',
+                'cart_items.menu_item_id',
+                'cart_items.quantity',
+                'cart_items.subtotal',
+                'menu_items.name as name',
+                'menu_items.description as description',
+                DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
+                'menu_items.price as price'
+            )
+                ->leftJoin('menu_items', 'cart_items.menu_item_id', '=', 'menu_items.id')
+                ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
+                ->where('cart_items.cart_id', $cart->id)
+                ->get();
+        });
+
+        $itemIds = $items->pluck('id')->toArray();
+        $extras = DB::table('cart_item_extras')
+        ->select(
+            'cart_item_id',
+            'extras.id as id',
+            'extras.name as name',
+            'extras.price as price',
+            'extras.menu_item_id as menu_item_id'
+        )
+            ->join('extras', 'cart_item_extras.extra_id', '=', 'extras.id')
+            ->whereIn('cart_item_id', $itemIds)
+            ->get()
+            ->groupBy('cart_item_id');
+
+        foreach ($items as $item) {
+            $item->extras = $extras[$item->id] ?? [];
+        }
+
+        $cart->items = $items;
+
+        return $cart;
     }
 }
