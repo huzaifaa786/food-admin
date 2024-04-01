@@ -12,4 +12,8 @@ class UserAddress extends Model
     protected $fillable = [
         'lat', 'lng', 'address', 'active' , 'building_name', 'building_number', 'floor_number', 'apartment_number', 'user_id'
     ];
+
+    protected $casts = [
+        'active' => 'boolean'
+    ];
 }
