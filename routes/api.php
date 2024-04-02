@@ -28,6 +28,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('profile', [AuthController::class, 'profile']);
         Route::post('add/cart', [CartController::class, 'add']);
         Route::post('update/cart', [CartController::class, 'update']);
+        Route::post('remove/cart', [CartController::class, 'remove']);
         Route::get('get/cart', [CartController::class, 'get']);
         Route::post('add/address', [AddressController::class, 'create']);
         Route::get('addressess', [AddressController::class, 'get']);

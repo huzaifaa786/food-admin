@@ -43,6 +43,13 @@ class CartController extends Controller
         return Api::setResponse('cart', $cart);
     }
 
+    public function remove(Request $request)
+    {
+        $cart = CartHelper::removeFromCart($request);
+
+        return Api::setResponse('cart', $cart);
+    }
+
     /**
      * Method get
      *

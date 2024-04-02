@@ -70,7 +70,7 @@ class CartHelper
         return $userCart ? $userCart : ['message' => 'Cart item not updated'];
     }
 
-    public static function removeFromCart(CartRequest $request)
+    public static function removeFromCart(Request $request)
     {
         $cart = Cart::where('user_id', auth()->user()->id)->first();
 
@@ -78,15 +78,17 @@ class CartHelper
             return null;
         }
 
-        $cartItem = $cart->items()->where('menu_item_id', $request->menu_item_id)->first();
+        $cartItem = $cart->items()->where('id', $request->cart_item_id)->first();
 
         if ($cartItem) {
             $cartItem->delete();
             $cart->calculateTotals();
+
         } else {
             return response()->json(['message' => 'Item not found in the cart'], 404);
         }
-        $userCart = Cart::with('items')->where('user_id', auth()->user()->id)->first();
+
+        $userCart = self::getCart();
         return $userCart;
     }
 
@@ -107,8 +109,7 @@ class CartHelper
     {
         $userId = auth()->user()->id;
 
-        $cart = Cache::remember('user_cart_' . $userId, now()->addMinutes(10), function () use ($userId) {
-            return DB::table('carts')
+        $cart = DB::table('carts')
             ->select(
                 'carts.id',
                 'carts.user_id',
@@ -121,15 +122,14 @@ class CartHelper
                 ->join('restraunts', 'carts.restraunt_id', '=', 'restraunts.id')
                 ->where('carts.user_id', $userId)
                 ->first();
-        });
+
 
         if (!$cart) {
 
             return null;
         }
 
-        $items = Cache::remember('cart_items_' . $cart->id, now()->addMinutes(10), function () use ($cart) {
-            return DB::table('cart_items')
+        $items =  DB::table('cart_items')
             ->select(
                 'cart_items.id as id',
                 'cart_items.notes',
@@ -146,7 +146,7 @@ class CartHelper
                 ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
                 ->where('cart_items.cart_id', $cart->id)
                 ->get();
-        });
+
 
         $itemIds = $items->pluck('id')->toArray();
         $extras = DB::table('cart_item_extras')
