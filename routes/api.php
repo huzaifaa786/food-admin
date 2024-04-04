@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
+use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('update/cart', [CartController::class, 'update']);
         Route::post('remove/cart', [CartController::class, 'remove']);
         Route::get('get/cart', [CartController::class, 'get']);
+        Route::post('place/order', [OrderController::class, 'placeOrder']);
         Route::post('add/address', [AddressController::class, 'create']);
         Route::get('addressess', [AddressController::class, 'get']);
         Route::post('address/main', [AddressController::class, 'setMain']);
