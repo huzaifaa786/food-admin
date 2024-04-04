@@ -152,7 +152,7 @@ class CartHelper
             ->leftJoin('menu_items', 'cart_items.menu_item_id', '=', 'menu_items.id')
             ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
             ->where('cart_items.cart_id', $cart->id)
-            ->groupBy('cart_items.id', 'cart_items.notes')
+            ->distinct() 
             ->get();
 
 
