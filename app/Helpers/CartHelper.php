@@ -24,17 +24,23 @@ class CartHelper
             ]);
         }
 
-        $cartItem = CartItem::updateOrCreate(
-            [
+        $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
+        if ($cartItem) {
+         $cartItem->update([
                 'cart_id' => $cart->id,
                 'menu_item_id' => $request->menu_item['id'],
-            ],
-            [
-                'quantity' => DB::raw('quantity + ' . $request->menu_item['quantity']),
-                'notes' => $request->menu_item['notes'] ?? null,
-            ]
-        );
-
+                'quantity' => $cartItem->quantity + $request->menu_item['quantity'],
+                'notes' => $request->menu_item['notes'] ?? null
+            ]);
+        }
+        else{
+            $cartItem = CartItem::create([
+                'cart_id' => $cart->id,
+                'menu_item_id' => $request->menu_item['id'],
+                'quantity' => $request->menu_item['quantity'],
+                'notes' => $request->menu_item['notes'] ?? null
+            ]);
+        }
 
         foreach ($request->menu_item['extras'] as $extra) {
             CartItemExtra::firstOrCreate([
