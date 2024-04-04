@@ -24,13 +24,16 @@ class CartHelper
             ]);
         }
 
-        $cartItem = CartItem::updateOrCreate([
-            'cart_id' => $cart->id,
-            'menu_item_id' => $request->menu_item['id'],
-        ], [
-            'quantity' => $request->menu_item['quantity'],
-            'notes' => $request->menu_item['notes'] ?? null
-        ]);
+        $cartItem = CartItem::updateOrCreate(
+            [
+                'cart_id' => $cart->id,
+                'menu_item_id' => $request->menu_item['id'],
+            ],
+            [
+                'quantity' => DB::raw('quantity + ' . $request->menu_item['quantity']),
+                'notes' => $request->menu_item['notes'] ?? null,
+            ]
+        );
 
 
         foreach ($request->menu_item['extras'] as $extra) {
