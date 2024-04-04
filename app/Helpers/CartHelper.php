@@ -26,14 +26,13 @@ class CartHelper
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
         if ($cartItem) {
-         $cartItem->update([
+            $cartItem->update([
                 'cart_id' => $cart->id,
                 'menu_item_id' => $request->menu_item['id'],
                 'quantity' => $cartItem->quantity + $request->menu_item['quantity'],
                 'notes' => $request->menu_item['notes'] ?? null
             ]);
-        }
-        else{
+        } else {
             $cartItem = CartItem::create([
                 'cart_id' => $cart->id,
                 'menu_item_id' => $request->menu_item['id'],
@@ -92,7 +91,6 @@ class CartHelper
         if ($cartItem) {
             $cartItem->delete();
             $cart->calculateTotals();
-
         } else {
             return response()->json(['message' => 'Item not found in the cart'], 404);
         }
@@ -128,9 +126,9 @@ class CartHelper
                 'restraunts.name as restaurant_name',
                 DB::raw("CONCAT('" . asset('') . "', restraunts.cover) as restaurant_image")
             )
-                ->join('restraunts', 'carts.restraunt_id', '=', 'restraunts.id')
-                ->where('carts.user_id', $userId)
-                ->first();
+            ->join('restraunts', 'carts.restraunt_id', '=', 'restraunts.id')
+            ->where('carts.user_id', $userId)
+            ->first();
 
 
         if (!$cart) {
@@ -151,22 +149,22 @@ class CartHelper
                 DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
                 'menu_items.price as price'
             )
-                ->leftJoin('menu_items', 'cart_items.menu_item_id', '=', 'menu_items.id')
-                ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
-                ->where('cart_items.cart_id', $cart->id)
-            ->groupBy('cart_items.id')
-                ->get();
+            ->leftJoin('menu_items', 'cart_items.menu_item_id', '=', 'menu_items.id')
+            ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
+            ->where('cart_items.cart_id', $cart->id)
+            ->groupBy('cart_items.id', 'cart_items.notes')
+            ->get();
 
 
         $itemIds = $items->pluck('id')->toArray();
         $extras = DB::table('cart_item_extras')
-        ->select(
-            'cart_item_id',
-            'extras.id as id',
-            'extras.name as name',
-            'extras.price as price',
-            'extras.menu_item_id as menu_item_id'
-        )
+            ->select(
+                'cart_item_id',
+                'extras.id as id',
+                'extras.name as name',
+                'extras.price as price',
+                'extras.menu_item_id as menu_item_id'
+            )
             ->join('extras', 'cart_item_extras.extra_id', '=', 'extras.id')
             ->whereIn('cart_item_id', $itemIds)
             ->get()
