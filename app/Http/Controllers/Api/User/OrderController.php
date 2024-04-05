@@ -44,5 +44,8 @@ class OrderController extends Controller
 
             return Api::setResponse('order',$order);
         }
+        else{
+            return Api::setError('cart not found');
+        }
     }
 }
