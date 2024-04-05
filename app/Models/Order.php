@@ -18,6 +18,7 @@ class Order extends Model
         'total_quantity',
         'user_address_id',
         'driver_id',
+        'payment_intent',
     ];
 
     /**

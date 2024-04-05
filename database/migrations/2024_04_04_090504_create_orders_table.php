@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
             $table->decimal('total_amount')->nullable();
             $table->integer('total_quantity')->nullable();
+            $table->string('payment_intent');
             $table->timestamps();
         });
     }

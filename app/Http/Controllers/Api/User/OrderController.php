@@ -21,7 +21,8 @@ class OrderController extends Controller
                 'total_quantity' => $cart->total_quantity,
                 'user_id' => auth()->user()->id,
                 'restraunt_id' => $cart->restraunt_id,
-                'user_address_id' => $request->user_address_id
+                'user_address_id' => $request->user_address_id,
+                'payment_intent' => $request->payment_intent,
             ]);
 
             foreach ($cart->items as $item) {
