@@ -14,17 +14,17 @@ class OrderHelper
         ->select(
             'orders.id',
             'orders.user_id',
-            'orders.restaurant_id',
+            'orders.restraunt_id',
             'orders.total_amount',
             'orders.total_quantity',
             // You may need to join with users table to get user details
             'users.name as user_name',
             'users.email as user_email',
             'users.phone as user_phone',
-            // Assuming you have a created_at field for orders
             'orders.created_at'
         )
-        ->where('orders.restaurant_id', $res->id)
+            ->join('users', 'orders.user_id', '=', 'users.id')
+        ->where('orders.restraunt_id', $res->id)
         ->get();
 
         if ($orders->isEmpty()) {
@@ -49,9 +49,13 @@ class OrderHelper
                 ->where('order_items.order_id', $order->id)
                 ->get();
 
+            foreach ($orderItems as $item) {
+                $item->extras = $extras[$item->id] ?? [];
+            }
+
             $order->items = $orderItems;
         }
 
-        return response()->json($orders, 200);
+        return $orders;
     }
 }

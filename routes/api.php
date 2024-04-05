@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Restraunt\CategoryController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
 use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
 use App\Http\Controllers\Api\Restraunt\MenuItemController;
+use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
@@ -61,5 +62,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::post('menuItem/create', [MenuItemController::class, 'create']);
         Route::post('menuItem/udpate/{id}', [MenuItemController::class, 'update']);
         Route::post('add/poster', [PosterController::class, 'addPoster']);
+        Route::get('orders', [RestrauntOrderController::class, 'index']);
+
     });
 });
