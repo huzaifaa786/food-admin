@@ -16,9 +16,9 @@ class RestrauntController extends Controller
         $restaurants = Restraunt::all();
         foreach ($restaurants as $res) {
 
-            $distance = LocationHelper::calculateDistance($user->lat, $user->lng, $res->lat, $res->lng);
+            $time = LocationHelper::calculateTimeToReach($user->lat, $user->lng, $res->lat, $res->lng);
 
-            $res->distance = $distance;
+            $res->time = $time;
         }
         return Api::setResponse('restaurants', $restaurants);
     }

@@ -18,7 +18,24 @@ class LocationHelper
 
         $distance = $earthRadius * $c;
 
-        return self::formatDistance($distance);
+        return $distance;
+    }
+
+    public static function calculateTimeToReach($lat1, $lon1, $lat2, $lon2)
+    {
+        $distance = self::calculateDistance($lat1, $lon1, $lat2, $lon2);
+
+        $distanceInKm = $distance / 1000;
+
+        $timeInHours = $distanceInKm / 25;
+
+        $timeInMinutes = round($timeInHours * 60);
+
+        if ($timeInHours < 1) {
+            return $timeInMinutes . ' m';
+        } else {
+            return round($timeInHours, 1) . ' h';
+        }
     }
 
     private static function formatDistance($distance)
