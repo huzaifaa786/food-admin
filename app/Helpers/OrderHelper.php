@@ -44,7 +44,8 @@ class OrderHelper
                 'order_items.subtotal',
                 'menu_items.name as name',
                 'menu_items.description as description',
-                'menu_items.price as price'
+                'menu_items.price as price',
+                DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
             )
                 ->join('menu_items', 'order_items.menu_item_id', '=', 'menu_items.id')
                 ->where('order_items.order_id', $order->id)
@@ -112,7 +113,8 @@ class OrderHelper
                 'order_items.subtotal',
                 'menu_items.name as name',
                 'menu_items.description as description',
-                'menu_items.price as price'
+                'menu_items.price as price',
+                DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
             )
                 ->join('menu_items', 'order_items.menu_item_id', '=', 'menu_items.id')
                 ->where('order_items.order_id', $order->id)
