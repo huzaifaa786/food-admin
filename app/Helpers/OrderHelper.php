@@ -50,6 +50,20 @@ class OrderHelper
                 ->where('order_items.order_id', $order->id)
                 ->get();
 
+            $itemIds = $orderItems->pluck('id')->toArray();
+            $extras = DB::table('order_item_extras')
+            ->select(
+                'order_item_id',
+                'extras.id as id',
+                'extras.name as name',
+                'extras.price as price',
+                'extras.menu_item_id as menu_item_id'
+            )
+            ->join('extras', 'order_item_extras.extra_id', '=', 'extras.id')
+            ->whereIn('order_item_id', $itemIds)
+            ->get()
+            ->groupBy('order_item_id');
+
             foreach ($orderItems as $item) {
                 $item->extras = $extras[$item->id] ?? [];
             }
@@ -103,6 +117,20 @@ class OrderHelper
                 ->join('menu_items', 'order_items.menu_item_id', '=', 'menu_items.id')
                 ->where('order_items.order_id', $order->id)
                 ->get();
+
+            $itemIds = $orderItems->pluck('id')->toArray();
+            $extras = DB::table('order_item_extras')
+            ->select(
+                'order_item_id',
+                'extras.id as id',
+                'extras.name as name',
+                'extras.price as price',
+                'extras.menu_item_id as menu_item_id'
+            )
+            ->join('extras', 'order_item_extras.extra_id', '=', 'extras.id')
+            ->whereIn('order_item_id', $itemIds)
+            ->get()
+            ->groupBy('order_item_id');
 
             foreach ($orderItems as $item) {
                 $item->extras = $extras[$item->id] ?? [];
