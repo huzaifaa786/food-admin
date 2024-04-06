@@ -21,7 +21,7 @@ class OrderHelper
             'users.name as user_name',
             'users.email as user_email',
             'users.phone as user_phone',
-            'users.image as user_image',
+            DB::raw("CONCAT('" . asset('') . "', users.image) as user_image")
         )
             ->join('users', 'orders.user_id', '=', 'users.id')
         ->where('orders.restraunt_id', $res->id)
