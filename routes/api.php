@@ -38,6 +38,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('address/main', [AddressController::class, 'setMain']);
         Route::post('address/remove', [AddressController::class, 'delete']);
         Route::post('address/update/{id}', [AddressController::class, 'update']);
+        Route::get('orders', [OrderController::class, 'index']);
     });
 });
 

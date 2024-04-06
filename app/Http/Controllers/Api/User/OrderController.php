@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Helpers\Api;
+use App\Helpers\OrderHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Order;
@@ -47,5 +48,11 @@ class OrderController extends Controller
         else{
             return Api::setError('cart not found');
         }
+    }
+
+    public function index()
+    {
+        $orders = OrderHelper::getUserOrders();
+        return Api::setResponse('orders', $orders);
     }
 }
