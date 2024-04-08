@@ -38,4 +38,32 @@ class OrderController extends Controller
         ]);
         return Api::setMessage('Driver Assigned');
     }
+
+    /**
+     * Method acceptOrder
+     *
+     * @param $id $id [explicite description]
+     *
+     * @return void
+     */
+    public function acceptOrder($id)
+    {
+        $order = Order::find($id);
+        $order->update(['status' => OrderStatus::ACCEPTED->value]);
+        return Api::setMessage('Order Accepted');
+    }
+
+    /**
+     * Method rejectOrder
+     *
+     * @param $id $id [explicite description]
+     *
+     * @return void
+     */
+    public function rejectOrder($id)
+    {
+        $order = Order::find($id);
+        $order->update(['status' => OrderStatus::REJECTED->value]);
+        return Api::setMessage('Order Rejected');
+    }
 }
