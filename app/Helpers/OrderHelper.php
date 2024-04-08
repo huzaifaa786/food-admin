@@ -17,6 +17,9 @@ class OrderHelper
             'orders.restraunt_id',
             'orders.total_amount',
             'orders.total_quantity',
+            'restraunts.name as restraunt_name',
+            'user_addresses.lat as user_lat',
+            'user_addresses.lng as user_lng',
             // You may need to join with users table to get user details
             'users.name as user_name',
             'users.email as user_email',
@@ -24,6 +27,8 @@ class OrderHelper
             DB::raw("CONCAT('" . asset('') . "', users.image) as user_image"),
             'orders.created_at'
         )
+            ->join('restraunts', 'orders.user_id', '=', 'restraunts.id')
+            ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
         ->where('orders.restraunt_id', $res->id)
         ->get();
@@ -86,6 +91,9 @@ class OrderHelper
             'orders.restraunt_id',
             'orders.total_amount',
             'orders.total_quantity',
+            'restraunts.name as restraunt_name',
+            'user_addresses.lat as user_lat',
+            'user_addresses.lng as user_lng',
             // You may need to join with users table to get user details
             'users.name as user_name',
             'users.email as user_email',
@@ -93,6 +101,8 @@ class OrderHelper
             'users.image as user_image',
             'orders.created_at'
         )
+            ->join('restraunts', 'orders.user_id', '=', 'restraunts.id')
+            ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.user_id', $user->id)
             ->get();

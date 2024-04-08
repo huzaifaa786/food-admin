@@ -22,7 +22,7 @@ class OrderController extends Controller
         if ($orders != null)
             return Api::setResponse('orders', $orders);
         else
-            return Api::setMessage('No orders found');
+            return Api::setError('No orders found');
     }
 
     /**
