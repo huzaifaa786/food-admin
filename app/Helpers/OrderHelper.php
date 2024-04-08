@@ -98,6 +98,8 @@ class OrderHelper
             'orders.total_amount',
             'orders.total_quantity',
             'restraunts.name as restraunt_name',
+            'restraunts.lat as restraunt_lat',
+            'restraunts.lng as restraunt_lng',
             'user_addresses.lat as user_lat',
             'user_addresses.lng as user_lng',
             // You may need to join with users table to get user details
