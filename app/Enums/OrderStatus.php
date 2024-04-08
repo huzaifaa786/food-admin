@@ -8,4 +8,5 @@ enum OrderStatus: string
     case ACCEPTED  = 'ACCEPTED';
     case ON_THE_WAY  = 'ON_THE_WAY';
     case REJECTED = 'REJECTED';
+    case DELIVERED = 'DELIVERED';
 }
