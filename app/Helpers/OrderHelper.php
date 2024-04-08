@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Enums\OrderStatus;
 use Illuminate\Support\Facades\DB;
 
 class OrderHelper
@@ -9,8 +10,10 @@ class OrderHelper
     public static function getRestrauntOrders()
     {
         $res = auth()->user();
+        $orders = [];
 
-        $orders = DB::table('orders')
+        foreach (OrderStatus::cases() as $status) {
+            $statusOrders = DB::table('orders')
         ->select(
             'orders.id',
             'orders.user_id',
@@ -31,14 +34,11 @@ class OrderHelper
             ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
         ->where('orders.restraunt_id', $res->id)
+                ->where('orders.status', $status->value)
         ->get();
+        if(!$statusOrders->isEmpty()){
 
-        if ($orders->isEmpty()) {
-            return null;
-        }
-
-        // Fetch order items for each order
-        foreach ($orders as $order) {
+            foreach ($statusOrders as $order) {
             $orderItems = DB::table('order_items')
             ->select(
                 'order_items.id as id',
@@ -75,6 +75,12 @@ class OrderHelper
             }
 
             $order->items = $orderItems;
+        }
+    }
+            // dump($statusOrders);
+
+            $orders[$status->value] = $statusOrders->toArray();
+
         }
 
         return $orders;
