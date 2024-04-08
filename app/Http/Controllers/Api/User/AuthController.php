@@ -98,4 +98,19 @@ class AuthController extends Controller
         return Api::setResponse('user', $user);
     }
 
+
+    /**
+     * Method updateProdile
+     *
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function profileUpdate(Request $request)
+    {
+        $user = User::find(auth()->user()->id);
+        $user->update($request->all());
+        return Api::setResponse('user', $user);
+    }
+
 }
