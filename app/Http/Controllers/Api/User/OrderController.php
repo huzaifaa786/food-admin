@@ -34,7 +34,7 @@ class OrderController extends Controller
                     'quantity' => $item->quantity,
                     'subtotal' => $item->subtotal,
                 ]);
-                foreach($item->extras as $extra){
+                foreach ($item->extras as $extra) {
                     OrderItemExtra::create([
                         'order_item_id' => $order_item->id,
                         'extra_id' => $extra->extra_id,
@@ -43,9 +43,8 @@ class OrderController extends Controller
             }
             $cart->delete();
 
-            return Api::setResponse('order',$order);
-        }
-        else{
+            return Api::setResponse('order', $order);
+        } else {
             return Api::setError('cart not found');
         }
     }
@@ -53,6 +52,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = OrderHelper::getUserOrders();
-        return Api::setResponse('orders', $orders);
+        if ($orders != null)
+            return Api::setResponse('orders', $orders);
+        else
+            return Api::setMessage('No orders found');
     }
 }

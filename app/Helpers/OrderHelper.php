@@ -29,7 +29,7 @@ class OrderHelper
         ->get();
 
         if ($orders->isEmpty()) {
-            return response()->json(['message' => 'No orders found for this restaurant'], 404);
+            return null;
         }
 
         // Fetch order items for each order
@@ -98,7 +98,7 @@ class OrderHelper
             ->get();
 
         if ($orders->isEmpty()) {
-            return response()->json(['message' => 'No orders found for this restaurant'], 404);
+            return null;
         }
 
         // Fetch order items for each order

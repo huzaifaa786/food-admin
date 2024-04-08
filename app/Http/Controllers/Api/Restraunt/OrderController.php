@@ -19,7 +19,10 @@ class OrderController extends Controller
     public function index()
     {
         $orders = OrderHelper::getRestrauntOrders();
-        return Api::setResponse('orders', $orders);
+        if ($orders != null)
+            return Api::setResponse('orders', $orders);
+        else
+            return Api::setMessage('No orders found');
     }
 
     /**
