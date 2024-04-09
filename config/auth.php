@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Driver;
 use App\Models\Restraunt;
 
 return [
@@ -43,7 +44,7 @@ return [
             'provider' => 'users',
         ],
 
-        
+
 
         'user' => [
             'driver' => 'sanctum',
@@ -53,6 +54,11 @@ return [
         'restraunt' => [
             'driver' => 'sanctum',
             'provider' => 'restraunts',
+        ],
+
+        'rider' => [
+            'driver' => 'sanctum',
+            'provider' => 'riders',
         ],
     ],
 
@@ -82,6 +88,11 @@ return [
         'restraunts' => [
             'driver' => 'eloquent',
             'model' => Restraunt::class,
+        ],
+
+        'riders' => [
+            'driver' => 'eloquent',
+            'model' => Driver::class,
         ],
 
         // 'users' => [

@@ -30,4 +30,10 @@ class AuthController extends Controller
             return Api::setError($th->getMessage());
         }
     }
+
+    public function profile()
+    {
+        $rider = Driver::find(auth()->user()->id);
+        return Api::setResponse('rider', $rider);
+    }
 }

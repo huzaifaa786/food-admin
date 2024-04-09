@@ -78,6 +78,7 @@ Route::group(['prefix' => 'rider'], function () {
     Route::post('login', [RiderAuthController::class, 'login']);
 
     Route::group(['middleware' =>  ['auth:sanctum', 'rider']], function () {
-        //
+        Route::get('profile', [RiderAuthController::class, 'profile']);
+
     });
 });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\RestrauntMiddleware;
+use App\Http\Middleware\RiderMiddleware;
 use App\Http\Middleware\UserMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'user' => UserMiddleware::class,
             'restraunt' => RestrauntMiddleware::class,
+            'rider' => RiderMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
