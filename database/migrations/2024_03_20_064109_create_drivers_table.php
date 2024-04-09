@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->string('password');
-            $table->string('image');
+            $table->string('image')->default('images/user.png');
             $table->foreignId('restraunt_id');
             $table->foreign('restraunt_id')->references('id')->on('restraunts')->onDelete('cascade');
             $table->boolean('active')->default(false);

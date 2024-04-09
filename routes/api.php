@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
 use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
+use App\Http\Controllers\Api\Rider\AuthController as RiderAuthController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\CartController;
@@ -69,5 +70,14 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
 
+    });
+});
+
+
+Route::group(['prefix' => 'rider'], function () {
+    Route::post('login', [RiderAuthController::class, 'login']);
+
+    Route::group(['middleware' =>  ['auth:sanctum', 'rider']], function () {
+        //
     });
 });

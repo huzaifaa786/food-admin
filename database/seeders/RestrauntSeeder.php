@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Driver;
 use App\Models\Restraunt;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,6 +24,15 @@ class RestrauntSeeder extends Seeder
             'password' => '123456',
             'radius' => '50',
             'category_id' => 1,
+        ]);
+
+        Driver::create([
+            'name' => 'Test Driver',
+            'email' => 'rider@mail.com',
+            'phone' => '03458877654',
+            'password' => 1234,
+            'active' => true,
+            'restraunt_id' => 1,
         ]);
     }
 }
