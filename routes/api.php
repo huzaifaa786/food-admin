@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
 use App\Http\Controllers\Api\Rider\AuthController as RiderAuthController;
+use App\Http\Controllers\Api\Rider\OrderController as RiderOrderController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\CartController;
@@ -80,6 +81,6 @@ Route::group(['prefix' => 'rider'], function () {
     Route::group(['middleware' =>  ['auth:sanctum', 'rider']], function () {
         Route::get('profile', [RiderAuthController::class, 'profile']);
         Route::get('change/status', [RiderAuthController::class, 'toggleActive']);
-
+        Route::get('orders', [RiderOrderController::class, 'index']);
     });
 });
