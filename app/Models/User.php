@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Helpers\ImageHelper;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,5 +57,13 @@ class User extends Authenticatable
         if (!empty($value)) {
             $this->attributes['password'] = Hash::make($value);
         }
+    }
+
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn (?string $value) => $value != null ?  asset($value) : null,
+            set: fn (?string $value) => ImageHelper::saveImageFromApi($value, 'images/user')
+        );
     }
 }
