@@ -79,6 +79,7 @@ Route::group(['prefix' => 'rider'], function () {
 
     Route::group(['middleware' =>  ['auth:sanctum', 'rider']], function () {
         Route::get('profile', [RiderAuthController::class, 'profile']);
+        Route::get('change/status', [RiderAuthController::class, 'toggleActive']);
 
     });
 });

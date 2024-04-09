@@ -36,4 +36,13 @@ class AuthController extends Controller
         $rider = Driver::find(auth()->user()->id);
         return Api::setResponse('rider', $rider);
     }
+
+    public function toggleActive()
+    {
+        $rider = Driver::find(auth()->user()->id);
+        $rider->update([
+            'active' => !$rider->active
+        ]);
+        return Api::setResponse('rider', $rider);
+    }
 }
