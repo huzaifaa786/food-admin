@@ -34,6 +34,7 @@ class AuthController extends Controller
     public function profile()
     {
         $rider = Driver::find(auth()->user()->id);
+        $rider->restraunt;
         return Api::setResponse('rider', $rider);
     }
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -64,6 +65,17 @@ class Driver extends Authenticatable
         if (!empty($value)) {
             $this->attributes['password'] = Hash::make($value);
         }
+    }
+
+
+    /**
+     * Method restraunt
+     *
+     * @return BelongsTo
+     */
+    public function restraunt() : BelongsTo
+    {
+        return $this->belongsTo(Restraunt::class);
     }
 
     /**
