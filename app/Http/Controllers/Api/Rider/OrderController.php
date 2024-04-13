@@ -14,7 +14,10 @@ class OrderController extends Controller
     public function index()
     {
         $orders = OrderHelper::getRiderOrders();
-       return Api::setResponse('orders', $orders);
+        if ($orders != null)
+            return Api::setResponse('orders', $orders);
+        else
+            return Api::setError('No orders found');
     }
 
     /**
