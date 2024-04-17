@@ -45,6 +45,8 @@ Route::group(['prefix' => 'user'], function () {
         Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
         Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
         Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
+        Route::any('user/forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
+
     });
 });
 
@@ -76,6 +78,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
         Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
         Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
+        Route::any('restraunt/forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
     });
 });
 

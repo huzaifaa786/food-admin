@@ -160,4 +160,15 @@ class AuthController extends Controller
             return Api::setError('Email is not exist');
         }
     }
+    public function forgetupdatePassword(Request $request)
+    {
+
+        $data = Restraunt::where('email', $request->email)->first();
+
+        $data->update([
+            'password' => $request->password
+        ]);
+        // toastr()->success('update successfully ');
+        return Api::setResponse('update', $data);
+    }
 }
