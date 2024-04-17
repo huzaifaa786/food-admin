@@ -118,13 +118,13 @@ class AuthController extends Controller
             if ($existingOtp) {
                 $existingOtp->delete();
             }
-            $user = Restraunt::where('email', $request->email)->first();
+            $restraunt = Restraunt::where('email', $request->email)->first();
 
-            if ($user) {
+            if ($restraunt) {
                 $otp = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
                 $mailData = [
-                    'title' => 'Noobz-Request Forget Password',
-                    'name' => $user->name,
+                    'title' => 'Restraunt-Request Forget Password',
+                    'name' => $restraunt->name,
                     'otp' => $otp,
                 ];
                 ForgetPassword::create([
