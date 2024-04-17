@@ -42,6 +42,9 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::get('orders', [OrderController::class, 'index']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
+        Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
+        Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
+        Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
     });
 });
 
@@ -70,7 +73,9 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('order/accept/{id}', [RestrauntOrderController::class, 'acceptOrder']);
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
-
+        Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
+        Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
+        Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
     });
 });
 
