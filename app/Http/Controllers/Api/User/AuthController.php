@@ -127,7 +127,7 @@ class AuthController extends Controller
             if ($user) {
                 $otp = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
                 $mailData = [
-                    'title' => 'Noobz-Request Forget Password',
+                    'title' => 'Food-Request Forget Password',
                     'name' => $user->name,
                     'otp' => $otp,
                 ];
