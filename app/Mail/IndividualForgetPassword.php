@@ -13,12 +13,14 @@ class IndividualForgetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailData;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($mailData)
     {
-        //
+        $this->mailData = $mailData;
     }
 
     /**
@@ -27,7 +29,8 @@ class IndividualForgetPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Individual Forget Password',
+            subject: 'Forget Password',
+
         );
     }
 
@@ -37,8 +40,15 @@ class IndividualForgetPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail',
         );
+    }
+
+    public function build()
+    {
+        return $this->from('info@attendance.gameking.net')
+            ->view('mail')
+            ->subject('One-Time Password (OTP)');
     }
 
     /**
