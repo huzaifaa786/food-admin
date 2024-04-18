@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'user'], function () {
     Route::post('register', [AuthController::class, 'createUser']);
     Route::post('login', [AuthController::class, 'loginUser']);
+    Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
+    Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
+    Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
+    Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
 
     Route::group(['middleware' =>  ['auth:sanctum', 'user']], function () {
         Route::get('restaurants', [RestrauntController::class, 'index']);
@@ -42,10 +46,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::get('orders', [OrderController::class, 'index']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
-        Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
-        Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
-        Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
-        Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
+
 
     });
 });
@@ -54,6 +55,10 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::post('register', [RestrauntAuthController::class, 'createRestraunt']);
     Route::post('login', [RestrauntAuthController::class, 'login']);
     Route::get('categories', [CategoryController::class, 'index']);
+    Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
+    Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
+    Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
+    Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::get('profile', [RestrauntAuthController::class, 'profile']);
@@ -75,10 +80,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('order/accept/{id}', [RestrauntOrderController::class, 'acceptOrder']);
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
-        Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
-        Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
-        Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
-        Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
+
     });
 });
 
