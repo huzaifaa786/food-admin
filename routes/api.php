@@ -93,5 +93,6 @@ Route::group(['prefix' => 'rider'], function () {
         Route::get('change/status', [RiderAuthController::class, 'toggleActive']);
         Route::get('orders', [RiderOrderController::class, 'index']);
         Route::get('order/deliver/{id}', [RiderOrderController::class, 'deliverOrder']);
+        Route::post('order/updateLocation', [RiderOrderController::class, 'changeOrderLocation']);
     });
 });
