@@ -46,9 +46,6 @@ class OrderController extends Controller
     {
         $orderlocation = OrderLocation::where('order_id', $request->order_id)->first();
         if ($orderlocation) {
-        dd(
-            $orderlocation);
-
             $orderlocation->update([
                 'lat' => $request->lat,
                 'lng' => $request->lng,
