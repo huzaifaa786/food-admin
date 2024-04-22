@@ -15,10 +15,10 @@ class PusherTest extends Component
         //
     }
 
-    #[On('echo:order-location, OrderLocationChangeEvent')]
-    public function realTimeMessage()
+    #[On('echo:order-location,OrderLocationChangeEvent')]
+    public function realTimeMessage($location)
     {
-       $this->download();
+       dump($location);
     }
 
     public function render()
