@@ -6,11 +6,12 @@ use App\Models\OrderLocation;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class OrderLocationChangeEvent
+class OrderLocationChangeEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -32,6 +33,7 @@ class OrderLocationChangeEvent
      */
     public function broadcastOn(): array
     {
+        Log::info('yahan a raha ha');
         return [
             new Channel('order-location'),
         ];
