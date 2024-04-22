@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class OrderLocationChangeEvent extends ShouldBroadcast
+class OrderLocationChangeEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +20,7 @@ class OrderLocationChangeEvent extends ShouldBroadcast
      */
     public function __construct(OrderLocation $location)
     {
-        log('eejeklrlkwrj');
+        Log::info('eejeklrlkwrj');
 
         $this->location = $location;
     }
