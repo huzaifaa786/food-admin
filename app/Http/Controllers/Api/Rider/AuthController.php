@@ -15,7 +15,6 @@ class AuthController extends Controller
     public function login(RestrauntLoginRequest $request)
     {
         try {
-
             $rider = Driver::where('email', $request->email)->first();
 
             if (!$rider || !Hash::check($request->password, $rider->password)) {
@@ -23,6 +22,14 @@ class AuthController extends Controller
                     'email' => ['Invalid credentials'],
                 ]);
             }
+
+            // Update or store FCM token
+            if ($request->has('fcm_token')) {
+                $rider->fcm_token = $request->fcm_token;
+                $rider->save();
+            }
+
+            // Generate token for the rider
             $rider->token = $rider->createToken("mobile", ['role:rider'])->plainTextToken;
 
             return Api::setResponse('rider', $rider);

@@ -9,6 +9,8 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderItemExtra;
+use App\Models\Restraunt;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -42,6 +44,14 @@ class OrderController extends Controller
                 }
             }
             $cart->delete();
+
+            $restraunt = Restraunt::find($request->restraunt_id);
+
+            (new NotificationService())->sendNotification(auth()->user()->fcm_token ?? '', 'order placed', 'boht boht mubarak ho hehe');
+
+            if ($restraunt) {
+                (new NotificationService())->sendNotification($restraunt->fcm_token ?? '', 'order placed', 'apka order place ho gya ha ');
+            }
 
             return Api::setResponse('order', $order);
         } else {

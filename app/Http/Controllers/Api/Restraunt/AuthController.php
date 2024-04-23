@@ -43,17 +43,24 @@ class AuthController extends Controller
     public function login(RestrauntLoginRequest $request)
     {
         try {
+            $restaurant = Restraunt::where('email', $request->email)->first();
 
-            $restraunt = Restraunt::where('email', $request->email)->first();
-
-            if (!$restraunt || !Hash::check($request->password, $restraunt->password)) {
+            if (!$restaurant || !Hash::check($request->password, $restaurant->password)) {
                 throw ValidationException::withMessages([
                     'email' => ['Invalid credentials'],
                 ]);
             }
-            $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
 
-            return Api::setResponse('restraunt', $restraunt);
+            // Update or store FCM token
+            if ($request->has('fcm_token')) {
+                $restaurant->fcm_token = $request->fcm_token;
+                $restaurant->save();
+            }
+
+            // Generate token for the restaurant
+            $restaurant->token = $restaurant->createToken("mobile", ['role:restaurant'])->plainTextToken;
+
+            return Api::setResponse('restaurant', $restaurant);
         } catch (\Throwable $th) {
             return Api::setError($th->getMessage());
         }

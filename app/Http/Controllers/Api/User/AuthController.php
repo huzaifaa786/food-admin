@@ -44,7 +44,6 @@ class AuthController extends Controller
     public function loginUser(UserLoginRequest $request)
     {
         try {
-
             $user = User::where('email', $request->email)->first();
 
             if (!$user || !Hash::check($request->password, $user->password)) {
@@ -53,6 +52,13 @@ class AuthController extends Controller
                 ]);
             }
 
+            // Update or store FCM token
+            if ($request->has('fcm_token')) {
+                $user->fcm_token = $request->fcm_token;
+                $user->save();
+            }
+
+            // Generate token for the user
             $user->token = $user->createToken("mobile", ['role:user'])->plainTextToken;
 
             return Api::setResponse('user', $user);
