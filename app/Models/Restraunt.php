@@ -35,6 +35,7 @@ class Restraunt extends Authenticatable
         'lng',
         'radius',
         'status',
+        'fcm_token',
         'category_id',
     ];
 

@@ -27,6 +27,7 @@ class Driver extends Authenticatable
         'image',
         'password',
         'active',
+        'fcm_token',
         'restraunt_id',
     ];
 

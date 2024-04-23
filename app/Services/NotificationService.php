@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Notification;
 use Illuminate\Support\Facades\Http;
 
 class NotificationService
@@ -13,8 +14,29 @@ class NotificationService
         $this->serverKey = env('FIREBASE_SERVER_KEY');
     }
 
-    function sendNotification($deviceToken, $title, $body)
+    function sendNotification($sendTo, $receiverId, $deviceToken, $title, $body)
     {
+        $notificationData = [
+            'title' => $title,
+            'body' => $body,
+        ];
+
+        switch ($sendTo) {
+            case 'USER':
+                $notificationData['user_id'] = $receiverId;
+                break;
+            case 'RIDER':
+                $notificationData['driver_id'] = $receiverId;
+                break;
+            case 'RES':
+                $notificationData['restraunt_id'] = $receiverId;
+                break;
+            default:
+                break;
+        }
+
+        Notification::create($notificationData);
+        
         $serverKey = 'YOUR_SERVER_KEY'; // Replace with your Firebase server key
 
         $response = Http::withHeaders([

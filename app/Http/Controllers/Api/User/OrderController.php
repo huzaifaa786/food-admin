@@ -45,12 +45,24 @@ class OrderController extends Controller
             }
             $cart->delete();
 
-            $restraunt = Restraunt::find($request->restraunt_id);
+            $restraunt = Restraunt::find($cart->restraunt_id);
 
-            (new NotificationService())->sendNotification(auth()->user()->fcm_token ?? '', 'order placed', 'boht boht mubarak ho hehe');
+            (new NotificationService())->sendNotification(
+                sendTo: 'USER',
+                receiverId: auth()->user()->id,
+                deviceToken: auth()->user()->fcm_token ?? '',
+                title: 'order placed',
+                body: 'boht boht mubarak ho hehe'
+            );
 
             if ($restraunt) {
-                (new NotificationService())->sendNotification($restraunt->fcm_token ?? '', 'order placed', 'apka order place ho gya ha ');
+                (new NotificationService())->sendNotification(
+                    sendTo: 'RES',
+                    receiverId: $restraunt->id,
+                    deviceToken: $restraunt->fcm_token ?? '',
+                    title: 'order placed',
+                    body: 'res order placed'
+                );
             }
 
             return Api::setResponse('order', $order);
