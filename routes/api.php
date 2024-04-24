@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
+use App\Http\Controllers\Api\User\NotificationController;
 use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
@@ -46,8 +47,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::get('orders', [OrderController::class, 'index']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
-
-
+        Route::get('notifications', [NotificationController::class, 'index']);
     });
 });
 
