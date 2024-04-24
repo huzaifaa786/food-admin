@@ -14,9 +14,8 @@ class NotificationController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function all()
     {
-        dd('sdf');
         $notifications = Notification::where('restraunt_id', auth()->user()->id)->get();
         return Api::setResponse('notifications', $notifications);
     }
