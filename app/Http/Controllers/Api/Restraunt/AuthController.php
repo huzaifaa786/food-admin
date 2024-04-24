@@ -58,7 +58,7 @@ class AuthController extends Controller
             }
 
             // Generate token for the restaurant
-            $restaurant->token = $restaurant->createToken("mobile", ['role:restaurant'])->plainTextToken;
+            $restaurant->token = $restaurant->createToken("mobile", ['role:restraunt'])->plainTextToken;
 
             return Api::setResponse('restaurant', $restaurant);
         } catch (\Throwable $th) {
