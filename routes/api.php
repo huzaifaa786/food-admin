@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Restraunt\CategoryController;
 use App\Http\Controllers\Api\Restraunt\DriverController;
 use App\Http\Controllers\Api\Restraunt\MenuCategoryController;
 use App\Http\Controllers\Api\Restraunt\MenuItemController;
+use App\Http\Controllers\Api\Restraunt\NotificationController as RestrauntNotificationController;
 use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
 use App\Http\Controllers\Api\Rider\AuthController as RiderAuthController;
@@ -80,7 +81,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('order/accept/{id}', [RestrauntOrderController::class, 'acceptOrder']);
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
-
+        Route::get('notifications', [RestrauntNotificationController::class, 'index']);
     });
 });
 

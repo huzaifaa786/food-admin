@@ -17,4 +17,8 @@ class Notification extends Model
         'body',
         'seen'
     ];
+
+    protected $casts = [
+        'seen' => 'boolean'
+    ];
 }
