@@ -77,7 +77,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         if ($user) {
             (new NotificationService())->sendNotification(
-                sendTo: 'RES',
+                sendTo: 'USER',
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
                 orderId: $order->id,
@@ -104,7 +104,7 @@ class OrderController extends Controller
         $user = User::find($order->user_id);
         if ($user) {
             (new NotificationService())->sendNotification(
-                sendTo: 'RES',
+                sendTo: 'USER',
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
                 orderId: $order->id,

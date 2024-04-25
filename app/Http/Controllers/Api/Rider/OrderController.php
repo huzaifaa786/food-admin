@@ -29,7 +29,7 @@ class OrderController extends Controller
         $order->update(['status' => OrderStatus::ON_THE_WAY->value]);
 
         (new NotificationService())->sendNotification(
-            sendTo: 'RES',
+            sendTo: 'USER',
             receiverId: $user->id,
             deviceToken: $user->fcm_token ?? '',
             orderId: $order->id,
@@ -50,7 +50,19 @@ class OrderController extends Controller
     public function deliverOrder($id)
     {
         $order = Order::find($id);
+        $user = $order->user;
         $order->update(['status' => OrderStatus::DELIVERED->value]);
+
+        (new NotificationService())->sendNotification(
+            sendTo: 'USER',
+            receiverId: $user->id,
+            deviceToken: $user->fcm_token ?? '',
+            orderId: $order->id,
+            orderStatus: $order->status,
+            title: 'Order Delivered',
+            body: 'your order was delivered'
+        );
+
         return Api::setMessage('Order Delivered');
     }
 
