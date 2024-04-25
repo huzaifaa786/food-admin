@@ -27,6 +27,11 @@ class AuthController extends Controller
         try {
             $restraunt = Restraunt::create($request->all());
 
+            if ($request->has('fcm_token')) {
+                $restraunt->fcm_token = $request->fcm_token;
+                $restraunt->save();
+            }
+
             $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
 
             return Api::setResponse('restraunt', $restraunt);

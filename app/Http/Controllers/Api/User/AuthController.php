@@ -28,6 +28,13 @@ class AuthController extends Controller
         try {
             $user = User::create($request->all());
             $user->address =  UserAddress::create(['user_id' => $user->id] + $request->all());
+
+            // Update or store FCM token
+            if ($request->has('fcm_token')) {
+                $user->fcm_token = $request->fcm_token;
+                $user->save();
+            }
+            
             $user->token = $user->createToken("mobile", ['role:user'])->plainTextToken;
 
             return Api::setResponse('user', $user);
