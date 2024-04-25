@@ -34,7 +34,7 @@ class AuthController extends Controller
                 $user->fcm_token = $request->fcm_token;
                 $user->save();
             }
-            
+
             $user->token = $user->createToken("mobile", ['role:user'])->plainTextToken;
 
             return Api::setResponse('user', $user);
@@ -110,6 +110,7 @@ class AuthController extends Controller
     public function profile()
     {
         $user = User::find(auth()->user()->id);
+        $user->mainAddress;
         return Api::setResponse('user', $user);
     }
 

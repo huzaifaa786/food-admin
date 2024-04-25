@@ -67,4 +67,9 @@ class User extends Authenticatable
             set: fn (?string $value) => ImageHelper::saveImageFromApi($value, 'images/user')
         );
     }
+
+    public function mainAddress()
+    {
+        return $this->hasMany(UserAddress::class, 'user_id')->where('active', true);
+    }
 }
