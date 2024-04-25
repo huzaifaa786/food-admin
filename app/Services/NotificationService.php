@@ -20,7 +20,7 @@ class NotificationService
             'title' => $title,
             'body' => $body,
             'order_id' => $orderId,
-            'order_status' => $orderStatus,
+            'status' => $orderStatus,
         ];
 
         switch ($sendTo) {
