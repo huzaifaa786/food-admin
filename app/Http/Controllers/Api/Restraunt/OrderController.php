@@ -51,8 +51,9 @@ class OrderController extends Controller
                 receiverId: $rider->id,
                 deviceToken: $rider->fcm_token ?? '',
                 orderId: $order->id,
-                title: 'order assigned',
-                body: 'apko order assign ho gya ha'
+                orderStatus: $order->status,
+                title: 'Order Assigned',
+                body: 'a new order has been assigned'
             );
         }
 
@@ -78,8 +79,9 @@ class OrderController extends Controller
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
                 orderId: $order->id,
-                title: 'order accepted',
-                body: 'apka order restaurant nay accept kar liya ha'
+                orderStatus: $order->status,
+                title: 'Order Accepted',
+                body: 'your order has been accepted'
             );
         }
 
@@ -104,8 +106,9 @@ class OrderController extends Controller
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
                 orderId: $order->id,
-                title: 'order rejected',
-                body: 'Ooops! apka order restaurant nay reject kar liya ha'
+                orderStatus: $order->status,
+                title: 'Order Rejected',
+                body: 'your order has been rejected'
             );
         }
 

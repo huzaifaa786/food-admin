@@ -43,7 +43,7 @@ class OrderController extends Controller
                     ]);
                 }
             }
-            $cart->delete();
+            // $cart->delete();
 
             $restraunt = Restraunt::find($cart->restraunt_id);
 
@@ -52,8 +52,9 @@ class OrderController extends Controller
                 receiverId: auth()->user()->id,
                 deviceToken: auth()->user()->fcm_token ?? '',
                 orderId: $order->id,
-                title: 'order placed',
-                body: 'boht boht mubarak ho hehe'
+                orderStatus: $order->status,
+                title: 'order Placed',
+                body: 'your order wes placed successfully'
             );
 
             if ($restraunt) {
@@ -62,8 +63,9 @@ class OrderController extends Controller
                     receiverId: $restraunt->id,
                     deviceToken: $restraunt->fcm_token ?? '',
                     orderId: $order->id,
-                    title: 'order placed',
-                    body: 'res order placed'
+                    orderStatus: $order->status,
+                    title: 'Order Received',
+                    body: 'you received a new order'
                 );
             }
 

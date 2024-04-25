@@ -14,12 +14,13 @@ class NotificationService
         $this->serverKey = env('FIREBASE_SERVER_KEY');
     }
 
-    function sendNotification($sendTo, $receiverId, $deviceToken, $orderId = null, $title, $body)
+    function sendNotification($sendTo, $receiverId, $deviceToken, $orderId = null, $orderStatus = null,$title, $body)
     {
         $notificationData = [
             'title' => $title,
             'body' => $body,
             'order_id' => $orderId,
+            'order_status' => $orderStatus,
         ];
 
         switch ($sendTo) {
