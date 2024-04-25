@@ -21,6 +21,13 @@ class OrderController extends Controller
             return Api::setError('No orders found');
     }
 
+    public function onWayOrder($id)
+    {
+        $order = Order::find($id);
+        $order->update(['status' => OrderStatus::ON_THE_WAY->value]);
+        return Api::setMessage('Order marked as on the way');
+    }
+
     /**
      * Method deliverOrder
      *
