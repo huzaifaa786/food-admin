@@ -43,7 +43,7 @@ class OrderController extends Controller
                     ]);
                 }
             }
-            // $cart->delete();
+            $cart->delete();
 
             $restraunt = Restraunt::find($cart->restraunt_id);
 

@@ -36,6 +36,7 @@ class OrderHelper
                 ->join('users', 'orders.user_id', '=', 'users.id')
                 ->where('orders.restraunt_id', $res->id)
                 ->where('orders.status', $status->value)
+                ->orderBy('orders.created_at', 'desc')
                 ->get();
             if (!$statusOrders->isEmpty()) {
 
@@ -114,6 +115,7 @@ class OrderHelper
             ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.user_id', $user->id)
+            ->orderBy('orders.created_at', 'desc')
             ->get();
 
         if ($orders->isEmpty()) {
