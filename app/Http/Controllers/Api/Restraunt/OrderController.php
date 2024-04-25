@@ -44,6 +44,8 @@ class OrderController extends Controller
             'status' => OrderStatus::ON_THE_WAY->value
         ]);
 
+        $order = Order::find($order->id);
+
         $rider = Driver::find($request->driver_id);
         if ($rider) {
             (new NotificationService())->sendNotification(

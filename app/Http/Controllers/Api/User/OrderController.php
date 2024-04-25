@@ -47,6 +47,8 @@ class OrderController extends Controller
 
             $restraunt = Restraunt::find($cart->restraunt_id);
 
+            $order = Order::find($order->id);
+
             (new NotificationService())->sendNotification(
                 sendTo: 'USER',
                 receiverId: auth()->user()->id,
