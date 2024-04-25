@@ -81,4 +81,16 @@ class OrderController extends Controller
         else
             return Api::setError('No orders found');
     }
+
+    public function getOrder($orderId)
+    {
+        $order = OrderHelper::getOrderById($orderId);
+
+        if ($order != null) {
+            return Api::setResponse('order', $order);
+        } else {
+            return Api::setError('Order not found');
+        }
+    }
+
 }

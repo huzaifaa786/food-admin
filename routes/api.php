@@ -47,6 +47,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('address/remove', [AddressController::class, 'delete']);
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::get('orders', [OrderController::class, 'index']);
+        Route::get('order/{id}', [OrderController::class, 'getOrder']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
         Route::get('notifications', [NotificationController::class, 'index']);
     });
