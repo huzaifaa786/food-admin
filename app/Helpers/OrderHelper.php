@@ -270,6 +270,7 @@ class OrderHelper
             ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.driver_id', $rider->id)
+            ->orderBy('orders.created_at', 'desc')
             ->get();
 
         if ($orders->isEmpty()) {
