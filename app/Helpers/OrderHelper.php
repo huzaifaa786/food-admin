@@ -241,11 +241,14 @@ class OrderHelper
     }
 
 
+
     public static function getRiderOrders()
     {
         $rider = auth()->user();
+        $orders = [];
 
-        $orders = DB::table('orders')
+        foreach (OrderStatus::cases() as $status) {
+            $statusOrders = DB::table('orders')
             ->select(
                 'orders.id',
                 'orders.user_id',
@@ -266,55 +269,57 @@ class OrderHelper
                 'users.image as user_image',
                 'orders.created_at'
             )
-            ->join('restraunts', 'orders.user_id', '=', 'restraunts.id')
-            ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
-            ->join('users', 'orders.user_id', '=', 'users.id')
-            ->where('orders.driver_id', $rider->id)
-            ->orderBy('orders.created_at', 'desc')
-            ->get();
-
-        if ($orders->isEmpty()) {
-            return null;
-        }
-
-        // Fetch order items for each order
-        foreach ($orders as $order) {
-            $orderItems = DB::table('order_items')
-                ->select(
-                    'order_items.id as id',
-                    'order_items.notes',
-                    'order_items.order_id',
-                    'order_items.menu_item_id',
-                    'order_items.quantity',
-                    'order_items.subtotal',
-                    'menu_items.name as name',
-                    'menu_items.description as description',
-                    'menu_items.price as price',
-                    DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
-                )
-                ->join('menu_items', 'order_items.menu_item_id', '=', 'menu_items.id')
-                ->where('order_items.order_id', $order->id)
+                ->join('restraunts', 'orders.user_id', '=', 'restraunts.id')
+                ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->where('orders.driver_id', $rider->id)
+                ->where('orders.status', $status->value)
+                ->orderBy('orders.created_at', 'desc')
                 ->get();
 
-            $itemIds = $orderItems->pluck('id')->toArray();
-            $extras = DB::table('order_item_extras')
-                ->select(
-                    'order_item_id',
-                    'extras.id as id',
-                    'extras.name as name',
-                    'extras.price as price',
-                    'extras.menu_item_id as menu_item_id'
-                )
-                ->join('extras', 'order_item_extras.extra_id', '=', 'extras.id')
-                ->whereIn('order_item_id', $itemIds)
-                ->get()
-                ->groupBy('order_item_id');
+            if (!$statusOrders->isEmpty()) {
+                // Fetch order items for each order
+                foreach ($statusOrders as $order) {
+                    $orderItems = DB::table('order_items')
+                    ->select(
+                        'order_items.id as id',
+                        'order_items.notes',
+                        'order_items.order_id',
+                        'order_items.menu_item_id',
+                        'order_items.quantity',
+                        'order_items.subtotal',
+                        'menu_items.name as name',
+                        'menu_items.description as description',
+                        'menu_items.price as price',
+                        DB::raw("CONCAT('" . asset('') . "', menu_items.image) as image"),
+                    )
+                        ->join('menu_items', 'order_items.menu_item_id', '=', 'menu_items.id')
+                        ->where('order_items.order_id', $order->id)
+                        ->get();
 
-            foreach ($orderItems as $item) {
-                $item->extras = $extras[$item->id] ?? [];
+                    $itemIds = $orderItems->pluck('id')->toArray();
+                    $extras = DB::table('order_item_extras')
+                    ->select(
+                        'order_item_id',
+                        'extras.id as id',
+                        'extras.name as name',
+                        'extras.price as price',
+                        'extras.menu_item_id as menu_item_id'
+                    )
+                        ->join('extras', 'order_item_extras.extra_id', '=', 'extras.id')
+                        ->whereIn('order_item_id', $itemIds)
+                        ->get()
+                        ->groupBy('order_item_id');
+
+                    foreach ($orderItems as $item) {
+                        $item->extras = $extras[$item->id] ?? [];
+                    }
+
+                    $order->items = $orderItems;
+                }
             }
 
-            $order->items = $orderItems;
+            $orders[$status->value] = $statusOrders->toArray();
         }
 
         return $orders;
