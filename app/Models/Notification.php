@@ -16,6 +16,7 @@ class Notification extends Model
         'driver_id',
         'title',
         'body',
+        'status',
         'seen'
     ];
 
