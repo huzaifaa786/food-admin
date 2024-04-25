@@ -37,8 +37,6 @@ class NotificationService
 
         Notification::create($notificationData);
 
-        $serverKey = 'AAAAmUB5VME:APA91bEEsiaGAd-6RrvZ5_0l4vK_QmGMFHzs2_Vz5WWKhxshgTVuq3Snm3hubHsPeZnB4_fpZiELo6V1efkg3MKLkEmUDdhoe0R3-KhHfqEhgbax10602ziG3BxpKPe3jw5Ne5DB4gEz'; // Replace with your Firebase server key
-
         $response = Http::withHeaders([
             'Authorization' => 'key=' . $this->serverKey,
             'Content-Type' => 'application/json',
