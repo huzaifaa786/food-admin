@@ -8,6 +8,7 @@ use App\Helpers\OrderHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderLocation;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -24,7 +25,18 @@ class OrderController extends Controller
     public function onWayOrder($id)
     {
         $order = Order::find($id);
+        $user = $order->user;
         $order->update(['status' => OrderStatus::ON_THE_WAY->value]);
+
+        (new NotificationService())->sendNotification(
+            sendTo: 'RES',
+            receiverId: $user->id,
+            deviceToken: $user->fcm_token ?? '',
+            orderId: $order->id,
+            orderStatus: $order->status,
+            title: 'Order on way',
+            body: 'your order is now on the way'
+        );
         return Api::setMessage('Order marked as on the way');
     }
 

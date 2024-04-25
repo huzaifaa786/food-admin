@@ -32,6 +32,16 @@ class Order extends Model
     {
         return $this->hasOne(OrderLocation::class);
     }
+
+    /**
+     * Method user
+     *
+     * @return BelongsTo
+     */
+    public function user() : BelongsTo
+    {
+        return $this->BelongsTo(User::class);
+    }
     /**
      * Method items
      *
