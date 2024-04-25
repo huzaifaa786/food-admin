@@ -51,6 +51,7 @@ class OrderController extends Controller
                 sendTo: 'USER',
                 receiverId: auth()->user()->id,
                 deviceToken: auth()->user()->fcm_token ?? '',
+                orderId: $order->id,
                 title: 'order placed',
                 body: 'boht boht mubarak ho hehe'
             );
@@ -60,6 +61,7 @@ class OrderController extends Controller
                     sendTo: 'RES',
                     receiverId: $restraunt->id,
                     deviceToken: $restraunt->fcm_token ?? '',
+                    orderId: $order->id,
                     title: 'order placed',
                     body: 'res order placed'
                 );

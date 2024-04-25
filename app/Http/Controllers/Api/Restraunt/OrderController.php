@@ -50,6 +50,7 @@ class OrderController extends Controller
                 sendTo: 'RIDER',
                 receiverId: $rider->id,
                 deviceToken: $rider->fcm_token ?? '',
+                orderId: $order->id,
                 title: 'order assigned',
                 body: 'apko order assign ho gya ha'
             );
@@ -76,6 +77,7 @@ class OrderController extends Controller
                 sendTo: 'RES',
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
+                orderId: $order->id,
                 title: 'order accepted',
                 body: 'apka order restaurant nay accept kar liya ha'
             );
@@ -101,6 +103,7 @@ class OrderController extends Controller
                 sendTo: 'RES',
                 receiverId: $user->id,
                 deviceToken: $user->fcm_token ?? '',
+                orderId: $order->id,
                 title: 'order rejected',
                 body: 'Ooops! apka order restaurant nay reject kar liya ha'
             );
