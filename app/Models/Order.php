@@ -20,7 +20,8 @@ class Order extends Model
         'user_address_id',
         'driver_id',
         'payment_intent',
-        'status'
+        'status',
+        'has_rating'
     ];
 
     /**
