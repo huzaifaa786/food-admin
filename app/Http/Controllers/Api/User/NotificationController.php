@@ -22,4 +22,29 @@ class NotificationController extends Controller
 
         return Api::setResponse('notifications', $notifications);
     }
+
+    /**
+     * Method unreadCount
+     *
+     * @return void
+     */
+    public function unreadCount()
+    {
+        $count = Notification::where('user_id', auth()->user()->id)->where('seen', false)->count();
+        return Api::setResponse('count', $count);
+    }
+
+    /**
+     * Method seenNotification
+     *
+     * @param $id $id [explicite description]
+     *
+     * @return void
+     */
+    public function seenNotification($id)
+    {
+        $notification = Notification::find($id);
+        $notification->update(['seen' => true]);
+        return Api::setMessage('success');
+    }
 }

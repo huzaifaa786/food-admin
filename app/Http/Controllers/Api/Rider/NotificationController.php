@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Restraunt;
+namespace App\Http\Controllers\Api\Rider;
 
 use App\Helpers\Api;
 use App\Http\Controllers\Controller;
@@ -16,7 +16,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::where('restraunt_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        $notifications = Notification::where('driver_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return Api::setResponse('notifications', $notifications);
     }
 
@@ -27,7 +27,7 @@ class NotificationController extends Controller
      */
     public function unreadCount()
     {
-        $count = Notification::where('restraunt_id', auth()->user()->id)->where('seen', false)->count();
+        $count = Notification::where('driver_id', auth()->user()->id)->where('seen', false)->count();
         return Api::setResponse('count', $count);
     }
 
