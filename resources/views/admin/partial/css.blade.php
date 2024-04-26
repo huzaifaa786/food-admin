@@ -1,4 +1,4 @@
- <!-- jsvectormap css -->
+<!-- jsvectormap css -->
  <link href="{{asset('assets/libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 
  <!--Swiper slider css-->
