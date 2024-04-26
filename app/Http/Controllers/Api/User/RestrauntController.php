@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Helpers\Api;
 use App\Helpers\LocationHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Rating;
 use App\Models\Restraunt;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,9 @@ class RestrauntController extends Controller
 
             $time = LocationHelper::calculateTimeToReach($user->lat, $user->lng, $res->lat, $res->lng);
 
+            $averageRating = Rating::where('restraunt_id', $res->id)->avg('rating');
             $res->time = $time;
+            $res->rating = $averageRating;
         }
         return Api::setResponse('restaurants', $restaurants);
     }

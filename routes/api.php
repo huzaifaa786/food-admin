@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
 use App\Http\Controllers\Api\User\NotificationController;
 use App\Http\Controllers\Api\User\OrderController;
+use App\Http\Controllers\Api\User\RatingController;
 use App\Http\Controllers\Api\User\RestrauntController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('order/{id}', [OrderController::class, 'getOrder']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
         Route::get('notifications', [NotificationController::class, 'index']);
+        Route::post('rating/store', [RatingController::class, 'store']);
     });
 });
 
