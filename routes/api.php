@@ -8,7 +8,9 @@ use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\Restraunt\NotificationController as RestrauntNotificationController;
 use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
+use App\Http\Controllers\Api\Restraunt\SaleController;
 use App\Http\Controllers\Api\Rider\AuthController as RiderAuthController;
+use App\Http\Controllers\Api\Rider\NotificationController as RiderNotificationController;
 use App\Http\Controllers\Api\Rider\OrderController as RiderOrderController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\AuthController;
@@ -51,7 +53,9 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('order/{id}', [OrderController::class, 'getOrder']);
         Route::post('profile/update', [AuthController::class, 'profileUpdate']);
         Route::get('notifications', [NotificationController::class, 'index']);
+        Route::get('notification/count', [NotificationController::class, 'unreadCount']);
         Route::post('rating/store', [RatingController::class, 'store']);
+        Route::get('notification/seen/{id}', [NotificationController::class, 'seenNotification']);
     });
 });
 
@@ -85,6 +89,9 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
         Route::get('notifications', [RestrauntNotificationController::class, 'index']);
+        Route::get('notification/count', [RestrauntNotificationController::class, 'unreadCount']);
+        Route::get('notification/seen/{id}', [RestrauntNotificationController::class, 'seenNotification']);
+        Route::get('sales', [SaleController::class, 'index']);
     });
 });
 
@@ -99,5 +106,8 @@ Route::group(['prefix' => 'rider'], function () {
         Route::get('order/deliver/{id}', [RiderOrderController::class, 'deliverOrder']);
         Route::get('order/onway/{id}', [RiderOrderController::class, 'onWayOrder']);
         Route::post('order/updateLocation', [RiderOrderController::class, 'changeOrderLocation']);
+        Route::get('notifications', [RiderNotificationController::class, 'index']);
+        Route::get('notification/count', [RiderNotificationController::class, 'unreadCount']);
+        Route::get('notification/seen/{id}', [RiderNotificationController::class, 'seenNotification']);
     });
 });
