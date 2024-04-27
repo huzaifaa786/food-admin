@@ -86,6 +86,7 @@ Route::group(['prefix' => 'restraunt'], function () {
         Route::post('menuItem/udpate/{id}', [MenuItemController::class, 'update']);
         Route::post('add/poster', [PosterController::class, 'addPoster']);
         Route::get('orders', [RestrauntOrderController::class, 'index']);
+        Route::get('order/{id}', [RestrauntOrderController::class, 'getOrder']);
         Route::get('order/accept/{id}', [RestrauntOrderController::class, 'acceptOrder']);
         Route::get('order/reject/{id}', [RestrauntOrderController::class, 'rejectOrder']);
         Route::post('assign/order', [RestrauntOrderController::class, 'assignDriver']);
