@@ -62,4 +62,8 @@ class Order extends Model
     {
         return $this->belongsTo(Restraunt::class);
     }
+   public function driver()
+   {
+       return $this->belongsTo(Driver::class);
+   }
 }

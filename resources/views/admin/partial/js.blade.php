@@ -36,3 +36,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
  <script src="{{ asset('assets/js/pages/datatables.init.js') }}"></script>
+
+
+
+ 

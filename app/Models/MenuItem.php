@@ -66,4 +66,8 @@ class MenuItem extends Model
             set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
         );
     }
+
+    public function orderitem(){
+        return $this->hasMany(OrderItem::class);
+    }
 }

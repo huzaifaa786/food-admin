@@ -144,8 +144,18 @@ class Restraunt extends Authenticatable
      *
      * @return HasMany
      */
-    public function menu_categories() : HasMany
+    public function menu_categories(): HasMany
     {
         return $this->hasMany(MenuCategory::class)->with('menu_items');
+    }
+
+    public function resturantorders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function rating()
+    {
+        return $this->hasMany(Rating::class);
     }
 }
