@@ -41,17 +41,20 @@ class RatingController extends Controller
      */
     public function checkRating()
     {
-        $order = Order::where('user_id', auth()->user()->id)->where('status', OrderStatus::DELIVERED->value)->latest()
+        $order = Order::where('user_id', auth()->user()->id)->where('status', OrderStatus::DELIVERED)->latest()
             ->first();
+
         if ($order) {
             if ($order->has_rating) {
-                return Api::setError('rating already exists');
+                $order = null;
+                return Api::setResponse('order', $order);
             } else {
                 $order->restraunt;
                 return Api::setResponse('order', $order);
             }
         } else {
-            return Api::setError('no order found');
+            $order = null;
+            return Api::setResponse('order', $order);
         }
     }
 }
