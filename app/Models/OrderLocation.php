@@ -15,4 +15,6 @@ class OrderLocation extends Model
     protected $fillable = [
         'order_id' ,'lat', 'lng'
     ];
+
+    
 }

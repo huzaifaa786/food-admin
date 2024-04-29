@@ -29,7 +29,7 @@ class Order extends Model
      *
      * @return HasOne
      */
-    public function location() : HasOne
+    public function location(): HasOne
     {
         return $this->hasOne(OrderLocation::class);
     }
@@ -39,7 +39,7 @@ class Order extends Model
      *
      * @return BelongsTo
      */
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
     }
@@ -62,10 +62,12 @@ class Order extends Model
     {
         return $this->belongsTo(Restraunt::class);
     }
-   public function driver()
-   {
-       return $this->belongsTo(Driver::class);
-   }
-
- 
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
+    public function useraddress()
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
 }

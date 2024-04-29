@@ -158,4 +158,8 @@ class Restraunt extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function rider(){
+        return $this->hasMany(Driver::class);
+    }
 }

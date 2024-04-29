@@ -74,42 +74,44 @@
          <div class="container-fluid">
 
 
-                    <div id="two-column-menu">
-                    </div>
-                    <ul class="navbar-nav" id="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                                <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="sidebarDashboards">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="" class="nav-link" data-key="t-analytics">
-                                            analytic </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> <!-- end Dashboard Menu -->
-                       
-                        
-                        {{-- Sales  --}}
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sales">
-                                <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Sales</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="sales">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('saletable')}}" class="nav-link" data-key="t-sales">
-                                            Sales Table </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> 
-                        
-                        {{-- <li class="nav-item">
+             <div id="two-column-menu">
+             </div>
+             <ul class="navbar-nav" id="navbar-nav">
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="sidebarDashboards">
+                         <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="sidebarDashboards">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="" class="nav-link" data-key="t-analytics">
+                                     analytic </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li> <!-- end Dashboard Menu -->
+
+
+                 {{-- Sales  --}}
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="sales">
+                         <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Sales</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="sales">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('saletable') }}" class="nav-link" data-key="t-sales">
+                                     Sales Table </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
+
+
+
+                 {{-- <li class="nav-item">
              <div id="two-column-menu">
              </div>
              <ul class="navbar-nav" id="navbar-nav">
@@ -157,7 +159,21 @@
                          </ul>
                      </div>
                  </li>
-
+                 {{-- Drivers --}}
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#rider" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="rider">
+                         <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Riders</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="rider">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('rider') }}" class="nav-link" data-key="t-rider">
+                                     All Riders </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
                  {{-- <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
                                 role="button" aria-expanded="false" aria-controls="sidebarApps">

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\RiderController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
@@ -27,16 +28,21 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('resturant/index', [RestaurantController::class, 'index'])->name('resturant.index');
     Route::get('resturant/order/{id}', [RestaurantController::class, 'resturantorder'])->name('resturant.order');
 
-    Route::post('order/items',[RestaurantController::class,'orderitems'])->name('order.item');
+    Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 
     //sales
-    Route::get('table',[SalesController::class,'saletable'])->name('saletable');
-    Route::post('sale/table',[SalesController::class,'salestable'])->name('sales.table');
+    Route::get('table', [SalesController::class, 'saletable'])->name('saletable');
+    Route::post('sale/table', [SalesController::class, 'salestable'])->name('sales.table');
     Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 
     // routes for dashboard
     Route::view('/dashboard', 'admin.dashboard.index')->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'showTotalRestraunts'])->name('dashboard');
+
+    // Rider routes
+    Route::get('rider', [RiderController::class, 'index'])->name('rider');
+    Route::get('/rider/detail/{id}',[RiderController::class,'ridersinfo'])->name('riders.detail');
+    Route::post('/rider/order/detail',[RiderController::class,'riderorder'])->name('rider.order.detail');
 });
 
 require __DIR__ . '/auth.php';

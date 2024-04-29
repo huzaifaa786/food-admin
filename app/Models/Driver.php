@@ -93,4 +93,8 @@ class Driver extends Authenticatable
             set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/driver')
         );
     }
+
+     public function orders(){
+        return $this->hasMany(Order::class);
+     }
 }
