@@ -44,7 +44,11 @@
                                         <td>{{ $order->driver_id }}</td>
                                         <td>{{ $order->total_amount }}</td>
                                         <td>{{ $order->total_quantity }}</td>
-                                        <td>{{ $order->status }}</td>
+                                        <td>
+                                            <span
+                                                class="badge {{ $order->status === 'REJECTED' ? 'bg-danger-subtle text-danger' : ($order->status === 'DELIVERED' ? 'bg-success' : '') }}">{{ $order->status }}</span>
+                                        </td>
+
                                         <td>
                                             <a href="javascript:void(0)" class="btn btn-info items"
                                                 order-id={{ $order->id }}>Items</a>

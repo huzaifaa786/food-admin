@@ -39,7 +39,7 @@
                                     <th>licence</th>
                                     <th>Status</th>
                                     <th>Category</th>
-                                    {{-- <th>Rating</th> --}}
+                                    <th>Rating</th>
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
@@ -57,14 +57,48 @@
                                                 width="80px"></td>
                                         <td><img src="{{ asset($restaurant->license) }}" alt="license_image" height="80px"
                                                 width="80px"></td>
-                                        <td>{{ $restaurant->status }}</td>
+                                        <td>
+                                            @php
+                                                $badgeClass = '';
+                                                switch ($restaurant->status) {
+                                                    case 'OPENED':
+                                                        $badgeClass = 'bg-success';
+                                                        break;
+                                                    case 'BUSY':
+                                                        $badgeClass = 'bg-info';
+                                                        break;
+                                                    case 'CLOSED':
+                                                        $badgeClass = 'bg-danger';
+                                                        break;
+                                                    default:
+                                                        $badgeClass = 'bg-secondary';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $restaurant->status }}</span>
+                                        </td>
+
+
                                         <td>{{ $restaurant->category->name }}</td>
-                                        {{-- <td>{{$restaurant->ratings}}</td> --}}
+                                        <td>
+                                            @php
+                                                $totalRating = 0;
+                                                $ratingCount = $restaurant->rating->count();
+                                                if ($ratingCount > 0) {
+                                                    foreach ($restaurant->rating as $rating) {
+                                                        $totalRating += $rating->rating;
+                                                    }
+                                                    $averageRating = $totalRating / $ratingCount;
+                                                    echo round($averageRating, 1);
+                                                } else {
+                                                    echo 'No ratings yet';
+                                                }
+                                            @endphp
+                                        </td>
                                         <td>
                                             {{ $restaurant->description }}
                                         </td>
                                         <td><a href="{{ route('resturant.order', $restaurant->id) }}"
-                                            class="btn btn-primary delete-btn" data-id="1">Orders</a></td>
+                                                class="btn btn-primary delete-btn" data-id="1">Orders</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
