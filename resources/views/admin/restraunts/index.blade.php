@@ -51,15 +51,15 @@
                                         <td>{{ $restaurant->name }}</td>
                                         <td>{{ $restaurant->email }}</td>
                                         <td>{{ $restaurant->phone }}</td>
-                                        <td><img src="{{ asset($restaurant->logo) }}" alt="..." height="80px"
+                                        <td><img src="{{ asset($restaurant->logo) }}" alt="logo_image" height="80px"
                                                 width="80px"></td>
-                                        <td><img src="{{ asset($restaurant->cover) }}" alt="..." height="80px"
+                                        <td><img src="{{ asset($restaurant->cover) }}" alt="cover_image" height="80px"
                                                 width="80px"></td>
-                                        <td><img src="{{ asset($restaurant->license) }}" alt="..." height="80px"
+                                        <td><img src="{{ asset($restaurant->license) }}" alt="license_image" height="80px"
                                                 width="80px"></td>
                                         <td>{{ $restaurant->status }}</td>
                                         <td>{{ $restaurant->category->name }}</td>
-                                        {{-- <td>{{$restaurant->rating}}</td> --}}
+                                        {{-- <td>{{$restaurant->ratings}}</td> --}}
                                         <td>
                                             {{ $restaurant->description }}
                                         </td>

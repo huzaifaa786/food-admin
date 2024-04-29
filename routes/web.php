@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\PusherTest;
@@ -26,6 +27,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('resturant/order/{id}',[RestaurantController::class,'resturantorder'])->name('resturant.order');
 
     Route::post('order/items',[RestaurantController::class,'orderitems'])->name('order.item');
+
+    //sales
+    Route::get('table',[SalesController::class,'saletable'])->name('saletable');
+    Route::post('sale/table',[SalesController::class,'salestable'])->name('sales.table');
 });
 
 require __DIR__ . '/auth.php';
