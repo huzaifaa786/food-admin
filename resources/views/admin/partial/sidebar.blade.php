@@ -91,36 +91,8 @@
                                 </ul>
                             </div>
                         </li> <!-- end Dashboard Menu -->
-                        {{-- User Side --}}
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#user" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="user">
-                                <i class="ri-user-line"></i> <span data-key="t-dashboards">Users</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="user">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('user.index')}}" class="nav-link" data-key="t-user">
-                                            User Index </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> 
-                        {{-- Restaurant Side  --}}
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#resturant" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="resturant">
-                                <i class="ri-restaurant-fill"></i> <span data-key="t-dashboards">Restaurant</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="resturant">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('resturant.index')}}" class="nav-link" data-key="t-resturant">
-                                            Restaurant Index </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> 
+                       
+                        
                         {{-- Sales  --}}
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse"
