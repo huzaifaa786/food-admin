@@ -184,7 +184,7 @@
                  <li class="nav-item">
                      <a class="nav-link menu-link" href="#rider" data-bs-toggle="collapse" role="button"
                          aria-expanded="false" aria-controls="rider">
-                         <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Riders</span>
+                         <i class="ri-e-bike-2-fill"></i> <span data-key="t-dashboards">Riders</span>
                      </a>
                      <div class="collapse menu-dropdown" id="rider">
                          <ul class="nav nav-sm flex-column">

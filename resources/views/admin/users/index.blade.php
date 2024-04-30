@@ -6,7 +6,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                    <h4 class="mb-sm-0">Datatables</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -45,7 +44,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <td><img src="{{ asset($user->logo) }}" alt="User image" height="80px"
+                                        <td><img src="{{ asset($user->image) }}" alt="User image" height="80px"
                                                 width="80px"></td>
                                     </tr>
                                 @endforeach

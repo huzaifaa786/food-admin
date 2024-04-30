@@ -4,7 +4,7 @@
         <div class="col-xxl-6">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Form Grid</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Sale Detail</h4>
 
                 </div><!-- end card header -->
 

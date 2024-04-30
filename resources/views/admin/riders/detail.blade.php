@@ -140,13 +140,27 @@
                         const createdAt = new Date(order.created_at);
                         const formattedDate =
                             `${createdAt.getFullYear()}-${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-${createdAt.getDate().toString().padStart(2, '0')} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+                        // Determine badge color based on status
+                        let badgeColorClass = '';
+                        if (order.status === 'REJECTED') {
+                            badgeColorClass = 'badge bg-danger';
+                        } else if (order.status === 'DELIVERED') {
+                            badgeColorClass = 'badge bg-success';
+                        } else if (order.status === 'ACCEPTED') {
+                            badgeColorClass = 'badge bg-primary';
+                        } else if (order.status === 'PLACED') {
+                            badgeColorClass = 'badge bg-warning';
+                        } else if (order.status === 'ON_THE_WAY') {
+                            badgeColorClass = 'badge bg-info';
+                        }
                         $('#userShowModal tbody').append(
                             `<tr>
-                <th scope="row">${index + 1}</th>
-                <td>${order.useraddress.address}</td>
-                <td>${order.status}</td>
-                <td>${formattedDate}</td>
-            </tr>`
+                        <th scope="row">${index + 1}</th>
+                        <td>${order.useraddress.address}</td>
+                        <td><span class="badge ${badgeColorClass}">${order.status}</span></td>
+                        <td>${formattedDate}</td>
+                    </tr>`
                         );
                     });
                 },
