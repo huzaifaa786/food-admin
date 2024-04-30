@@ -111,5 +111,6 @@ Route::group(['prefix' => 'rider'], function () {
         Route::get('notifications', [RiderNotificationController::class, 'index']);
         Route::get('notification/count', [RiderNotificationController::class, 'unreadCount']);
         Route::get('notification/seen/{id}', [RiderNotificationController::class, 'seenNotification']);
+        Route::post('updatePassword', [RiderAuthController::class, 'updatePassword']);
     });
 });

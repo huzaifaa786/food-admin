@@ -45,6 +45,34 @@ class AuthController extends Controller
         return Api::setResponse('rider', $rider);
     }
 
+    /**
+     * Method updatePassword
+     *
+     * @param Request $request [explicite description]
+     *
+     * @return void
+     */
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:4'],
+            'new_password' => ['required', 'string', 'min:6',]
+        ]);
+
+        $currentPasswordStatus = Hash::check($request->password, auth()->user()->password);
+        if ($currentPasswordStatus) {
+            $rider = Driver::find(auth()->user()->id);
+            if (!$rider) {
+                return Api::setResponse('error', 'rider not found');
+            } else {
+                $rider->update(['password' => $request->new_password]);
+                return Api::setResponse('success', 'Password updated');
+            }
+        } else {
+            return Api::setError('Wrong current password');
+        }
+    }
+
     public function toggleActive()
     {
         $rider = Driver::find(auth()->user()->id);
