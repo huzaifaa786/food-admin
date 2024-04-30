@@ -74,7 +74,7 @@ class Driver extends Authenticatable
      *
      * @return BelongsTo
      */
-    public function restraunt() : BelongsTo
+    public function restraunt(): BelongsTo
     {
         return $this->belongsTo(Restraunt::class);
     }
@@ -94,7 +94,9 @@ class Driver extends Authenticatable
         );
     }
 
-     public function orders(){
+    public function orders()
+    {
+
         return $this->hasMany(Order::class);
-     }
+    }
 }

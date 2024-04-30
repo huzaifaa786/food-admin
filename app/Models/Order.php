@@ -68,6 +68,6 @@ class Order extends Model
     }
     public function useraddress()
     {
-        return $this->belongsTo(UserAddress::class);
+        return $this->belongsTo(UserAddress::class, 'user_address_id');
     }
 }

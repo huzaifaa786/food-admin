@@ -95,7 +95,7 @@
                                 <th scope="col">#</th>
                                 <th>User Address</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Date/Time</th>
 
                             </tr>
                         </thead>
@@ -143,7 +143,7 @@
                         $('#userShowModal tbody').append(
                             `<tr>
                 <th scope="row">${index + 1}</th>
-                <td>${order.user_address_id}</td>
+                <td>${order.useraddress.address}</td>
                 <td>${order.status}</td>
                 <td>${formattedDate}</td>
             </tr>`
