@@ -19,7 +19,7 @@ class AdminController extends Controller
         $remember = $request->has('remember');
         if (Auth::guard('admin')->attempt($credentials, $remember)) {
             toastr()->success(' Login successfully ');
-            return redirect()->intended('/admin/layouts');
+            return redirect()->intended('/dashboard');
         }
         toastr()->error('Incorrect email or password');
         return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([

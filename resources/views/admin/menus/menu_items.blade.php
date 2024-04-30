@@ -19,7 +19,6 @@
             </div>
         </div>
         <!-- end page title -->
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -49,7 +48,7 @@
                                         <td>{{ $menuItem->menu_category->name }}</td>
                                         <td>{{ $menuItem->restraunt->name }}</td>
                                         <td><img src="{{ asset($menuItem->image) }}" alt="Menu Image"
-                                                style="max-width: 100px;"></td>
+                                                style="max-width: 100px;" height="80px" width="80px"></td>
                                         <td>{{ $menuItem->description }}</td>
                                         <td>{{ $menuItem->price }}</td>
                                         <td>{{ $menuItem->discount }}</td>

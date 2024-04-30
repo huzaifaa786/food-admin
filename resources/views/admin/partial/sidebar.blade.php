@@ -125,7 +125,7 @@
                                      Sales Table </a>
                              </li>
                              <li class="nav-item">
-                                 <a href="{{ route('sale-graph') }}" class="nav-link" data-key="t-sales">
+                                 <a href="{{ route('sale/graph') }}" class="nav-link" data-key="t-sales">
                                      Sales Graph </a>
                              </li>
                          </ul>

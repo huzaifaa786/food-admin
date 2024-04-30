@@ -28,14 +28,14 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('resturant/index', [RestaurantController::class, 'index'])->name('resturant.index');
     Route::get('resturant/order/{id}', [RestaurantController::class, 'resturantorder'])->name('resturant.order');
     Route::get('menu/index', [RestaurantController::class, 'showMenu'])->name('menu.index');
-    Route::get('/menu/{restaurant_id}/{menu_category_id}',[RestaurantController::class,'showMenuItems'])->name('menu.items');
+    Route::get('/menu/{restaurant_id}',[RestaurantController::class,'showMenuItems'])->name('menu.items');
     Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 
     //sales
     Route::get('table', [SalesController::class, 'saletable'])->name('saletable');
     Route::post('sale/table', [SalesController::class, 'salestable'])->name('sales.table');
-    Route::view('/sale-graph', 'admin.Sales.graph')->name('sale-graph');
-    Route::post('/sale-graph', [SalesController::class, 'graph'])->name('sale-graph');
+    Route::view('/sale-graph', 'admin.Sales.graph')->name('sale/graph');
+    Route::post('/sale/graph', [SalesController::class, 'graph'])->name('sale-graph');
 
     Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 

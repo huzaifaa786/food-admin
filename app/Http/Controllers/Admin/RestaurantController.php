@@ -37,10 +37,9 @@ class RestaurantController extends Controller
 
         return view('admin.menus.index', compact('menuCategories'));
     }
-    public function showMenuItems($restaurantId, $menuCategoryId)
+    public function showMenuItems($restaurantId)
     {
         $menuItems = MenuItem::where('restraunt_id', $restaurantId)
-            ->where('menu_category_id', $menuCategoryId)
             ->get();
 
         return view('admin.menus.menu_items', compact('menuItems'));
