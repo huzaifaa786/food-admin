@@ -64,10 +64,10 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::post('register', [RestrauntAuthController::class, 'createRestraunt']);
     Route::post('login', [RestrauntAuthController::class, 'login']);
     Route::get('categories', [CategoryController::class, 'index']);
-    Route::any('forgetpassword', [AuthController::class, 'forgetPassword']);
-    Route::any('verifyemail', [AuthController::class, 'verifyEmail']);
-    Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
-    Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
+    Route::any('forgetpassword', [RestrauntAuthController::class, 'forgetPassword']);
+    Route::any('verifyemail', [RestrauntAuthController::class, 'verifyEmail']);
+    Route::any('verifyOtp', [RestrauntAuthController::class, 'verifyOtp']);
+    Route::any('forgetUpdatePassword', [RestrauntAuthController::class, 'forgetupdatePassword']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::get('profile', [RestrauntAuthController::class, 'profile']);

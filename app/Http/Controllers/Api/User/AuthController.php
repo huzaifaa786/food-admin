@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\IndividualForgetPassword;
-use App\Models\Restraunt;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -137,7 +136,7 @@ class AuthController extends Controller
             if ($existingOtp) {
                 $existingOtp->delete();
             }
-            $user = Restraunt::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
             if ($user) {
                 $otp = str_pad(mt_rand(0, 999999), 6, '0', STR_PAD_LEFT);
