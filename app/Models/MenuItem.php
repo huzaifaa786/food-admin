@@ -6,6 +6,7 @@ use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MenuItem extends Model
@@ -50,6 +51,15 @@ class MenuItem extends Model
     public function extras(): HasMany
     {
         return $this->hasMany(Extra::class);
+    }
+
+    public function menu_category(): BelongsTo
+    {
+        return $this->belongsTo(MenuCategory::class, 'menu_category_id');
+    }
+    public function restraunt(): BelongsTo
+    {
+        return $this->belongsTo(Restraunt::class, 'restraunt_id');
     }
 
     /**

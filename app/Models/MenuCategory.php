@@ -4,23 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MenuCategory extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-      'name','restraunt_id'
-    ];
+  protected $fillable = [
+    'name', 'restraunt_id'
+  ];
 
-    /**
-     * Method menu_items
-     *
-     * @return HasMany
-     */
-    public function menu_items(): HasMany
-    {
-        return $this->hasMany(MenuItem::class)->with('extras');
-    }
+  /**
+   * Method menu_items
+   *
+   * @return HasMany
+   */
+
+   public function restraunt(): BelongsTo
+   {
+       return $this->belongsTo(Restraunt::class);
+   }
+   
+  public function menu_items(): HasMany
+  {
+    return $this->hasMany(MenuItem::class)->with('extras');
+  }
 }

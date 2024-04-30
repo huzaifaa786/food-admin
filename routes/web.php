@@ -27,7 +27,8 @@ Route::middleware(['auth:admin'])->group(function () {
     //Resturant Routes
     Route::get('resturant/index', [RestaurantController::class, 'index'])->name('resturant.index');
     Route::get('resturant/order/{id}', [RestaurantController::class, 'resturantorder'])->name('resturant.order');
-
+    Route::get('menu/index', [RestaurantController::class, 'showMenu'])->name('menu.index');
+    Route::get('/menu/{restaurant_id}/{menu_category_id}',[RestaurantController::class,'showMenuItems'])->name('menu.items');
     Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 
     //sales

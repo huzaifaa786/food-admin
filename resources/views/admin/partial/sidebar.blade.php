@@ -78,18 +78,18 @@
              </div>
              <ul class="navbar-nav" id="navbar-nav">
                  <li class="nav-item">
-                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                     {{-- <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
                          aria-expanded="false" aria-controls="sidebarDashboards">
                          <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
-                     </a>
-                     <div class="collapse menu-dropdown" id="sidebarDashboards">
-                         <ul class="nav nav-sm flex-column">
-                             <li class="nav-item">
-                                 <a href="{{route('dashboard')}}" class="nav-link" data-key="t-analytics">
-                                     analytic </a>
-                             </li>
-                         </ul>
-                     </div>
+                     </a> --}}
+                     {{-- <div class="collapse " id="sidebarDashboards"> --}}
+                     <ul class="nav nav-sm flex-column">
+                         <li class="nav-item">
+                             <a href="{{ route('dashboard') }}" class="nav-link ">
+                                 Dashboard </a>
+                         </li>
+                     </ul>
+                     {{-- </div> --}}
                  </li> <!-- end Dashboard Menu -->
 
                  {{-- <li class="nav-item">
@@ -113,26 +113,26 @@
                        
                         
                         {{-- Sales  --}}
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sales">
-                                <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Sales</span>
-                            </a>
-                            <div class="collapse menu-dropdown" id="sales">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{route('saletable')}}" class="nav-link" data-key="t-sales">
-                                            Sales Table </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{route('sale-graph')}}" class="nav-link" data-key="t-sales">
-                                            Sales Graph </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> 
-                        
-                        {{-- <li class="nav-item">
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#sales" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="sales">
+                         <i class="las la-file-invoice"></i> <span data-key="t-dashboards">Sales</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="sales">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('saletable') }}" class="nav-link" data-key="t-sales">
+                                     Sales Table </a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="{{ route('sale-graph') }}" class="nav-link" data-key="t-sales">
+                                     Sales Graph </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
+
+                 {{-- <li class="nav-item">
              <div id="two-column-menu">
              </div>
              <ul class="navbar-nav" id="navbar-nav">
@@ -195,6 +195,22 @@
                          </ul>
                      </div>
                  </li>
+
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#menu" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="rider">
+                         <i class=" ri-menu-3-fill"></i> <span data-key="t-dashboards">Menus</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="menu">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{route('menu.index')}}" class="nav-link" data-key="t-menu">
+                                     Restraunt Menu </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
+
                  {{-- <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
                                 role="button" aria-expanded="false" aria-controls="sidebarApps">
