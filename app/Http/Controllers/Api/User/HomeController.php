@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $restaurants = Category::has('restaurants')->with('restaurants')->get();
+        $restaurants = Category::has('restaurants.menu_categories')->with('restaurants')->get();
 
         $response = new stdClass();
         $response->categories = $categories;
