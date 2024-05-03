@@ -154,7 +154,7 @@ class Restraunt extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function rating()
+    public function ratings()
     {
         return $this->hasMany(Rating::class);
     }

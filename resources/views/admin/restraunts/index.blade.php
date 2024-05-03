@@ -82,9 +82,9 @@
                                         <td>
                                             @php
                                                 $totalRating = 0;
-                                                $ratingCount = $restaurant->rating->count();
+                                                $ratingCount = $restaurant->ratings->count();
                                                 if ($ratingCount > 0) {
-                                                    foreach ($restaurant->rating as $rating) {
+                                                    foreach ($restaurant->ratings as $rating) {
                                                         $totalRating += $rating->rating;
                                                     }
                                                     $averageRating = $totalRating / $ratingCount;
