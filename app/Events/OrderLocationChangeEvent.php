@@ -35,7 +35,7 @@ class OrderLocationChangeEvent implements ShouldBroadcastNow
     {
         Log::info('yahan a raha ha');
         return [
-            new Channel('order-location'),
+            new Channel('order-location-' . $this->location->order_id),
         ];
     }
 }
