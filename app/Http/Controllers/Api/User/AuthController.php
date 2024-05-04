@@ -171,9 +171,10 @@ class AuthController extends Controller
     }
     public function verifyEmail(Request $request)
     {
-        $existingEmail = User::where('email', $request->email)->first();
-        if ($existingEmail) {
-            return Api::setResponse('Existing User', $existingEmail->currentAccessToken());
+        $user = User::where('email', $request->email)->first();
+        $user->token = $user->createToken('auth_token')->plainTextToken;
+        if ($user) {
+            return Api::setResponse('user', $user);
         } else {
             return Api::setError('Email is not exist');
         }
