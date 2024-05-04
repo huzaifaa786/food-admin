@@ -176,7 +176,7 @@ class AuthController extends Controller
         if ($user) {
             return Api::setResponse('user', $user);
         } else {
-            return Api::setError('Email is not exist');
+            return Api::setResponse('user' , null);
         }
     }
     public function forgetupdatePassword(Request $request)
