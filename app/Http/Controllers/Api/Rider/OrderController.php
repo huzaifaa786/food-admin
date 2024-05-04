@@ -91,4 +91,22 @@ class OrderController extends Controller
 
         return Api::setMessage('Location updated');
     }
+
+    /**
+     * Method getOrder
+     *
+     * @param $orderId $orderId [explicite description]
+     *
+     * @return void
+     */
+    public function getOrder($orderId)
+    {
+        $order = OrderHelper::getOrderById($orderId);
+
+        if ($order != null) {
+            return Api::setResponse('order', $order);
+        } else {
+            return Api::setError('Order not found');
+        }
+    }
 }
