@@ -172,8 +172,8 @@ class AuthController extends Controller
     public function verifyEmail(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        $user->token = $user->createToken('auth_token')->plainTextToken;
         if ($user) {
+            $user->token = $user->createToken('auth_token')->plainTextToken;
             return Api::setResponse('user', $user);
         } else {
             return Api::setResponse('user' , null);
