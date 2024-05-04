@@ -173,7 +173,7 @@ class AuthController extends Controller
     {
         $existingEmail = User::where('email', $request->email)->first();
         if ($existingEmail) {
-            return Api::setResponse('Existing User', $existingEmail);
+            return Api::setResponse('Existing User', $existingEmail->currentAccessToken());
         } else {
             return Api::setError('Email is not exist');
         }
