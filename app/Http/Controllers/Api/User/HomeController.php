@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $restaurants = Category::whereHas('restaurants.menu_categories')->with(['restaurants' => function ($query) {
+        $restaurants = Category::has('restaurants.menu_categories')->with(['restaurants' => function ($query) {
             $query->withAvg('ratings as rating', 'rating');
         }])->get();
 

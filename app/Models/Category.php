@@ -37,6 +37,6 @@ class Category extends Model
      */
     public function restaurants(): HasMany
     {
-        return $this->hasMany(Restraunt::class);
+        return $this->hasMany(Restraunt::class)->whereHas('menu_categories');
     }
 }
