@@ -124,9 +124,11 @@ class CartHelper
                 'carts.total_amount',
                 'carts.total_quantity',
                 'restraunts.name as restaurant_name',
+                'ratings.rating as rating',
                 DB::raw("CONCAT('" . asset('') . "', restraunts.cover) as restaurant_image")
             )
             ->join('restraunts', 'carts.restraunt_id', '=', 'restraunts.id')
+            ->leftJoin('ratings', 'carts.restraunt_id', '=', 'ratings.restraunt_id')
             ->where('carts.user_id', $userId)
             ->first();
 
@@ -152,7 +154,7 @@ class CartHelper
             ->leftJoin('menu_items', 'cart_items.menu_item_id', '=', 'menu_items.id')
             ->leftJoin('cart_item_extras', 'cart_items.id', '=', 'cart_item_extras.cart_item_id')
             ->where('cart_items.cart_id', $cart->id)
-            ->distinct() 
+            ->distinct()
             ->get();
 
 
