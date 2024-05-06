@@ -12,7 +12,7 @@ class MenuCategory extends Model
   use HasFactory;
 
   protected $fillable = [
-    'name', 'restraunt_id'
+    'name', 'restraunt_id', 'ar_name'
   ];
 
   /**
@@ -25,7 +25,7 @@ class MenuCategory extends Model
    {
        return $this->belongsTo(Restraunt::class);
    }
-   
+
   public function menu_items(): HasMany
   {
     return $this->hasMany(MenuItem::class)->with('extras');

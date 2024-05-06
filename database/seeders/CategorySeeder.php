@@ -14,18 +14,17 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::insert([
-            ['name' => 'Indian' ,'image' => 'images/categories/cat1.png'],
-            ['name' => 'Chinese' ,'image' => 'images/categories/cat2.png'],
-            ['name' => 'Brazilian' ,'image' => 'images/categories/cat3.png'],
-            ['name' => 'Italian' ,'image' => 'images/categories/cat1.png'],
-            ['name' => 'Egyption' ,'image' => 'images/categories/cat3.png'],
-            ['name' => 'Japanese' ,'image' => 'images/categories/2.png'],
-            ['name' => 'Lebanese' ,'image' => 'images/categories/cat1.png'],
-            ['name' => 'Lebanese' ,'image' => 'images/categories/1.png'],
-            ['name' => 'American' ,'image' => 'images/categories/cat1.png'],
-            ['name' => 'Arabian' ,'image' => 'images/categories/cat3.png'],
-            ['name' => 'Greek' ,'image' => 'images/categories/cat2.png'],
-            ['name' => 'Asian' ,'image' => 'images/categories/cat2.png'],
+            ['name' => 'Indian' ,'image' => 'images/categories/cat1.png', 'ar_name' => 'هندي'],
+            ['name' => 'Chinese' ,'image' =>'images/categories/cat2.png', 'ar_name' => 'صيني'],
+            ['name' => 'Brazilian' ,'image' =>'images/categories/cat3.png', 'ar_name' => 'برازيلي'],
+            ['name' => 'Italian' ,'image' =>'images/categories/cat1.png', 'ar_name' => 'برازيلي'],
+            ['name' => 'Egyption' ,'image' =>'images/categories/cat3.png', 'ar_name' => 'مصري'],
+            ['name' => 'Japanese' ,'image' =>'images/categories/2.png', 'ar_name' => 'ياباني'],
+            ['name' => 'Lebanese' ,'image' =>'images/categories/cat1.png', 'ar_name' => 'لبناني'],
+            ['name' => 'American' ,'image' =>'images/categories/cat1.png', 'ar_name' => 'أمريكي'],
+            ['name' => 'Arabian' ,'image' =>'images/categories/cat3.png', 'ar_name' => 'عربي'],
+            ['name' => 'Greek' ,'image' =>'images/categories/cat2.png', 'ar_name' => 'يوناني'],
+            ['name' => 'Asian' ,'image' =>'images/categories/cat2.png', 'ar_name' => 'آسيوي'],
         ]);
     }
 }
