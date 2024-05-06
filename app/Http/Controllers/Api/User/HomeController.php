@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $restaurants = Category::has('restaurants.menu_categories')->with(['restaurants' => function ($query) {
-            $query->whereHas('menu_categories')->withAvg('ratings', 'rating as rating');
+            $query->whereHas('menu_categories')->withAvg('ratings as rating');
         }])->get();
 
 
