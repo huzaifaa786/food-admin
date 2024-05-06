@@ -55,7 +55,8 @@ class OrderController extends Controller
                 orderId: $order->id,
                 orderStatus: $order->status,
                 title: 'Order Assigned',
-                body: 'a new order has been assigned'
+                body: 'New order assigned',
+                ar_body: 'طلب جديد'
             );
         }
 
@@ -83,7 +84,8 @@ class OrderController extends Controller
                 orderId: $order->id,
                 orderStatus: $order->status,
                 title: 'Order Accepted',
-                body: 'your order has been accepted'
+                body: 'Your order has been accepted',
+                ar_body: 'تم قبول طلبك'
             );
         }
 
@@ -110,7 +112,8 @@ class OrderController extends Controller
                 orderId: $order->id,
                 orderStatus: $order->status,
                 title: 'Order Rejected',
-                body: 'your order has been rejected'
+                body: 'Your order has been rejected',
+                ar_body: 'تم رفض طلبك'
             );
         }
 

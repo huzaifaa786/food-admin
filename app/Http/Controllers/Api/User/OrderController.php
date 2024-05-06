@@ -56,7 +56,8 @@ class OrderController extends Controller
                 orderId: $order->id,
                 orderStatus: $order->status,
                 title: 'order Placed',
-                body: 'your order wes placed successfully'
+                body: 'Your order was placed successfully',
+                ar_body: 'تم وضع طلبك بنجاح'
             );
 
             if ($restraunt) {
@@ -67,7 +68,8 @@ class OrderController extends Controller
                     orderId: $order->id,
                     orderStatus: $order->status,
                     title: 'Order Received',
-                    body: 'you received a new order'
+                    body: 'You received a new order',
+                    ar_body: 'لقد إستلمت طلب جديد'
                 );
             }
 
