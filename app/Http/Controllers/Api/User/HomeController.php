@@ -28,7 +28,7 @@ class HomeController extends Controller
 
         $response = new stdClass();
         $response->categories = $categories;
-        $response->categoriesWithRestaurants = $categoriesWithRestaurants;
+        $response->restaurants = $categoriesWithRestaurants;
 
         return Api::setResponse('response', $response);
     }
