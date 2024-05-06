@@ -28,7 +28,7 @@ class RestrauntController extends Controller
 
     public function restaurantByCategory($id)
     {
-        $restaurants = Restraunt::where('category_id', $id)->whereHas('menu_categories')->get();
+        $restaurants = Restraunt::where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         return Api::setResponse('restaurants', $restaurants);
     }
 
