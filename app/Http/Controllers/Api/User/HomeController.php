@@ -13,15 +13,21 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        $restaurants = Category::has('restaurants.menu_categories')->with(['restaurants' => function ($query) {
-            $query->whereHas('menu_categories')->withAvg('ratings', 'rating');
+        $categories = Category::with(['restaurants' => function ($query) {
+            $query->has('menu_categories')->withAvg('ratings', 'rating');
         }])->get();
 
-
         $response = new stdClass();
-        $response->categories = $categories;
-        $response->restaurants = $restaurants;
+        $response->categories = $categories->map(function ($category) {
+            $category->restaurants->transform(function ($restaurant) {
+                $restaurant->rating = $restaurant->ratings_avg_rating;
+                unset($restaurant->ratings_avg_rating);
+                return $restaurant;
+            });
+            return $category;
+        });
+
+        $response->restaurants = $categories->pluck('restaurants')->flatten();
 
         return Api::setResponse('response', $response);
     }
