@@ -35,7 +35,8 @@ class OrderController extends Controller
             orderId: $order->id,
             orderStatus: $order->status,
             title: 'Order on way',
-            body: 'your order is now on the way'
+            body: 'Your order is now on the way',
+            ar_body: 'طلبك في طريقه إليك'
         );
         return Api::setMessage('Order marked as on the way');
     }
@@ -60,7 +61,8 @@ class OrderController extends Controller
             orderId: $order->id,
             orderStatus: $order->status,
             title: 'Order Delivered',
-            body: 'your order was delivered'
+            body: 'Your order was delivered',
+            ar_body: 'تم توصيل طلبك'
         );
 
         return Api::setMessage('Order Delivered');
