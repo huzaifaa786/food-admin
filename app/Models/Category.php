@@ -18,17 +18,9 @@ class Category extends Model
         'image'
     ];
 
-    /**
-     * Method image
-     *
-     * @return Attribute
-     */
-    protected function image(): Attribute
+    public function getImageAttribute($value)
     {
-        return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImage($value, 'images/categories')
-        );
+        return asset($value);
     }
 
     /**

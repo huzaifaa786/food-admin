@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -47,6 +48,15 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('rider', [RiderController::class, 'index'])->name('rider');
     Route::get('/rider/detail/{id}',[RiderController::class,'ridersinfo'])->name('riders.detail');
     Route::post('/rider/order/detail',[RiderController::class,'riderorder'])->name('rider.order.detail');
+
+    //category
+    Route::view('/category','admin.category.create')->name('category');
+    Route::post('/create/category',[AdminCategoryController::class,'store'])->name('category.store');
+    Route::get('index',[AdminCategoryController::class,'index'])->name('category.index');
+    Route::get('/category/delete/{id}',[AdminCategoryController::class,'delete'])->name('category.delete');
+    Route::get('/category/edit/{id}',[AdminCategoryController::class,'edit'])->name('category.edit');
+    Route::post('/category/update',[AdminCategoryController::class,'update'])->name('category.update');
+
 });
 
 require __DIR__ . '/auth.php';
