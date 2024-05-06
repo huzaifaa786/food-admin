@@ -17,8 +17,7 @@ class HomeController extends Controller
             $query->has('menu_categories')->withAvg('ratings', 'rating');
         }])->get();
 
-        $response = new stdClass();
-        $response->categories = $categories->map(function ($category) {
+        $categoriesWithRestaurants = $categories->map(function ($category) {
             $category->restaurants->transform(function ($restaurant) {
                 $restaurant->rating = $restaurant->ratings_avg_rating;
                 unset($restaurant->ratings_avg_rating);
@@ -27,7 +26,9 @@ class HomeController extends Controller
             return $category;
         });
 
-        $response->restaurants = $categories->pluck('restaurants')->flatten();
+        $response = new stdClass();
+        $response->categories = $categories;
+        $response->categoriesWithRestaurants = $categoriesWithRestaurants;
 
         return Api::setResponse('response', $response);
     }
