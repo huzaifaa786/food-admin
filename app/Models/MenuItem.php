@@ -18,6 +18,8 @@ class MenuItem extends Model
         'restraunt_id',
         'description',
         'image',
+        'image2',
+        'image3',
         'price',
         'menu_category_id',
         'discount',
@@ -70,6 +72,22 @@ class MenuItem extends Model
      * @return void
      */
     protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
+        );
+    }
+
+    protected function image2(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
+        );
+    }
+
+    protected function image3(): Attribute
     {
         return Attribute::make(
             get: fn (string $value) => asset($value),

@@ -134,7 +134,6 @@ class CartHelper
 
 
         if (!$cart) {
-
             return null;
         }
 
