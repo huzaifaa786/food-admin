@@ -72,7 +72,7 @@ class DriverController extends Controller
      */
     public function index()
     {
-        $drivers = Driver::all();
+        $drivers = Driver::where('restraunt_id', auth()->user()->id)->get();
         return Api::setResponse('drivers', $drivers);
     }
 }
