@@ -6,12 +6,12 @@
             <div class="card-header align-items-center d-flex">
                 <h4 class="card-title mb-0 flex-grow-1">Category</h4>
                 <div class="flex-shrink-0">
-                    
+
                 </div>
             </div><!-- end card header -->
 
             <div class="card-body">
-             
+
                 <div class="live-preview">
                     <form action="{{route('category.update')}}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -35,7 +35,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Category Image</label>
-                                    <input type="file" required class="form-control" id="image" name="image">
+                                    <input type="file" class="form-control" id="image" name="image">
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -48,11 +48,11 @@
                         <!--end row-->
                     </form>
                 </div>
-               
+
             </div>
         </div>
     </div> <!-- end col -->
 
-   
+
 </div>
 @endsection
