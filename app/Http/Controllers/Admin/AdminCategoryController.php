@@ -10,11 +10,7 @@ use Illuminate\Http\Request;
 class AdminCategoryController extends Controller
 {
     public function store(Request $request){
-        $category = Category::create([
-            'name'=>$request->name,
-            'ar_name'=>$request->ar_name,
-            'image'=> ImageHelper::saveImage($request->image,'images/categories')
-        ]);
+        $category = Category::create($request->all());
         if($category){
             toastr()->success('Add Category','Success');
             return redirect()->back();
@@ -48,11 +44,7 @@ class AdminCategoryController extends Controller
     public function update(Request $request)
     {
         $category = Category::find($request->id);
-        $categories =  $category->update([
-            'name' => $request->name,
-            'ar_name' => $request->ar_name,
-            'image' => ImageHelper::saveImage($request->image, 'Images/categories'),
-        ]);
+        $categories =  $category->update($request->all());
         if ($categories) {
             toastr()->success('Update Succussfully', 'Congrats');
             return redirect()->route('category.index');

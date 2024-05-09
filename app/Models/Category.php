@@ -32,4 +32,17 @@ class Category extends Model
     {
         return $this->hasMany(Restraunt::class)->whereHas('menu_categories');
     }
+
+    /**
+     * Method image
+     *
+     * @return Attribute
+     */
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => asset($value),
+            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/categories')
+        );
+    }
 }
