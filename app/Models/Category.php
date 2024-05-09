@@ -42,7 +42,7 @@ class Category extends Model
     {
         return Attribute::make(
             get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/categories')
+            set: fn (string $value) => ImageHelper::saveImage($value, 'images/categories')
         );
     }
 }
