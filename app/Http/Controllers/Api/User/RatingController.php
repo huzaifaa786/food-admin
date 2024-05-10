@@ -57,4 +57,10 @@ class RatingController extends Controller
             return Api::setResponse('order', $order);
         }
     }
+
+    public function getRatings($id)
+    {
+        $ratings = Rating::where('restraunt_id' , $id)->get();
+        return Api::setResponse('ratings', $ratings);
+    }
 }

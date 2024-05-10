@@ -56,6 +56,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('notification/count', [NotificationController::class, 'unreadCount']);
         Route::post('rating/store', [RatingController::class, 'store']);
         Route::get('rating/check', [RatingController::class, 'checkRating']);
+        Route::get('ratings/{id}', [RatingController::class, 'getRatings']);
         Route::get('notification/seen/{id}', [NotificationController::class, 'seenNotification']);
     });
 });
