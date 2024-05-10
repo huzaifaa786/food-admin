@@ -25,6 +25,7 @@ class Restraunt extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'ar_desc',
         'phone',
         'description',
         'logo',
