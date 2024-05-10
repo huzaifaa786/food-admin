@@ -22,6 +22,10 @@ class CartHelper
                 'restraunt_id' => $request->restraunt_id
 
             ]);
+        } else {
+            if ($cart->restaurant_id != $request->restraunt_id) {
+                return ['message' => 'You can’t buy from more than one restaurant at the same time!'];
+            }
         }
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
