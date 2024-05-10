@@ -98,7 +98,7 @@ class CartHelper
 
             if ($cart->items->isEmpty()) {
                 $cart->delete();
-                return response()->json(['message' => 'Cart deleted because there are no items'], 200);
+                return null;
             }
         } else {
             return response()->json(['message' => 'Item not found in the cart'], 404);
