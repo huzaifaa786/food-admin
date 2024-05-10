@@ -14,7 +14,7 @@ class RestrauntController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $restaurants = Restraunt::all();
+        $restaurants = Restraunt::active()->get();
         foreach ($restaurants as $res) {
 
             $time = LocationHelper::calculateTimeToReach($user->lat, $user->lng, $res->lat, $res->lng);
@@ -28,7 +28,7 @@ class RestrauntController extends Controller
 
     public function restaurantByCategory($id)
     {
-        $restaurants = Restraunt::where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
+        $restaurants = Restraunt::active()->where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         return Api::setResponse('restaurants', $restaurants);
     }
 

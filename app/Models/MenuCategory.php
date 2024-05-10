@@ -28,6 +28,6 @@ class MenuCategory extends Model
 
   public function menu_items(): HasMany
   {
-    return $this->hasMany(MenuItem::class)->with('extras');
+    return $this->hasMany(MenuItem::class)->where('available', true)->with('extras');
   }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RestrauntStatus;
 use App\Helpers\ImageHelper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +31,7 @@ class Category extends Model
      */
     public function restaurants(): HasMany
     {
-        return $this->hasMany(Restraunt::class)->whereHas('menu_categories');
+        return $this->hasMany(Restraunt::class)->where('status', RestrauntStatus::OPENED->value)->whereHas('menu_categories');
     }
 
     /**

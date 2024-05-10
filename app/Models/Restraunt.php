@@ -149,6 +149,11 @@ class Restraunt extends Authenticatable
         return $this->hasMany(MenuCategory::class)->with('menu_items');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', RestrauntStatus::OPENED->value);
+    }
+
     public function resturantorders()
     {
         return $this->hasMany(Order::class);
