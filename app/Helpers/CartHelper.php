@@ -22,7 +22,7 @@ class CartHelper
 
             ]);
         } else {
-            if ($cart->restaurant_id != $request->restraunt_id) {
+            if ($cart->restraunt_id != $request->restraunt_id) {
                 return ['message' => 'You can’t buy from more than one restaurant at the same time!'];
             }
         }
