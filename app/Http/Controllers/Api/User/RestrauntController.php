@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Restraunt;
 use Illuminate\Http\Request;
+use stdClass;
 
 class RestrauntController extends Controller
 {
@@ -38,7 +39,19 @@ class RestrauntController extends Controller
             $query->has('menu_items');
         }])->find($id);
 
+        $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
+            return $category->menu_items;
+        });
+
+        $allCategory = new stdClass();
+        $allCategory->name = 'All';
+        $allCategory->ar_name = 'الجميع';
+        $allCategory->menu_items = $menuItems;
+
+        $restaurant->menu_categories->prepend($allCategory);
+
         $restaurant->rating = Rating::where('restraunt_id', $id)->avg('rating');
         return Api::setResponse('restaurant', $restaurant);
     }
+
 }
