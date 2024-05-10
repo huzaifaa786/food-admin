@@ -14,11 +14,11 @@ class MenuCategorySeeder extends Seeder
     public function run(): void
     {
         MenuCategory::insert([
-            ['name' => 'Seafood', 'restraunt_id' => 1],
-            ['name' => 'pasta', 'restraunt_id' => 1],
-            ['name' => 'pizza', 'restraunt_id' => 1],
-            ['name' => 'burger', 'restraunt_id' => 1],
-            ['name' => 'sandwich', 'restraunt_id' => 1],
+            ['name' => 'Seafood', 'restraunt_id' => 1,'ar_name' => 'مأكولات بحرية'],
+            ['name' => 'pasta', 'restraunt_id' =>1, 'ar_name' => 'معكرونة'],
+            ['name' => 'pizza', 'restraunt_id' =>1, 'ar_name' => 'بيتزا'],
+            ['name' => 'burger', 'restraunt_id' =>1, 'ar_name' => 'برغر'],
+            ['name' => 'sandwich', 'restraunt_id' =>1, 'ar_name' => 'ساندويتش'],
     ]);
     }
 }

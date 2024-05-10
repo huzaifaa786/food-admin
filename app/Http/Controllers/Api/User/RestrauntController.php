@@ -46,6 +46,7 @@ class RestrauntController extends Controller
         $allCategory = new stdClass();
         $allCategory->name = 'All';
         $allCategory->ar_name = 'الجميع';
+        $allCategory->restraunt_id = $restaurant->id;
         $allCategory->menu_items = $menuItems;
 
         $restaurant->menu_categories->prepend($allCategory);
