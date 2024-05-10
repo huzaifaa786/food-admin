@@ -72,15 +72,21 @@ class CartHelper
             return ['message' => 'Item not found in the cart'];
         }
 
-
         $cartItem->quantity = $request->quantity;
         $cartItem->calculateSubtotal();
 
         $cartItem->cart->calculateTotals();
+
+        if ($cartItem->quantity == 0) {
+            $cartItem->cart->delete();
+            return ['message' => 'Cart deleted because there are no items'];
+        }
+
         $userCart = self::getCart();
 
-        return $userCart ? $userCart : ['message' => 'Cart item not updated'];
+        return $userCart ? $userCart : ['message' => 'Cart item updated'];
     }
+
 
     public static function removeFromCart(Request $request)
     {
