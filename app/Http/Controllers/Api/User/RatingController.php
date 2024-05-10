@@ -60,7 +60,7 @@ class RatingController extends Controller
 
     public function getRatings($id)
     {
-        $ratings = Rating::where('restraunt_id' , $id)->get();
+        $ratings = Rating::with('user')->where('restraunt_id' , $id)->get();
         return Api::setResponse('ratings', $ratings);
     }
 }
