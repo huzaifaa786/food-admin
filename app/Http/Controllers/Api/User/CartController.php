@@ -26,10 +26,13 @@ class CartController extends Controller
     {
         $cart = CartHelper::addToCart($request);
 
-        if($cart['message']);{
+        if($cart['message']){
             return Api::setError($cart['message']);
         }
-        return Api::setResponse('cart', $cart);
+        else{
+            return Api::setResponse('cart', $cart);
+        }
+
     }
 
     /**

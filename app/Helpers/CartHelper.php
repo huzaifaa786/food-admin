@@ -15,7 +15,6 @@ class CartHelper
     public static function addToCart(CartRequest $request)
     {
         $cart = Cart::where('user_id', auth()->user()->id)->first();
-
         if (!$cart) {
             $cart = Cart::create([
                 'user_id' => auth()->user()->id,
@@ -27,6 +26,7 @@ class CartHelper
                 return ['message' => 'You can’t buy from more than one restaurant at the same time!'];
             }
         }
+
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
         if ($cartItem) {
