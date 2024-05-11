@@ -6,6 +6,7 @@ use App\Http\Requests\CartRequest;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\CartItemExtra;
+use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -29,9 +30,13 @@ class CartHelper
 
 
         $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
+
+        $menuItem = MenuItem::find($request->menu_item['id']);
+        
         if ($cartItem) {
             $cartItem->update([
                 'cart_id' => $cart->id,
+                'ar_desc' => $menuItem->ar_desc,
                 'menu_item_id' => $request->menu_item['id'],
                 'quantity' => $cartItem->quantity + $request->menu_item['quantity'],
                 'notes' => $request->menu_item['notes'] ?? null
@@ -39,6 +44,7 @@ class CartHelper
         } else {
             $cartItem = CartItem::create([
                 'cart_id' => $cart->id,
+                'ar_desc' => $menuItem->ar_desc,
                 'menu_item_id' => $request->menu_item['id'],
                 'quantity' => $request->menu_item['quantity'],
                 'notes' => $request->menu_item['notes'] ?? null
