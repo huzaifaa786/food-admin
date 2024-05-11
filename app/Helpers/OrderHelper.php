@@ -199,11 +199,12 @@ class OrderHelper
                 'users.image as user_image',
                 'orders.created_at'
             )
-            ->join('restraunts', 'orders.user_id', '=', 'restraunts.id')
+            ->join('restraunts', 'orders.restraunt_id', '=', 'restraunts.id')
             ->join('user_addresses', 'orders.user_address_id', '=', 'user_addresses.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('orders.id', $orderId)
             ->first();
+
 
         if ($order == null) {
             return null;
