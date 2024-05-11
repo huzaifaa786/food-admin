@@ -28,6 +28,7 @@ class OrderHelper
                     'user_addresses.building_number as building_number',
                     'user_addresses.floor_number as floor_number',
                     'user_addresses.apartment_number as apartment_number',
+                    'user_addresses.address as address',
                     // You may need to join with users table to get user details
                     'users.name as user_name',
                     'users.email as user_email',
