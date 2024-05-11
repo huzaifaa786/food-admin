@@ -17,6 +17,7 @@ class MenuItem extends Model
         'name',
         'restraunt_id',
         'description',
+        'ar_desc',
         'image',
         'image2',
         'image3',
