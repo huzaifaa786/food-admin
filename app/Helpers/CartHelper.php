@@ -32,7 +32,7 @@ class CartHelper
         $cartItem = CartItem::where('cart_id', $cart->id)->where('menu_item_id', $request->menu_item['id'])->first();
 
         $menuItem = MenuItem::find($request->menu_item['id']);
-        
+
         if ($cartItem) {
             $cartItem->update([
                 'cart_id' => $cart->id,
@@ -157,6 +157,7 @@ class CartHelper
             ->select(
                 'cart_items.id as id',
                 'cart_items.notes',
+                'cart_items.ar_desc',
                 'cart_items.cart_id',
                 'cart_items.menu_item_id',
                 'cart_items.quantity',
