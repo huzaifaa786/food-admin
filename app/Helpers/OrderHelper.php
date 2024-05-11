@@ -24,6 +24,10 @@ class OrderHelper
                     'restraunts.name as restraunt_name',
                     'user_addresses.lat as user_lat',
                     'user_addresses.lng as user_lng',
+                    'user_addresses.building_name as building_name',
+                    'user_addresses.building_number as building_number',
+                    'user_addresses.floor_number as floor_number',
+                    'user_addresses.apartment_number as apartment_number',
                     // You may need to join with users table to get user details
                     'users.name as user_name',
                     'users.email as user_email',
