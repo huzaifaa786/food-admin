@@ -27,7 +27,7 @@ class AuthController extends Controller
     {
         try {
             $user = User::create($request->all());
-            UserAddress::create(['user_id' => $user->id] + $request->all());
+            UserAddress::create(['user_id' => $user->id, 'active' =>true] + $request->all());
             $user->address;
             // Update or store FCM token
             if ($request->has('fcm_token')) {
