@@ -28,6 +28,7 @@ class Notification extends Model
 
     public function getCreatedAt($value)
     {
+        dd($value);
         return Carbon::parse($value);
     }
 }
