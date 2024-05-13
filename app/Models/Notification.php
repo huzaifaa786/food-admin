@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,4 +25,9 @@ class Notification extends Model
     protected $casts = [
         'seen' => 'boolean'
     ];
+
+    public function getCreatedAt($value)
+    {
+        return Carbon::parse($value);
+    }
 }
