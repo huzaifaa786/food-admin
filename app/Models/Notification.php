@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DateTimeInterface;
 
 class Notification extends Model
 {
@@ -26,8 +27,8 @@ class Notification extends Model
         'seen' => 'boolean'
     ];
 
-    protected function asDateTime($value)
+    protected function serializeDate(DateTimeInterface $date)
     {
-        return Carbon::parse($value);
+        return $date->format('Y-m-d H:i:s');
     }
 }
