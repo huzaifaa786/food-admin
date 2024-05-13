@@ -26,9 +26,8 @@ class Notification extends Model
         'seen' => 'boolean'
     ];
 
-    public function getCreatedAt($value)
+    protected function asDateTime($value)
     {
-        dd($value);
         return Carbon::parse($value);
     }
 }
