@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Helpers\Api;
+use App\Helpers\LocationHelper;
 use App\Helpers\OrderHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
@@ -10,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderItemExtra;
 use App\Models\Restraunt;
+use App\Models\UserAddress;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
@@ -76,6 +78,28 @@ class OrderController extends Controller
             return Api::setResponse('order', $order);
         } else {
             return Api::setError('cart not found');
+        }
+    }
+
+    public function checkRange(Request $request)
+    {
+        $request->validate([
+            'address_id' => 'required|exists:user_addresses,id',
+            'restaurant_id' => 'required|exists:restraunts,id',
+        ]);
+
+        $address = UserAddress::findOrFail($request->address_id);
+        $restaurant = Restraunt::findOrFail($request->restaurant_id);
+
+        $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+
+        $withinRange = $distance <= ($restaurant->radius * 1000);
+
+        if($withinRange){
+            return Api::setMessage('within range');
+        }
+        else{
+            return Api::setError('restaurant out of range');
         }
     }
 

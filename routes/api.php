@@ -44,6 +44,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('remove/cart', [CartController::class, 'remove']);
         Route::get('get/cart', [CartController::class, 'get']);
         Route::post('place/order', [OrderController::class, 'placeOrder']);
+        Route::post('check/range', [OrderController::class, 'checkRange']);
         Route::post('add/address', [AddressController::class, 'create']);
         Route::get('addressess', [AddressController::class, 'get']);
         Route::post('address/main', [AddressController::class, 'setMain']);
