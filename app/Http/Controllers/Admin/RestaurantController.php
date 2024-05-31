@@ -23,6 +23,14 @@ class RestaurantController extends Controller
         $orders = $restraunt->resturantorders;
         return view('admin.restraunts.restraunts_order', ['orders' => $orders]);
     }
+    public function resturantStatus($id)
+    {
+        $restraunt = Restraunt::find($id);
+        $restraunt->update([
+            'is_approved' => !$restraunt->is_approved,
+        ]);
+        return redirect()->back();
+    }
 
     public function orderitems(Request $request)
     {

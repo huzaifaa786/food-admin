@@ -41,7 +41,10 @@
                                     <th>Category</th>
                                     <th>Rating</th>
                                     <th>Description</th>
+                                    <th>Payment ID</th>
+                                    <th>Payment Status</th>
                                     <th>Action</th>
+                                    <th>Account Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,8 +100,36 @@
                                         <td>
                                             {{ $restaurant->description }}
                                         </td>
+                                        <td>
+                                            {{ $restaurant->payment_intent }}
+                                        </td>
+                                        <td>
+                                            @php
+                                                $badgeClass = '';
+                                                switch ($restaurant->payment_status) {
+                                                    case 'Paid':
+                                                        $badgeClass = 'bg-success';
+                                                        break;
+                                                    case 'Pending':
+                                                        $badgeClass = 'bg-danger';
+                                                        break;
+                                                    default:
+                                                        $badgeClass = 'bg-danger';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $restaurant->payment_status }}</span>
+                                        </td>
                                         <td><a href="{{ route('resturant.order', $restaurant->id) }}"
                                                 class="btn btn-primary delete-btn" data-id="1">Orders</a></td>
+                                        <td><a href="{{ route('resturant.status', $restaurant->id) }}"
+                                                class="btn @if ($restaurant->is_approved)btn-danger  @else btn-success  @endif  delete-btn"
+                                                data-id="1">
+                                                @if ($restaurant->is_approved)
+                                                    Reject
+                                                @else
+                                                    Approve
+                                                @endif
+                                            </a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
