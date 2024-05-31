@@ -231,11 +231,11 @@
                      </div>
                  </li>
                  <li class="nav-item">
-                     <a class="nav-link menu-link" href="#menu" data-bs-toggle="collapse" role="button"
+                     <a class="nav-link menu-link" href="#fee" data-bs-toggle="collapse" role="button"
                          aria-expanded="false" aria-controls="rider">
                          <i class="ri-money-dollar-box-line"></i> <span data-key="t-dashboards">Fees</span>
                      </a>
-                     <div class="collapse menu-dropdown" id="menu">
+                     <div class="collapse menu-dropdown" id="fee">
                          <ul class="nav nav-sm flex-column">
                              <li class="nav-item">
                                  <a href="{{route('fee.create')}}" class="nav-link" data-key="t-menu">
