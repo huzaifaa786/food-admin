@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Restraunt\MenuItemController;
 use App\Http\Controllers\Api\Restraunt\NotificationController as RestrauntNotificationController;
 use App\Http\Controllers\Api\Restraunt\OrderController as RestrauntOrderController;
 use App\Http\Controllers\Api\Restraunt\PosterController;
+use App\Http\Controllers\Api\Restraunt\RestaurantFeeController;
 use App\Http\Controllers\Api\Restraunt\SaleController;
 use App\Http\Controllers\Api\Rider\AuthController as RiderAuthController;
 use App\Http\Controllers\Api\Rider\NotificationController as RiderNotificationController;
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::any('verifyOtp', [AuthController::class, 'verifyOtp']);
     Route::any('forgetUpdatePassword', [AuthController::class, 'forgetupdatePassword']);
 
-    Route::group(['middleware' =>  ['auth:sanctum', 'user']], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'user']], function () {
         Route::get('restaurants', [RestrauntController::class, 'index']);
         Route::get('category/restaurants/{id}', [RestrauntController::class, 'restaurantByCategory']);
         Route::get('restaurant-detail/{id}', [RestrauntController::class, 'restaurantDetail']);
@@ -70,9 +71,11 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::any('verifyemail', [RestrauntAuthController::class, 'verifyEmail']);
     Route::any('verifyOtp', [RestrauntAuthController::class, 'verifyOtp']);
     Route::any('forgetUpdatePassword', [RestrauntAuthController::class, 'forgetupdatePassword']);
+    Route::get('fee', [RestaurantFeeController::class, 'fee']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::get('profile', [RestrauntAuthController::class, 'profile']);
+
         Route::post('updatePassword', [RestrauntAuthController::class, 'updatePassword']);
         Route::post('profile/update', [RestrauntAuthController::class, 'profileUpdate']);
         Route::post('driver/store', [DriverController::class, 'storeDriver']);
@@ -103,7 +106,7 @@ Route::group(['prefix' => 'restraunt'], function () {
 Route::group(['prefix' => 'rider'], function () {
     Route::post('login', [RiderAuthController::class, 'login']);
 
-    Route::group(['middleware' =>  ['auth:sanctum', 'rider']], function () {
+    Route::group(['middleware' => ['auth:sanctum', 'rider']], function () {
         Route::get('profile', [RiderAuthController::class, 'profile']);
         Route::get('change/status', [RiderAuthController::class, 'toggleActive']);
         Route::get('orders', [RiderOrderController::class, 'index']);

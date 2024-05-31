@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\RestaurantFeeController;
 use App\Http\Controllers\Admin\RiderController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\UserController;
@@ -56,6 +57,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/category/delete/{id}',[AdminCategoryController::class,'delete'])->name('category.delete');
     Route::get('/category/edit/{id}',[AdminCategoryController::class,'edit'])->name('category.edit');
     Route::post('/category/update',[AdminCategoryController::class,'update'])->name('category.update');
+    Route::post('/fee/store',[RestaurantFeeController::class,'store'])->name('fee.store');
+    Route::get('/fee/create',[RestaurantFeeController::class,'create'])->name('fee.create');
 
 });
 
