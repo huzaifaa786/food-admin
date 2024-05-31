@@ -72,6 +72,7 @@ Route::group(['prefix' => 'restraunt'], function () {
     Route::any('verifyOtp', [RestrauntAuthController::class, 'verifyOtp']);
     Route::any('forgetUpdatePassword', [RestrauntAuthController::class, 'forgetupdatePassword']);
     Route::get('fee', [RestaurantFeeController::class, 'fee']);
+    Route::post('payment/update', [RestaurantFeeController::class, 'updatePaymentStatus']);
 
     Route::group(['middleware' => ['auth:sanctum', 'restraunt']], function () {
         Route::get('profile', [RestrauntAuthController::class, 'profile']);

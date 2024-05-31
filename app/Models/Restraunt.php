@@ -38,6 +38,9 @@ class Restraunt extends Authenticatable
         'status',
         'fcm_token',
         'category_id',
+        'payment_status',
+        'payment_intent',
+        'is_approved',
     ];
 
     /**
@@ -85,8 +88,8 @@ class Restraunt extends Authenticatable
     protected function logo(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/logo')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/logo')
         );
     }
 
@@ -100,8 +103,8 @@ class Restraunt extends Authenticatable
     protected function cover(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/cover')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/cover')
         );
     }
 
@@ -115,8 +118,8 @@ class Restraunt extends Authenticatable
     protected function license(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/license')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/restraunt/license')
         );
     }
 
@@ -165,7 +168,8 @@ class Restraunt extends Authenticatable
         return $this->hasMany(Rating::class);
     }
 
-    public function rider(){
+    public function rider()
+    {
         return $this->hasMany(Driver::class);
     }
 }
