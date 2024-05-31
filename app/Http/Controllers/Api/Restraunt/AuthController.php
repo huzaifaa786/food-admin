@@ -55,7 +55,12 @@ class AuthController extends Controller
                     'email' => ['Invalid credentials'],
                 ]);
             }
-
+            if ($restaurant->payment_status != "Paid") {
+                return Api::setError('Restaurant Payment is Pending');
+            }
+            if ($restaurant->is_approved == false) {
+                return Api::setError('Restaurant Approval Pending');
+            }
             // Update or store FCM token
             if ($request->has('fcm_token')) {
                 $restaurant->fcm_token = $request->fcm_token;
