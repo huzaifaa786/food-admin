@@ -26,10 +26,9 @@ class CartController extends Controller
     {
         $cart = CartHelper::addToCart($request);
 
-        if($cart['message']){
+        if ($cart['message']) {
             return Api::setError($cart['message']);
-        }
-        else{
+        } else {
             return Api::setResponse('cart', $cart);
         }
 
@@ -53,6 +52,11 @@ class CartController extends Controller
     {
         $cart = CartHelper::removeFromCart($request);
 
+        return Api::setResponse('cart', $cart);
+    }
+    public function clear(Request $request)
+    {
+        $cart = CartHelper::clearCart();
         return Api::setResponse('cart', $cart);
     }
 
