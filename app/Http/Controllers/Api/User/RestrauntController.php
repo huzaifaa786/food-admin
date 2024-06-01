@@ -34,9 +34,9 @@ class RestrauntController extends Controller
         return Api::setResponse('restaurants', $restaurants);
     }
 
-    public function restaurantInRange($id)
+    public function restaurantInRange()
     {
-        $address = UserAddress::findOrFail($id);
+        $address = UserAddress::where('user_id', auth()->user()->id)->firstOrFail();
         $restaurants = Restraunt::active()->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         $restaurantsWithinRange = [];
         foreach ($restaurants as $restaurant) {
