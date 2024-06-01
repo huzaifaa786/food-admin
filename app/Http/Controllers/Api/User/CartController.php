@@ -57,7 +57,7 @@ class CartController extends Controller
     public function clear(Request $request)
     {
         $cart = CartHelper::clearCart();
-        return Api::setResponse('cart', $cart);
+        return Api::setMessage('Cart cleared successfully');
     }
 
     /**
