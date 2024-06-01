@@ -36,14 +36,18 @@ class RestrauntController extends Controller
 
     public function restaurantInRange()
     {
-        $address = UserAddress::where('user_id', auth()->user()->id)->firstOrFail();
+        $address = UserAddress::where('user_id', auth()->user()->id)->first();
         $restaurants = Restraunt::active()->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         $restaurantsWithinRange = [];
-        foreach ($restaurants as $restaurant) {
-            $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-            if ($distance <= ($restaurant->radius * 1000)) {
-                $restaurantsWithinRange[] = $restaurant;
+        if ($address) {
+            foreach ($restaurants as $restaurant) {
+                $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+                if ($distance <= ($restaurant->radius * 1000)) {
+                    $restaurantsWithinRange[] = $restaurant;
+                }
             }
+        } else {
+            $restaurantsWithinRange = $restaurants;
         }
         if (count($restaurantsWithinRange) > 0) {
             return Api::setResponse('restaurants', $restaurantsWithinRange);
