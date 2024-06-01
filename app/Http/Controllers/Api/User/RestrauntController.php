@@ -7,6 +7,7 @@ use App\Helpers\LocationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Rating;
 use App\Models\Restraunt;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -33,11 +34,32 @@ class RestrauntController extends Controller
         return Api::setResponse('restaurants', $restaurants);
     }
 
+    public function restaurantInRange($id)
+    {
+        $address = UserAddress::findOrFail($id);
+        $restaurants = Restraunt::active()->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
+        $restaurantsWithinRange = [];
+        foreach ($restaurants as $restaurant) {
+            $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+            if ($distance <= ($restaurant->radius * 1000)) {
+                $restaurantsWithinRange[] = $restaurant;
+            }
+        }
+        if (count($restaurantsWithinRange) > 0) {
+            return Api::setResponse('restaurants', $restaurantsWithinRange);
+        } else {
+            return Api::setError('No restaurants within range');
+        }
+    }
+
+
     public function restaurantDetail($id)
     {
-        $restaurant = Restraunt::with(['menu_categories' => function ($query) {
-            $query->has('menu_items');
-        }])->find($id);
+        $restaurant = Restraunt::with([
+            'menu_categories' => function ($query) {
+                $query->has('menu_items');
+            }
+        ])->find($id);
 
         $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
             return $category->menu_items;
