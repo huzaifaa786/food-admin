@@ -94,23 +94,23 @@
 
                  {{-- Category --}}
                  <li class="nav-item">
-                    <a class="nav-link menu-link" href="#category" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="category">
-                        <i class=" bx bx-category"></i> <span data-key="t-dashboards">Categories</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="category">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('category') }}" class="nav-link" data-key="t-category">
-                                    Create Category </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('category.index') }}" class="nav-link" data-key="t-category">
-                                    All Categories </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                     <a class="nav-link menu-link" href="#category" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="category">
+                         <i class=" bx bx-category"></i> <span data-key="t-dashboards">Categories</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="category">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('category') }}" class="nav-link" data-key="t-category">
+                                     Create Category </a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="{{ route('category.index') }}" class="nav-link" data-key="t-category">
+                                     All Categories </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
 
                  {{-- <li class="nav-item">
                     <div id="two-column-menu">
@@ -224,7 +224,7 @@
                      <div class="collapse menu-dropdown" id="menu">
                          <ul class="nav nav-sm flex-column">
                              <li class="nav-item">
-                                 <a href="{{route('menu.index')}}" class="nav-link" data-key="t-menu">
+                                 <a href="{{ route('menu.index') }}" class="nav-link" data-key="t-menu">
                                      Restraunt Menu </a>
                              </li>
                          </ul>
@@ -238,8 +238,24 @@
                      <div class="collapse menu-dropdown" id="fee">
                          <ul class="nav nav-sm flex-column">
                              <li class="nav-item">
-                                 <a href="{{route('fee.create')}}" class="nav-link" data-key="t-menu">
+                                 <a href="{{ route('fee.create') }}" class="nav-link" data-key="t-menu">
                                      Restraunt Registration Fee </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#order" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="rider">
+                         <i class="ri-truck-line
+                         "></i> <span
+                             data-key="t-dashboards">Orders</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="order">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('order.index') }}" class="nav-link" data-key="t-menu">
+                                     All Orders </a>
                              </li>
                          </ul>
                      </div>

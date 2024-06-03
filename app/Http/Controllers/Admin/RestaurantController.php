@@ -52,4 +52,10 @@ class RestaurantController extends Controller
 
         return view('admin.menus.menu_items', compact('menuItems'));
     }
+
+    public function allOrders()
+    {
+        $orders = Order::all();
+        return view('admin.order.index', ['orders' => $orders]);
+    }
 }

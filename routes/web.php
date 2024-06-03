@@ -27,6 +27,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('user/index', [AdminUserController::class, 'index'])->name('user.index');
 
     //Resturant Routes
+    Route::get('order/index', [RestaurantController::class, 'allOrders'])->name('order.index');
     Route::get('resturant/index', [RestaurantController::class, 'index'])->name('resturant.index');
     Route::get('resturant/order/{id}', [RestaurantController::class, 'resturantorder'])->name('resturant.order');
     Route::get('resturant/status/{id}', [RestaurantController::class, 'resturantStatus'])->name('resturant.status');

@@ -54,12 +54,15 @@
                                         <td>{{ $restaurant->name }}</td>
                                         <td>{{ $restaurant->email }}</td>
                                         <td>{{ $restaurant->phone }}</td>
-                                        <td><img src="{{ asset($restaurant->logo) }}" alt="logo_image" height="80px"
-                                                width="80px"></td>
-                                        <td><img src="{{ asset($restaurant->cover) }}" alt="cover_image" height="80px"
-                                                width="80px"></td>
-                                        <td><img src="{{ asset($restaurant->license) }}" alt="license_image" height="80px"
-                                                width="80px"></td>
+                                        <td><a class="image-popup" href="{{ asset($restaurant->logo) }}" title=""><img
+                                                    src="{{ asset($restaurant->logo) }}" alt="logo_image" height="80px"
+                                                    width="80px"></a></td>
+                                        <td><a class="image-popup" href="{{ asset($restaurant->cover) }}"
+                                                title=""><img src="{{ asset($restaurant->cover) }}" alt="cover_image"
+                                                    height="80px" width="80px"></a></td>
+                                        <td><a class="image-popup" href="{{ asset($restaurant->license) }}"
+                                                title=""><img src="{{ asset($restaurant->license) }}"
+                                                    alt="license_image" height="80px" width="80px"></a></td>
                                         <td>
                                             @php
                                                 $badgeClass = '';
@@ -117,12 +120,13 @@
                                                         $badgeClass = 'bg-danger';
                                                 }
                                             @endphp
-                                            <span class="badge {{ $badgeClass }}">{{ $restaurant->payment_status }}</span>
+                                            <span
+                                                class="badge {{ $badgeClass }}">{{ $restaurant->payment_status }}</span>
                                         </td>
                                         <td><a href="{{ route('resturant.order', $restaurant->id) }}"
                                                 class="btn btn-primary delete-btn" data-id="1">Orders</a></td>
                                         <td><a href="{{ route('resturant.status', $restaurant->id) }}"
-                                                class="btn @if ($restaurant->is_approved)btn-danger  @else btn-success  @endif  delete-btn"
+                                                class="btn @if ($restaurant->is_approved) btn-danger  @else btn-success @endif  delete-btn"
                                                 data-id="1">
                                                 @if ($restaurant->is_approved)
                                                     Reject
@@ -139,4 +143,15 @@
             </div><!--end col-->
         </div><!--end row-->
     </div>
+@endsection
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/libs/glightbox/css/glightbox.min.css') }}">
+@endsection
+@section('script')
+    <script src="{{ asset('assets/libs/glightbox/js/glightbox.min.js') }}"></script>
+
+    <!-- isotope-layout -->
+    <script src="{{ asset('assets/libs/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/pages/gallery.init.js') }}"></script>
 @endsection

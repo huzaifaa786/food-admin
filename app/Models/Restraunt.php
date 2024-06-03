@@ -140,7 +140,11 @@ class Restraunt extends Authenticatable
      */
     public function getStatusAttribute($value)
     {
-        return RestrauntStatus::from($value)->name;
+        if ($value != -1) {
+            return RestrauntStatus::from($value)->name;
+        } else {
+            return RestrauntStatus::CLOSED->name;
+        }
     }
 
     /**
