@@ -11,13 +11,12 @@ class RestaurantFeeController extends Controller
 {
     public function create()
     {
-        $fee = RestaurantFee::first()->amount ?? 0;
+        $fee = RestaurantFee::first();
         return view('admin.fee.create')->with('fee',$fee);
     }
 
     public function store(Request $request)
     {
-
         RestaurantFee::updateOrCreate(['id' => 1], $request->all());
         return redirect()->back();
     }

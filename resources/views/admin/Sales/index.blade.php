@@ -32,6 +32,21 @@
                                             id="enddate">
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="enddate" class="form-label">Restaurant</label>
+                                        <select name="restaurant_id" id="" class="form-control">
+                                            <option value="" @if (!isset($restraunt_id) && $restraunt_id == null) selected @endif
+                                                >All Restaurant</option>
+                                            @foreach (App\Models\Restraunt::all() as $restaurant)
+                                                <option value="{{ $restaurant->id }}"
+                                                    @if (isset($restraunt_id) && $restaurant->id == $restraunt_id) selected @endif>
+                                                    {{ $restaurant->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <!--end col-->
 
 
@@ -84,7 +99,17 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td> <b>Total: {{$saledata != [] ? $saledata->sum('total_amount') : 0}}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
+
                 </div>
             </div>
         </div><!--end col-->

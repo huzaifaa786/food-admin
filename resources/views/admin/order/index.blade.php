@@ -49,7 +49,7 @@
                                         <td>{{ $order->total_quantity }}</td>
                                         <td>
                                             <span
-                                                class="badge {{ $order->status === 'REJECTED' ? 'bg-danger-subtle text-danger' : ($order->status === 'DELIVERED' ? 'bg-success' : '') }}">{{ $order->status }}</span>
+                                                class="badge {{ $order->status === 'REJECTED' ? 'bg-danger-subtle text-danger' : ($order->status === 'DELIVERED' ? 'bg-success' : 'bg-info') }}">{{ $order->status }}</span>
                                         </td>
 
                                         <td>

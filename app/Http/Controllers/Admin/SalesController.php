@@ -11,37 +11,57 @@ class SalesController extends Controller
 {
     public function saletable()
     {
-        $saledata = [];
-        $totalAmount = 0;
-        return view('admin.Sales.index')->with('saledata', $saledata)->with('totalAmount', $totalAmount);
+        $saledata = Order::whereDate('created_at', Carbon::now()->format('Y-m-d'))
+            ->with('restraunt')
+            ->get();
+
+
+        return view('admin.Sales.index')->with([
+            'saledata' => $saledata,
+            'startDate' => Carbon::now()->format('Y-m-d'),
+            'endDate' => Carbon::now()->format('Y-m-d'),
+            'restraunt_id' => null,
+        ]);
     }
 
     public function salestable(Request $request)
     {
+
         $start_date = $request->input('start_date', date('Y-m-d'));
         $end_date = $request->input('end_date', date('Y-m-d'));
 
         if ($start_date == $end_date) {
-            $saledata = Order::whereDate('created_at', $start_date)
-                ->with('restraunt')
-                ->get();
+            if (isset($request->restaurant_id))
+                $saledata = Order::where('restraunt_id', $request->restaurant_id)->whereDate('created_at', $start_date)
+                    ->with('restraunt')
+                    ->get();
+            else
+                $saledata = Order::whereDate('created_at', $start_date)
+                    ->with('restraunt')
+                    ->get();
 
 
             return view('admin.Sales.index')->with([
                 'saledata' => $saledata,
                 'startDate' => $start_date,
-                'endDate' => $end_date
+                'endDate' => $end_date,
+                'restraunt_id' => $request->restaurant_id ?? ''
             ]);
         } else {
-            $saledata = Order::whereBetween('created_at', [$start_date, $end_date])
-                ->with('restraunt')
-                ->get();
-
+            if (isset($request->restaurant_id))
+                $saledata = Order::where('restraunt_id', $request->restaurant_id)->whereBetween('created_at', [$start_date, $end_date])
+                    ->with('restraunt')
+                    ->get();
+            else
+                $saledata = Order::whereBetween('created_at', [$start_date, $end_date])
+                    ->with('restraunt')
+                    ->get();
 
             return view('admin.Sales.index')->with([
                 'saledata' => $saledata,
                 'startDate' => $start_date,
-                'endDate' => $end_date
+                'endDate' => $end_date,
+                'restraunt_id' => $request->restaurant_id ?? ''
             ]);
         }
     }
