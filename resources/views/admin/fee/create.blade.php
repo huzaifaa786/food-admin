@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="category" class="form-label">Fee Amount</label>
+                                        <label for="category" class="form-label">Service charge</label>
                                         <input type="number" required class="form-control"
                                             placeholder="Enter Service Charges" name="service_charges"
                                             value="{{ $fee->service_charges ?? 0 }}" id="category" required>
