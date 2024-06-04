@@ -10,6 +10,8 @@ class RestaurantFee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'amount','service_charges'
+        'amount',
+        'service_charges',
+        'poster_charges'
     ];
 }
