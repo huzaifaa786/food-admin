@@ -41,7 +41,12 @@ class Restraunt extends Authenticatable
         'payment_status',
         'payment_intent',
         'is_approved',
-    ];
+        'working_from',
+        'working_to',
+        'delivery_charges',
+        'minimum_charges',
+        'delivery_time',
+        ];
 
     /**
      * The attributes that should be hidden for serialization.
