@@ -37,7 +37,7 @@ class Cart extends Model
      */
     public function restraunt(): BelongsTo
     {
-        return $this->belongsTo(Restraunt::class);
+        return $this->belongsTo(Restraunt::class, 'restraunt_id', 'id');
     }
 
     /**
