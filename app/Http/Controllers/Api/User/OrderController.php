@@ -10,6 +10,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderItemExtra;
+use App\Models\RestaurantFee;
 use App\Models\Restraunt;
 use App\Models\UserAddress;
 use App\Services\NotificationService;
@@ -19,10 +20,14 @@ class OrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
-        $cart  = Cart::find($request->cart_id);
+        $cart = Cart::find($request->cart_id);
+
         if ($cart) {
+            $restaurant = Restraunt::find($cart->restraunt_id);
+            $fee = RestaurantFee::first();
+            $total = $cart->total_amount + $fee->service_charges + $restaurant->delivery_charges;
             $order = Order::create([
-                'total_amount' => $cart->total_amount,
+                'total_amount' => $total,
                 'total_quantity' => $cart->total_quantity,
                 'user_id' => auth()->user()->id,
                 'restraunt_id' => $cart->restraunt_id,
@@ -95,10 +100,9 @@ class OrderController extends Controller
 
         $withinRange = $distance <= ($restaurant->radius * 1000);
 
-        if($withinRange){
+        if ($withinRange) {
             return Api::setMessage('within range');
-        }
-        else{
+        } else {
             return Api::setError('restaurant out of range');
         }
     }
