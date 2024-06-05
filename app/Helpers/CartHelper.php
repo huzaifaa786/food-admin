@@ -139,6 +139,7 @@ class CartHelper
                 'carts.restraunt_id',
                 'carts.total_amount',
                 'carts.total_quantity',
+                'restaurants.*',
                 'restraunts.name as restaurant_name',
                 'ratings.rating as rating',
                 DB::raw("CONCAT('" . asset('') . "', restraunts.cover) as restaurant_image")
@@ -153,7 +154,7 @@ class CartHelper
             return null;
         }
 
-        $items =  DB::table('cart_items')
+        $items = DB::table('cart_items')
             ->select(
                 'cart_items.id as id',
                 'cart_items.notes',
