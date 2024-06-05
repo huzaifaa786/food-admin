@@ -18,12 +18,14 @@ class Cart extends Model
         'total_quantity',
     ];
 
+    protected $with = ['restraunt'];
+
     /**
      * Method items
      *
      * @return HasMany
      */
-    public function items() : HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
@@ -33,7 +35,7 @@ class Cart extends Model
      *
      * @return BelongsTo
      */
-    public function restraunt() : BelongsTo
+    public function restraunt(): BelongsTo
     {
         return $this->belongsTo(Restraunt::class);
     }
