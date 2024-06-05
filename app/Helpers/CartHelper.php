@@ -139,8 +139,10 @@ class CartHelper
                 'carts.restraunt_id',
                 'carts.total_amount',
                 'carts.total_quantity',
-                'restaurants.* as restaurant',
                 'restraunts.name as restaurant_name',
+                'restraunts.delivery_charges as restaurant_delv_charge',
+                'restraunts.minimum_charges as restaurant_min_charge',
+                'restraunts.delivery_time as restaurant_delv_time',
                 'ratings.rating as rating',
                 DB::raw("CONCAT('" . asset('') . "', restraunts.cover) as restaurant_image")
             )
