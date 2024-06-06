@@ -42,8 +42,8 @@ class Category extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImage($value, 'images/categories')
+            get: fn(string $value) => asset($value),
+            set: fn($value) => ImageHelper::saveImage($value, 'images/categories')
         );
     }
 }
