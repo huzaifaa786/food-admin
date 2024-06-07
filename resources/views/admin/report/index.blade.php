@@ -38,7 +38,9 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $report->user->name }}</td>
                                         <td>{{ $report->des }}</td>
-                                        <td><img src="{{ $report->image }}" alt="" srcset=""></td>
+                                        <td><a class="image-popup" href="{{ $report->image }}"
+                                            title=""><img src="{{ $report->image }}" alt="cover_image"
+                                                height="80px" width="80px"></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -79,6 +81,17 @@
             </div>
         </div>
     </div> --}}
+@endsection
+@section('css')
+    <link rel="stylesheet" href="{{ asset('assets/libs/glightbox/css/glightbox.min.css') }}">
+@endsection
+@section('script')
+    <script src="{{ asset('assets/libs/glightbox/js/glightbox.min.js') }}"></script>
+
+    <!-- isotope-layout -->
+    <script src="{{ asset('assets/libs/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+    <script src="{{ asset('assets/js/pages/gallery.init.js') }}"></script>
 @endsection
 
 
