@@ -26,14 +26,17 @@
                         <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>No#</th>
+                                    <th>User name</th>
                                     <th>Description</th>
                                     <th>Image</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($reports as $key => $report)
+                                @foreach (App\Models\Report::all() as $key => $report)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
+                                        <td>{{ $report->user->name }}</td>
                                         <td>{{ $report->des }}</td>
                                         <td>{{ $report->image }}</td>
                                     </tr>
