@@ -11,7 +11,9 @@ class OrderItemExtra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_item_id', 'extra_id'
+        'order_item_id',
+        'extra_id',
+        'quantity'
     ];
 
     /**

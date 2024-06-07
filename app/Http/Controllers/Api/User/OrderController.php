@@ -47,6 +47,7 @@ class OrderController extends Controller
                     OrderItemExtra::create([
                         'order_item_id' => $order_item->id,
                         'extra_id' => $extra->extra_id,
+                        'quantity' => $extra->quantity,
                     ]);
                 }
             }
