@@ -16,7 +16,7 @@ class ReportController extends Controller
     {
         $request->validate([
             'des' => 'nullable|string',
-            'image' => 'nullable|image',
+            'image' => 'nullable|string',
         ]);
 
         // $imagePath = null;
@@ -26,8 +26,6 @@ class ReportController extends Controller
 
         $report = ModelsReport::create([
             'user_id' => Auth::id(),
-            'des' => $request->input('des'),
-
         ]+ $request->all());
 
         return Api::setResponse('report', $report);
