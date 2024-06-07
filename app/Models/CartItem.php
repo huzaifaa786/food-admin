@@ -12,7 +12,12 @@ class CartItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cart_id', 'menu_item_id', 'notes', 'quantity', 'subtotal', 'ar_desc'
+        'cart_id',
+        'menu_item_id',
+        'notes',
+        'quantity',
+        'subtotal',
+        'ar_desc'
     ];
 
     /**
@@ -20,7 +25,7 @@ class CartItem extends Model
      *
      * @return BelongsTo
      */
-    public function menu_item() : BelongsTo
+    public function menu_item(): BelongsTo
     {
         return $this->belongsTo(MenuItem::class);
     }
@@ -30,7 +35,7 @@ class CartItem extends Model
      *
      * @return BelongsTo
      */
-    public function cart() : BelongsTo
+    public function cart(): BelongsTo
     {
         return $this->belongsTo(Cart::class);
     }
@@ -40,7 +45,7 @@ class CartItem extends Model
      *
      * @return HasMany
      */
-    public function extras() : HasMany
+    public function extras(): HasMany
     {
         return $this->hasMany(CartItemExtra::class);
     }
@@ -55,7 +60,7 @@ class CartItem extends Model
         $subtotal = $this->quantity * $this->menu_item->price;
 
         foreach ($this->extras as $cartExtra) {
-            $subtotal += $cartExtra->extra->price;
+            $subtotal += $cartExtra->extra->price * $cartExtra->quantity;
         }
         $this->subtotal = $subtotal;
         $this->save();

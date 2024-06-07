@@ -54,7 +54,8 @@ class CartHelper
         foreach ($request->menu_item['extras'] as $extra) {
             CartItemExtra::firstOrCreate([
                 'cart_item_id' => $cartItem->id,
-                'extra_id' => $extra['id']
+                'extra_id' => $extra['id'],
+                'quantity' => $extra['quantity']
             ]);
         }
         $cartItem->calculateSubtotal();
