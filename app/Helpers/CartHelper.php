@@ -182,6 +182,7 @@ class CartHelper
         $extras = DB::table('cart_item_extras')
             ->select(
                 'cart_item_id',
+                'cart_item_extras.quantity as quantity',
                 'extras.id as id',
                 'extras.name as name',
                 'extras.price as price',
