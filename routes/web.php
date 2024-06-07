@@ -32,7 +32,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('resturant/order/{id}', [RestaurantController::class, 'resturantorder'])->name('resturant.order');
     Route::get('resturant/status/{id}', [RestaurantController::class, 'resturantStatus'])->name('resturant.status');
     Route::get('menu/index', [RestaurantController::class, 'showMenu'])->name('menu.index');
-    Route::get('/menu/{restaurant_id}',[RestaurantController::class,'showMenuItems'])->name('menu.items');
+    Route::get('/menu/{restaurant_id}', [RestaurantController::class, 'showMenuItems'])->name('menu.items');
     Route::post('order/items', [RestaurantController::class, 'orderitems'])->name('order.item');
 
     //sales
@@ -49,19 +49,23 @@ Route::middleware(['auth:admin'])->group(function () {
 
     // Rider routes
     Route::get('rider', [RiderController::class, 'index'])->name('rider');
-    Route::get('/rider/detail/{id}',[RiderController::class,'ridersinfo'])->name('riders.detail');
-    Route::post('/rider/order/detail',[RiderController::class,'riderorder'])->name('rider.order.detail');
+    Route::get('/rider/detail/{id}', [RiderController::class, 'ridersinfo'])->name('riders.detail');
+    Route::post('/rider/order/detail', [RiderController::class, 'riderorder'])->name('rider.order.detail');
 
     //category
-    Route::view('/category','admin.category.create')->name('category');
-    Route::post('/create/category',[AdminCategoryController::class,'store'])->name('category.store');
-    Route::get('index',[AdminCategoryController::class,'index'])->name('category.index');
-    Route::get('/category/delete/{id}',[AdminCategoryController::class,'delete'])->name('category.delete');
-    Route::get('/category/edit/{id}',[AdminCategoryController::class,'edit'])->name('category.edit');
-    Route::post('/category/update',[AdminCategoryController::class,'update'])->name('category.update');
-    Route::post('/fee/store',[RestaurantFeeController::class,'store'])->name('fee.store');
-    Route::get('/fee/create',[RestaurantFeeController::class,'create'])->name('fee.create');
+    Route::view('/category', 'admin.category.create')->name('category');
+    Route::post('/create/category', [AdminCategoryController::class, 'store'])->name('category.store');
+    Route::get('index', [AdminCategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/delete/{id}', [AdminCategoryController::class, 'delete'])->name('category.delete');
+    Route::get('/category/edit/{id}', [AdminCategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/category/update', [AdminCategoryController::class, 'update'])->name('category.update');
+    Route::post('/fee/store', [RestaurantFeeController::class, 'store'])->name('fee.store');
+    Route::get('/fee/create', [RestaurantFeeController::class, 'create'])->name('fee.create');
 
+
+    // reports
+    // Route::view('/report', 'admin.report.index')->name('report');
+    Route::get('/report/show', [RestaurantController::class, 'report'])->name('report.index');
 });
 
 require __DIR__ . '/auth.php';

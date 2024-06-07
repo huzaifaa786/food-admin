@@ -58,4 +58,9 @@ class RestaurantController extends Controller
         $orders = Order::all();
         return view('admin.order.index', ['orders' => $orders]);
     }
+    public function report()
+    {
+        $reports = Restraunt::all();
+        return view('admin.report.index')->with('reports', $reports);
+    }
 }

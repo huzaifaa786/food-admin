@@ -260,6 +260,22 @@
                          </ul>
                      </div>
                  </li>
+                 <li class="nav-item">
+                     <a class="nav-link menu-link" href="#report" data-bs-toggle="collapse" role="button"
+                         aria-expanded="false" aria-controls="report">
+                         <i class="ri-truck-line
+                        "></i> <span
+                             data-key="t-dashboards">Reports</span>
+                     </a>
+                     <div class="collapse menu-dropdown" id="report">
+                         <ul class="nav nav-sm flex-column">
+                             <li class="nav-item">
+                                 <a href="{{ route('report.index') }}" class="nav-link" data-key="t-menu">
+                                     All Reports </a>
+                             </li>
+                         </ul>
+                     </div>
+                 </li>
 
                  {{-- <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
