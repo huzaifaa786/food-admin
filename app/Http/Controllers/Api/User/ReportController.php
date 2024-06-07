@@ -19,16 +19,16 @@ class ReportController extends Controller
             'image' => 'nullable|image',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = ImageHelper::saveImage($request->file('image'), 'images/reports');
-        }
+        // $imagePath = null;
+        // if ($request->hasFile('image')) {
+        //     $imagePath = ImageHelper::saveImage($request->file('image'), 'images/reports');
+        // }
 
         $report = ModelsReport::create([
             'user_id' => Auth::id(),
             'des' => $request->input('des'),
-            'image' => $imagePath,
-        ]);
+
+        ]+ $request->all());
 
         return Api::setResponse('report', $report);
     }
