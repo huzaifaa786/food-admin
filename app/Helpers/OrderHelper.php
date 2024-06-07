@@ -234,6 +234,7 @@ class OrderHelper
                 'order_item_id',
                 'extras.id as id',
                 'extras.name as name',
+                'order_item_extras as quantity',
                 'extras.price as price',
                 'extras.menu_item_id as menu_item_id'
             )
