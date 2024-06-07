@@ -11,7 +11,9 @@ class CartItemExtra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cart_item_id', 'extra_id'
+        'cart_item_id',
+        'extra_id',
+        'quantity',
     ];
 
     /**
@@ -19,7 +21,7 @@ class CartItemExtra extends Model
      *
      * @return BelongsTo
      */
-    public function extra() : BelongsTo
+    public function extra(): BelongsTo
     {
         return $this->belongsTo(Extra::class);
     }
