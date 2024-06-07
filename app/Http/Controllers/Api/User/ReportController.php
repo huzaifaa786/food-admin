@@ -19,10 +19,10 @@ class ReportController extends Controller
             'image' => 'nullable|string',
         ]);
 
-        // Assuming the user is authenticated
-        $request['user_id'] = Auth::id();
 
-        $report = ModelsReport::create($request->all());
+
+
+        $report = ModelsReport::create(['user_id' => Auth::id()] + $request->all());
 
         return Api::setResponse('report', $report);
     }
