@@ -38,7 +38,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $report->user->name }}</td>
                                         <td>{{ $report->des }}</td>
-                                        <td>{{ $report->image }}</td>
+                                        <td><img src="{{ $report->image }}" alt="" srcset=""></td>
                                     </tr>
                                 @endforeach
                             </tbody>
