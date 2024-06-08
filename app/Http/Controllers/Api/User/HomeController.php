@@ -16,30 +16,40 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::with([
+        $categories = Category::all();
+        $restaurants = Category::has('restaurants.menu_categories')->with([
             'restaurants' => function ($query) {
                 $query->withAvg('ratings as rating', 'rating');
             }
-        ])->has('restaurants.menu_categories')->get();
+        ])->get();
 
         $posters = Poster::all();
-
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
+        $restaurantsWithinRange = [];
 
         if ($address) {
-            foreach ($categories as $category) {
-                $category->restaurants = $category->restaurants->filter(function ($restaurant) use ($address) {
+            foreach ($restaurants as $category) {
+                foreach ($category->restaurants as $restaurant) {
                     $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-                    return $distance <= ($restaurant->radius * 1000);
-                })->values(); // Reset keys after filtering
+                    if ($distance <= ($restaurant->radius * 1000)) {
+                        $restaurantsWithinRange[] = $restaurant;
+                    }
+                }
+            }
+        } else {
+            foreach ($restaurants as $category) {
+                foreach ($category->restaurants as $restaurant) {
+                    $restaurantsWithinRange[] = $restaurant;
+                }
             }
         }
 
         $response = new stdClass();
         $response->categories = $categories;
         $response->posters = $posters;
+        $response->restaurants = $restaurantsWithinRange;
 
         return Api::setResponse('response', $response);
-    }
 
+    }
 }
