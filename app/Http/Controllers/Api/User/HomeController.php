@@ -17,37 +17,28 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $restaurants = Category::has('restaurants.menu_categories')->with([
-            'restaurants' => function ($query) {
-                $query->withAvg('ratings as rating', 'rating');
-            }
-        ])->get();
-
-        $posters = Poster::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
-        $restaurantsWithinRange = [];
 
-        if ($address) {
-            foreach ($restaurants as $category) {
-                foreach ($category->restaurants as $restaurant) {
-                    $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-                    if ($distance <= ($restaurant->radius * 1000)) {
-                        $restaurantsWithinRange[] = $restaurant;
-                    }
+        $restaurants = Category::has('restaurants.menu_categories')
+            ->whereHas('restaurants', function ($query) use ($address) {
+                $query->where(function ($subQuery) use ($address) {
+                    $subQuery->whereRaw("(
+                    " . LocationHelper::calculateDistance($address->lat, $address->lng, 'lat', 'lng') . " <= radius * 1000
+                )");
+                });
+            })
+            ->with([
+                'restaurants' => function ($query) {
+                    $query->withAvg('ratings as rating', 'rating');
                 }
-            }
-        } else {
-            foreach ($restaurants as $category) {
-                foreach ($category->restaurants as $restaurant) {
-                    $restaurantsWithinRange[] = $restaurant;
-                }
-            }
-        }
+            ])
+            ->get();
+        $posters = Poster::all();
 
         $response = new stdClass();
         $response->categories = $categories;
         $response->posters = $posters;
-        $response->restaurants = $restaurantsWithinRange;
+        $response->restaurants = $restaurants;
 
         return Api::setResponse('response', $response);
 
