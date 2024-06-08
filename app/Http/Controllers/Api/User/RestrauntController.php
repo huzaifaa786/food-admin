@@ -25,7 +25,19 @@ class RestrauntController extends Controller
             $res->time = $time;
             $res->rating = $averageRating;
         }
-        return Api::setResponse('restaurants', $restaurants);
+        $address = UserAddress::where('user_id', auth()->user()->id)->first();
+        $restaurantsWithinRange = [];
+        if ($address) {
+            foreach ($restaurants as $restaurant) {
+                $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+                if ($distance <= ($restaurant->radius * 1000)) {
+                    $restaurantsWithinRange[] = $restaurant;
+                }
+            }
+        } else {
+            $restaurantsWithinRange = $restaurants;
+        }
+        return Api::setResponse('restaurants', $restaurantsWithinRange);
     }
 
     public function restaurantByCategory($id)
