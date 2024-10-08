@@ -11,7 +11,7 @@ class BannerController extends Controller
 {
     public function index()
     {
-        $posters = Poster::all();
+        $posters = Poster::where('created_at', '>=', now()->subDay())->get();
         return Api::setResponse('posters', $posters);
     }
 }
