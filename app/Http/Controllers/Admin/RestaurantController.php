@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Report;
 use App\Http\Controllers\Controller;
 use App\Models\MenuCategory;
 use App\Models\MenuItem;
 use App\Models\Order;
+use App\Models\Report as ModelsReport;
 use App\Models\Restraunt;
 use Illuminate\Http\Request;
 
@@ -60,7 +62,16 @@ class RestaurantController extends Controller
     }
     public function report()
     {
-        $reports = Restraunt::all();
+        $reports = Report::all();
         return view('admin.report.index')->with('reports', $reports);
+    }
+
+    public function solve($id)
+    {
+        $report = Report::findOrFail($id);
+        $report->solved = 1;
+        $report->save();
+
+        return redirect()->back()->with('success', 'The report has been marked as solved.');
     }
 }

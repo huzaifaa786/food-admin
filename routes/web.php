@@ -66,6 +66,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // reports
     // Route::view('/report', 'admin.report.index')->name('report');
     Route::get('/report/show', [RestaurantController::class, 'report'])->name('report.index');
+    Route::get('/report/solve/{id}', [RestaurantController::class, 'solve'])->name('report.solve');
 });
 
 require __DIR__ . '/auth.php';

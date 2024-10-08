@@ -30,6 +30,8 @@
                                     <th>User name</th>
                                     <th>Description</th>
                                     <th>Image</th>
+                                    <th>Solved</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,9 +40,21 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $report->user->name }}</td>
                                         <td>{{ $report->des }}</td>
-                                        <td><a class="image-popup" href="{{ $report->image }}"
-                                            title=""><img src="{{ $report->image }}" alt="cover_image"
-                                                height="80px" width="80px"></a></td>
+                                        <td>
+                                            <a class="image-popup" href="{{ $report->image }}" title="">
+                                                <img src="{{ $report->image }}" alt="cover_image" height="80px"
+                                                    width="80px">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if ($report->solved)
+                                                <span class="badge bg-success">Solved</span>
+                                            @else
+                                                <span class="badge bg-danger">Unsolved</span>
+                                            @endif
+                                        </td>
+                                        <td><a href="{{ route('report.solve', $report->id) }}"
+                                            class="btn btn-primary " data-id="1">Mark As Done</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
