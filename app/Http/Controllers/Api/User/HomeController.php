@@ -24,9 +24,9 @@ class HomeController extends Controller
             ->whereHas('restaurants', function ($query) use ($address) {
                 $query->where(function ($subQuery) use ($address) {
                     $subQuery->whereRaw("(
-                        " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
+                        " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                     )")
-                        ->where('restaurants.status', RestrauntStatus::OPENED->value);
+                        ->where('restraunts.status', RestrauntStatus::OPENED->value);
                 });
             })
             ->with([
