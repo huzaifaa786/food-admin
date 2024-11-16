@@ -16,47 +16,46 @@ use stdClass;
 class HomeController extends Controller
 {
     public function index()
-{
-    $categories = Category::all();
-    $address = UserAddress::where('user_id', auth()->user()->id)->first();
+    {
+        $categories = Category::all();
+        $address = UserAddress::where('user_id', auth()->user()->id)->first();
 
-    // Fetch only open restaurants that are within the user's location
-    $restaurants = Category::has('restaurants.menu_categories')
-        ->whereHas('restaurants', function ($query) use ($address) {
-            $query->where(function ($subQuery) use ($address) {
-                // Filter restaurants based on the location and radius
-                $subQuery->whereRaw("(
+        // Fetch only open restaurants that are within the user's location
+        $restaurants = Category::has('restaurants.menu_categories')
+            ->whereHas('restaurants', function ($query) use ($address) {
+                $query->where(function ($subQuery) use ($address) {
+                    // Filter restaurants based on the location and radius
+                    $subQuery->whereRaw("(
                     " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                 )");
+                })
+                    ->where('status', RestrauntStatus::OPENED->value); // Ensure restaurant is open
             })
-            ->where('status', RestrauntStatus::OPENED->value); // Ensure restaurant is open
-        })
-        ->with([
-            'restaurants' => function ($query) {
-                $query->withAvg('ratings as rating', 'rating');
-            }
-        ])
-        ->get();
+            ->with([
+                'restaurants' => function ($query) {
+                    $query->withAvg('ratings as rating', 'rating');
+                }
+            ])
+            ->get();
 
-    // Filter out posters for restaurants that are closed or have no restaurants nearby
-    $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
-        $query->whereHas('restaurants', function ($subQuery) use ($address) {
-            $subQuery->where(function ($subQuery) use ($address) {
-                // Ensure the restaurant is within the user's location
-                $subQuery->whereRaw("(
+        // Filter out posters for restaurants that are closed or have no restaurants nearby
+        $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
+            $query->whereHas('restaurants', function ($subQuery) use ($address) {
+                $subQuery->where(function ($subQuery) use ($address) {
+                    // Ensure the restaurant is within the user's location
+                    $subQuery->whereRaw("(
                     " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                 )");
-            })
-            ->where('status', RestrauntStatus::OPENED->value); // Ensure restaurant is open
-        });
-    })->get();
+                })
+                    ->where('status', RestrauntStatus::OPENED->value); // Ensure restaurant is open
+            });
+        })->get();
 
-    $response = new stdClass();
-    $response->categories = $categories;
-    $response->posters = $posters;
-    $response->restaurants = $restaurants;
+        $response = new stdClass();
+        $response->categories = $categories;
+        $response->posters = $posters;
+        $response->restaurants = $restaurants;
 
-    return Api::setResponse('response', $response);
-}
-
+        return Api::setResponse('response', $response);
+    }
 }

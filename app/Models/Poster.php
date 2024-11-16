@@ -22,5 +22,9 @@ class Poster extends Model
             set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/poster')
         );
     }
+    public function restraunt()
+    {
+        return $this->belongsTo(Restraunt::class, 'restraunt_id');
+    }
     
 }
