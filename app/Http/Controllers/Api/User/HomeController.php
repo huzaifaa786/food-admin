@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Enums\RestrauntStatus;
 use App\Helpers\Api;
 use App\Helpers\LocationHelper;
 use App\Http\Controllers\Controller;
@@ -24,9 +23,8 @@ class HomeController extends Controller
             ->whereHas('restaurants', function ($query) use ($address) {
                 $query->where(function ($subQuery) use ($address) {
                     $subQuery->whereRaw("(
-                        " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
-                    )")
-                        ->where('restraunts.status', RestrauntStatus::OPENED->value);
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                )");
                 });
             })
             ->with([
@@ -35,14 +33,7 @@ class HomeController extends Controller
                 }
             ])
             ->get();
-
-        $categories = $categories->filter(function ($category) use ($restaurants) {
-            return $restaurants->where('id', $category->id)->isNotEmpty();
-        });
-
-        $posters = Poster::whereHas('category', function ($query) use ($restaurants) {
-            $query->whereIn('id', $restaurants->pluck('category_id'));
-        })->get();
+        $posters = Poster::all();
 
         $response = new stdClass();
         $response->categories = $categories;
@@ -50,5 +41,6 @@ class HomeController extends Controller
         $response->restaurants = $restaurants;
 
         return Api::setResponse('response', $response);
+
     }
 }

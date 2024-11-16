@@ -22,8 +22,5 @@ class Poster extends Model
             set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/poster')
         );
     }
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    
 }
