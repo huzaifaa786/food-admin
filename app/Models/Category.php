@@ -46,4 +46,8 @@ class Category extends Model
             set: fn($value) => ImageHelper::saveImage($value, 'images/categories')
         );
     }
+    public function posters()
+    {
+        return $this->hasMany(Poster::class);
+    }
 }
