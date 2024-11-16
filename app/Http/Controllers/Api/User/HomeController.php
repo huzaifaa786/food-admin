@@ -40,7 +40,7 @@ class HomeController extends Controller
 
         // Filter out posters for restaurants that are closed or have no restaurants nearby
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
-            $query->whereHas('restaurants', function ($subQuery) use ($address) {
+            $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->where(function ($subQuery) use ($address) {
                     // Ensure the restaurant is within the user's location
                     $subQuery->whereRaw("(
