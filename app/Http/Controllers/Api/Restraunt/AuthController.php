@@ -55,10 +55,7 @@ class AuthController extends Controller
                     'email' => ['Invalid credentials'],
                 ]);
             }
-            $payment_pending = $restaurant->payment_status != "Paid";
-            if ($payment_pending) {
-                return Api::setMessage('Restaurant Payment is Pending');
-            }
+            
             if ($restaurant->is_approved == false) {
                 return Api::setError('Restaurant Approval Pending');
             }
