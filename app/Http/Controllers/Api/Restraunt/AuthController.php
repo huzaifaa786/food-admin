@@ -56,7 +56,7 @@ class AuthController extends Controller
                 ]);
             }
             if ($restaurant->payment_status != "Paid") {
-                return Api::setError('Restaurant Payment is Pending');
+                return Api::setMessage('Restaurant Payment is Pending');
             }
             if ($restaurant->is_approved == false) {
                 return Api::setError('Restaurant Approval Pending');
