@@ -55,7 +55,10 @@ class AuthController extends Controller
                     'email' => ['Invalid credentials'],
                 ]);
             }
-            
+            if ($restaurant->payment_status != "Paid") {
+            $restaurant->token = $restaurant->createToken("mobile", ['role:restraunt'])->plainTextToken;
+                return Api::setResponse('restaurant', $restaurant);
+            }
             if ($restaurant->is_approved == false) {
                 return Api::setError('Restaurant Approval Pending');
             }
