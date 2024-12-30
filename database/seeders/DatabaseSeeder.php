@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RestrauntSeeder::class);
         $this->call(MenuCategorySeeder::class);
         $this->call(MenuItemSeeder::class);
+        $this->call(AdminSeeder::class);
     }
 }
