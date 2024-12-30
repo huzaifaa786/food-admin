@@ -45,7 +45,7 @@ class HomeController extends Controller
                 })
                     ->where('status', RestrauntStatus::OPENED->value);
             });
-        })->get();
+        })->where('created_at', '>=', now()->subDay())->get();
 
         $response = new stdClass();
         $response->categories = $categories;
