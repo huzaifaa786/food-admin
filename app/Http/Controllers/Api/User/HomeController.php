@@ -24,7 +24,7 @@ class HomeController extends Controller
             ->whereHas('restaurants', function ($query) use ($address) {
                 $query->where(function ($subQuery) use ($address) {
                     $subQuery->whereRaw("(
-                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= 2.00 * 1000
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                 )");
                 })
                     ->where('status', RestrauntStatus::OPENED->value);
@@ -36,7 +36,6 @@ class HomeController extends Controller
             ])
             ->get();
 
-        dd(LocationHelper::calculateDistanceSql($address->lat, $address->lng, 32.0653066, 72.6408261));
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
