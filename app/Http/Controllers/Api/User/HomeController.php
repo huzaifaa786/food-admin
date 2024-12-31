@@ -23,14 +23,6 @@ class HomeController extends Controller
 
         $restaurants = Category::has('restaurants.menu_categories')
             ->whereHas('restaurants', function ($query) use ($address) {
-                Log::info($query->whereRaw("(
-            " . LocationHelper::calculateDistanceSql(
-                $address->lat,
-                $address->lng,
-                'restraunts.lat',
-                'restraunts.lng'
-            ) . " <= restraunts.radius * 1000
-        )")->toSql());
                 $query->whereRaw("(
             " . LocationHelper::calculateDistanceSql(
                     $address->lat,
@@ -46,10 +38,10 @@ class HomeController extends Controller
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
-            ->get();
+            ->toSql();
 
 
-        // dd(LocationHelper::calculateDistance($address->lat, $address->lng, 31.9854504, 73.0131358));
+        dd($restaurants);
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->where(function ($subQuery) use ($address) {
