@@ -36,7 +36,7 @@ class HomeController extends Controller
             ])
             ->get();
 
-            dd($restaurants);
+            dd(LocationHelper::calculateDistanceSql($address->lat, $address->lng, 31.9854504, 73.0131358));
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->where(function ($subQuery) use ($address) {
