@@ -20,6 +20,7 @@ class LocationHelper
 
         return $distance;
     }
+
     public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
     {
         $earthRadius = 6371000;
@@ -31,7 +32,7 @@ class LocationHelper
         $c = "2 * atan2(sqrt({$a}), sqrt(1 - {$a}))";
 
         $distance = "{$earthRadius} * {$c}";
-         
+
         return $distance;
     }
 
