@@ -21,17 +21,17 @@ class HomeController extends Controller
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
 
         \DB::enableQueryLog();
-        $restaurants = Category::has('restraunts.menu_categories')
+        $restaurants = Category::has('restaurants.menu_categories')
         ->whereHas('restaurants', function ($query) use ($address) {
             $query->where(function ($subQuery) use ($address) {
                 $subQuery->whereRaw("(
-                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
             )");
             })
             ->where('status', RestrauntStatus::OPENED->value);
         })
             ->with([
-            'restraunts' => function ($query) {
+                'restaurants' => function ($query) {
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
