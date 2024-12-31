@@ -20,42 +20,33 @@ class HomeController extends Controller
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
 
-        \DB::enableQueryLog();
         $restaurants = Category::has('restaurants.menu_categories')
-        ->whereHas('restaurants', function ($query) use ($address) {
-            $query->where(function ($subQuery) use ($address) {
-                $subQuery->whereRaw("(
-                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
-            )");
+            ->whereHas('restaurants', function ($query) use ($address) {
+                $query->where(function ($subQuery) use ($address) {
+                    $subQuery->whereRaw("(
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                )");
+                })
+                    ->where('status', RestrauntStatus::OPENED->value);
             })
-            ->where('status', RestrauntStatus::OPENED->value);
-        })
             ->with([
                 'restaurants' => function ($query) {
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
             ->get();
-        dd(\DB::getQueryLog());
-
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
-                $subQuery->whereRaw("
-            (
-                6371 * acos(
-                    cos(radians(?)) * cos(radians(restraunts.lat)) *
-                    cos(radians(restraunts.lng) - radians(?)) +
-                    sin(radians(?)) * sin(radians(restraunts.lat))
-                )
-            ) <= restraunts.radius / 1000", [
-                    $address->lat,
-                    $address->lng,
-                    $address->lat
-                ])
+                $subQuery->where(function ($subQuery) use ($address) {
+                    $subQuery->whereRaw("(
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                )");
+                })
                     ->where('status', RestrauntStatus::OPENED->value);
             });
-        })->where('created_at', '>=', now()->subDay())->get();
+        })
+        ->where('created_at', '>=', now()->subDay())->get();
 
         $response = new stdClass();
         $response->categories = $categories;
