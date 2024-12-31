@@ -20,7 +20,6 @@ class HomeController extends Controller
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
 
-        \DB::enableQueryLog();
         $restaurants = Category::has('restaurants.menu_categories')
             ->whereHas('restaurants', function ($query) use ($address) {
                 $query->where(function ($subQuery) use ($address) {
@@ -35,9 +34,9 @@ class HomeController extends Controller
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
-            ->get();
+            ->toSql();
 
-        dd(\DB::getQueryLog());
+        dd($restaurants);
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
