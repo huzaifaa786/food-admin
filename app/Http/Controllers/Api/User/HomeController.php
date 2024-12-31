@@ -30,7 +30,7 @@ class HomeController extends Controller
                 'restraunts.lat',
                 'restraunts.lng'
             ) . " <= restraunts.radius * 1000
-        )"));
+        )")->toSql());
                 $query->whereRaw("(
             " . LocationHelper::calculateDistanceSql(
                     $address->lat,
