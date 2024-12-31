@@ -25,11 +25,11 @@ class HomeController extends Controller
             $query->whereRaw("
             (
                 6371 * acos(
-                    cos(radians(?)) * cos(radians(restaurants.lat)) *
-                    cos(radians(restaurants.lng) - radians(?)) +
-                    sin(radians(?)) * sin(radians(restaurants.lat))
+                    cos(radians(?)) * cos(radians(restraunts.lat)) *
+                    cos(radians(restraunts.lng) - radians(?)) +
+                    sin(radians(?)) * sin(radians(restraunts.lat))
                 )
-            ) <= restaurants.radius / 1000", [
+            ) <= restraunts.radius / 1000", [
                 $address->lat,
                 $address->lng,
                 $address->lat
@@ -42,7 +42,8 @@ class HomeController extends Controller
                 }
             ])
             ->get();
-            
+
+
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->where(function ($subQuery) use ($address) {
