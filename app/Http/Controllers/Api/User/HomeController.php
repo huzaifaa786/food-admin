@@ -34,9 +34,9 @@ class HomeController extends Controller
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
-            ->get();
+            ->toSql();
 
-
+            dd($restaurants);
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->where(function ($subQuery) use ($address) {
