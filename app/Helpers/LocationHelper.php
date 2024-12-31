@@ -20,7 +20,6 @@ class LocationHelper
 
         return $distance;
     }
-
     public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
     {
         $earthRadius = 6371000;
