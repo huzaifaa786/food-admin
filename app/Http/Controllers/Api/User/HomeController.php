@@ -11,6 +11,7 @@ use App\Models\Poster;
 use App\Models\Restraunt;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class HomeController extends Controller
@@ -22,6 +23,14 @@ class HomeController extends Controller
 
         $restaurants = Category::has('restaurants.menu_categories')
             ->whereHas('restaurants', function ($query) use ($address) {
+                Log::info($query->whereRaw("(
+            " . LocationHelper::calculateDistanceSql(
+                $address->lat,
+                $address->lng,
+                'restraunts.lat',
+                'restraunts.lng'
+            ) . " <= restraunts.radius * 1000
+        )"));
                 $query->whereRaw("(
             " . LocationHelper::calculateDistanceSql(
                     $address->lat,
