@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
-
+        
         $restaurants = Category::has('restaurants.menu_categories')
         ->whereHas('restaurants', function ($query) use ($address) {
             $query->whereRaw("
@@ -29,7 +29,7 @@ class HomeController extends Controller
                     cos(radians(restraunts.lng) - radians(?)) +
                     sin(radians(?)) * sin(radians(restraunts.lat))
                 )
-            ) <= restraunts.radius / 1000", [
+            ) <= restraunts.radius", [
                 $address->lat,
                 $address->lng,
                 $address->lat
@@ -42,7 +42,6 @@ class HomeController extends Controller
                 }
             ])
             ->get();
-
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
