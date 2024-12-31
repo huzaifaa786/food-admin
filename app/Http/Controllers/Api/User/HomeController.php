@@ -20,28 +20,24 @@ class HomeController extends Controller
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
 
-        $restaurants = Category::has('restaurants.menu_categories')
+        \DB::enableQueryLog();
+        $restaurants = Category::has('restraunts.menu_categories')
         ->whereHas('restaurants', function ($query) use ($address) {
-            $query->whereRaw("
-            (
-                6371 * acos(
-                    cos(radians(?)) * cos(radians(restraunts.lat)) *
-                    cos(radians(restraunts.lng) - radians(?)) +
-                    sin(radians(?)) * sin(radians(restraunts.lat))
-                )
-            ) <= restraunts.radius / 1000", [
-                $address->lat,
-                $address->lng,
-                $address->lat
-            ])
-                ->where('status', RestrauntStatus::OPENED->value);
+            $query->where(function ($subQuery) use ($address) {
+                $subQuery->whereRaw("(
+                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+            )");
+            })
+            ->where('status', RestrauntStatus::OPENED->value);
         })
             ->with([
-                'restaurants' => function ($query) {
+            'restraunts' => function ($query) {
                     $query->withAvg('ratings as rating', 'rating');
                 }
             ])
             ->get();
+
+        dd(\DB::getQueryLog());
 
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
