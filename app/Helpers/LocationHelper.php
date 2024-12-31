@@ -31,7 +31,7 @@ class LocationHelper
         $c = "2 * atan2(sqrt({$a}), sqrt(1 - {$a}))";
 
         $distance = "{$earthRadius} * {$c}";
-        
+         
         return $distance;
     }
 
