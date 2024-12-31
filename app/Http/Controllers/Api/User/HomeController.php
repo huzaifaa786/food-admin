@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $address = UserAddress::where('user_id', auth()->user()->id)->first();
+        $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
         $restaurants = Category::query()
         ->whereHas('restaurants', function ($query) use ($address) {
