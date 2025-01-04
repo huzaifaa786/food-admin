@@ -87,10 +87,35 @@ class RestrauntController extends Controller
             }
         ])->find($id);
 
+        if (!$restaurant) {
+            return Api::setError('Restaurant not found', 404);
+        }
+
+        // Fetch all menu items
         $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
             return $category->menu_items;
         });
 
+        // Loop through each menu item and apply the discount
+        foreach ($menuItems as $item) {
+            // Check if a discount is applicable
+            $currentDay = now()->format('l'); // Example: 'Monday'
+            $currentTime = now()->format('H:i:s'); // Example: '14:00:00'
+
+            if ($item->discount_start && $item->discount_end) {
+                if (
+                    $currentDay === $item->discount_day &&
+                    $currentTime >= $item->discount_start &&
+                    $currentTime <= $item->discount_end
+                ) {
+                    // Apply discount
+                    $item->original_price = $item->price;
+                    $item->price = $item->price - ($item->price * ($item->discount / 100));
+                }
+            }
+        }
+
+        // Add "All" category
         $allCategory = new stdClass();
         $allCategory->name = 'All';
         $allCategory->ar_name = 'الجميع';
@@ -99,7 +124,9 @@ class RestrauntController extends Controller
 
         $restaurant->menu_categories->prepend($allCategory);
 
+        // Calculate average rating
         $restaurant->rating = Rating::where('restraunt_id', $id)->avg('rating');
+
         return Api::setResponse('restaurant', $restaurant);
     }
 
