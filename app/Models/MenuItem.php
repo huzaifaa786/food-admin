@@ -33,6 +33,21 @@ class MenuItem extends Model
         'available' => 'boolean'
     ];
 
+    public function getPriceAttribute($value)
+    {
+        $currentDate = now()->toDateString();
+
+        if (
+            $this->discount &&
+            $this->discount_till_date &&
+            $currentDate <= $this->discount_till_date
+        ) {
+            return $value - ($value * ($this->discount / 100));
+        }
+
+        return $value;
+    }
+
     /**
      * Method toggleAvailable
      *
