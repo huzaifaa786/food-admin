@@ -48,6 +48,21 @@ class MenuItem extends Model
         return $value;
     }
 
+    public function getOriginalPriceAttribute()
+    {
+        $currentDate = now()->toDateString();
+
+        if (
+            $this->discount &&
+            $this->discount_till_date &&
+            $currentDate <= $this->discount_till_date
+        ) {
+            return $this->price / (1 - $this->discount / 100); 
+        }
+
+        return null; // Return null if there's no discount
+    }
+
     /**
      * Method toggleAvailable
      *

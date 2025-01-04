@@ -79,55 +79,42 @@ class RestrauntController extends Controller
     }
 
 
-    public function restaurantDetail($id)
-    {
-        // Fetch the restaurant with related menu categories and items
-        $restaurant = Restraunt::with([
-            'menu_categories' => function ($query) {
-                $query->whereHas('menu_items'); // Only include categories with menu items
-            },
-            'menu_categories.menu_items'
-        ])->find($id);
-
-        if (!$restaurant) {
-            return Api::setError('Restaurant not found', 404);
+public function restaurantDetail($id)
+{
+    $restaurant = Restraunt::with([
+        'menu_categories' => function ($query) {
+            $query->has('menu_items');
         }
+    ])->find($id);
 
-        // Fetch and process all menu items
-        $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
-            return $category->menu_items;
-        });
-
-        $currentDay = now()->format('l'); // Current day, e.g., 'Monday'
-        $currentDate = now()->toDateString(); // Current date, e.g., '2025-01-04'
-
-        $menuItems->each(function ($item) use ($currentDay, $currentDate) {
-            // Check and apply discounts
-            if (
-                $item->discount && // Discount exists
-                $item->discount_till_date && // Discount end date exists
-                $currentDate <= $item->discount_till_date  // Today is a discount day
-            ) {
-                // Apply discount
-                $item->original_price = $item->price; // Store original price
-                $item->price = $item->price - ($item->price * ($item->discount / 100));
-            }
-        });
-
-        // Add an "All" category with all menu items
-        $allCategory = (object)[
-            'name' => 'All',
-            'ar_name' => 'الجميع',
-            'restraunt_id' => $restaurant->id,
-            'menu_items' => $menuItems
-        ];
-        $restaurant->menu_categories->prepend($allCategory);
-
-        // Calculate and add the average rating for the restaurant
-        $restaurant->rating = round(Rating::where('restraunt_id', $id)->avg('rating'), 1) ?: 0.0;
-
-        return Api::setResponse('restaurant', $restaurant);
+    if (!$restaurant) {
+        return Api::setError('Restaurant not found', 404);
     }
 
+    // Fetch all menu items
+    $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
+        return $category->menu_items;
+    });
+
+    // Loop through each menu item and apply the discount
+    foreach ($menuItems as $item) {
+        // Check if a discount is applicable
+       $item->original_price;
+    }
+
+    // Add "All" category
+    $allCategory = new stdClass();
+    $allCategory->name = 'All';
+    $allCategory->ar_name = 'الجميع';
+    $allCategory->restraunt_id = $restaurant->id;
+    $allCategory->menu_items = $menuItems;
+
+    $restaurant->menu_categories->prepend($allCategory);
+
+    // Calculate average rating
+    $restaurant->rating = Rating::where('restraunt_id', $id)->avg('rating');
+
+    return Api::setResponse('restaurant', $restaurant);
+}
 
 }
