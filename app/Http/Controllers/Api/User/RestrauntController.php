@@ -102,7 +102,7 @@ class RestrauntController extends Controller
         $currentDate = now()->toDateString(); // Current date, e.g., '2025-01-04'
 
         $menuItems->each(function ($item) use ($currentDay, $currentDate) {
-            dd($item);
+            dd($item->discount, $item->discount_till_date, $currentDate <= $item->discount_till_date);
             // Check and apply discounts
             if (
                 $item->discount && // Discount exists
