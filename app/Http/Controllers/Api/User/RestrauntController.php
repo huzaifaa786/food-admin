@@ -106,9 +106,7 @@ class RestrauntController extends Controller
             if (
                 $item->discount && // Discount exists
                 $item->discount_till_date && // Discount end date exists
-                $currentDate <= $item->discount_till_date && // Discount is valid for today
-                $item->discount_days && // Discount days are defined
-                in_array($currentDay, explode(',', $item->discount_days)) // Today is a discount day
+                $currentDate <= $item->discount_till_date  // Today is a discount day
             ) {
                 // Apply discount
                 $item->original_price = $item->price; // Store original price
