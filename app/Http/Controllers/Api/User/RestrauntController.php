@@ -98,8 +98,18 @@ public function restaurantDetail($id)
 
     // Loop through each menu item and apply the discount
     foreach ($menuItems as $item) {
-        // Check if a discount is applicable
-       $item->original_price;
+            $currentDate = now()->toDateString();
+
+            if (
+                $item->discount &&
+                $item->discount_till_date &&
+                $currentDate <= $item->discount_till_date
+            ) {
+                $item->original_price =  $item->price / (1 - $item->discount / 100);
+            }
+            else{
+                $item->original_price = null;
+            }
     }
 
     // Add "All" category
