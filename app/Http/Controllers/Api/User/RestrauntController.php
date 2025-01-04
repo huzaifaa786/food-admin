@@ -111,7 +111,6 @@ class RestrauntController extends Controller
                 // Apply discount
                 $item->original_price = $item->price; // Store original price
                 $item->price = $item->price - ($item->price * ($item->discount / 100));
-                dd($item);
             }
         });
 
