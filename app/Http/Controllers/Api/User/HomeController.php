@@ -22,7 +22,10 @@ class HomeController extends Controller
         $restaurants = Category::whereHas('restaurants', function ($query) use ($address) {
             $query->where('status', RestrauntStatus::OPENED->value)
                 ->whereHas('menu_categories')
-                ->withAvg('ratings as rating', 'rating');
+                ->withAvg('ratings as rating', 'rating')
+                ->whereRaw("
+                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+            ");
         })->with('restaurants')->get();
 
 
