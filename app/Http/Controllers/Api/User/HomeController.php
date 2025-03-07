@@ -62,23 +62,16 @@ class HomeController extends Controller
 
         // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
-            $categories = Category::whereHas('restaurants', function ($query) use ($address) {
-                $query->whereRaw("
-                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-                ");
-            })
-                ->with(['restaurants' => function ($query) use ($address) {
-                    $query->whereRaw("
-                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-                ")
-                        ->withAvg('ratings as rating', 'rating');
-                }])
+            $restaurants = Restraunt::whereRaw("
+                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+            ")
+                ->where('status', RestrauntStatus::OPENED->value)
+                ->with(['menu_categories', 'category', 'category.restaurants']) // Ensure category is loaded
+                ->withAvg('ratings as rating', 'rating')
                 ->get();
         } else {
-            $categories = collect(); // Empty collection if no address
+            $restaurants = collect(); // Empty collection if no address
         }
-
-
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             if ($address) {
@@ -96,7 +89,7 @@ class HomeController extends Controller
         $response = new \stdClass();
         $response->categories = $categories;
         $response->posters = $posters;
-        $response->restaurants = $categories;
+        $response->restaurants = $restaurants;
 
         return Api::setResponse('response', $response);
     }
