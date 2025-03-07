@@ -28,6 +28,7 @@ class HomeController extends Controller
                     (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
                 ");
         })->with('restaurants')->get();
+        dd($restaurants);
     
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
