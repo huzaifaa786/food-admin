@@ -50,10 +50,11 @@ class RestrauntController extends Controller
             foreach ($restaurants as $restaurant) {
                 
                 $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-                dd($distance);
                 if ($distance <= ($restaurant->radius * 1000)) {
+                    dd($restaurant->radius * 1000);
                     $restaurantsWithinRange[] = $restaurant;
                 }
+                
             }
         }
          else {
