@@ -20,20 +20,42 @@ class LocationHelper
 
         return $distance;
     }
+    // public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
+    // {
+    //     $earthRadius = 6371000;
+
+    //     $dLat = "({$lat2} - {$lat1}) * pi() / 180";
+    //     $dLon = "({$lon2} - {$lon1}) * pi() / 180";
+
+    //     $a = "pow(sin({$dLat} / 2), 2) + cos({$lat1} * pi() / 180) * cos({$lat2} * pi() / 180) * pow(sin({$dLon} / 2), 2)";
+    //     $c = "2 * atan2(sqrt({$a}), sqrt(1 - {$a}))";
+
+    //     $distance = "{$earthRadius} * {$c}";
+
+    //     return $distance;
+    // }
     public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
     {
-        $earthRadius = 6371000;
+        $earthRadius = 6371000; // Earth's radius in meters
 
-        $dLat = "({$lat2} - {$lat1}) * pi() / 180";
-        $dLon = "({$lon2} - {$lon1}) * pi() / 180";
-
-        $a = "pow(sin({$dLat} / 2), 2) + cos({$lat1} * pi() / 180) * cos({$lat2} * pi() / 180) * pow(sin({$dLon} / 2), 2)";
-        $c = "2 * atan2(sqrt({$a}), sqrt(1 - {$a}))";
-
-        $distance = "{$earthRadius} * {$c}";
-
-        return $distance;
+        return "(
+        $earthRadius * 2 * 
+        ATAN2(
+            SQRT(
+                POW(SIN((RADIANS($lat2) - RADIANS($lat1)) / 2), 2) +
+                COS(RADIANS($lat1)) * COS(RADIANS($lat2)) * 
+                POW(SIN((RADIANS($lon2) - RADIANS($lon1)) / 2), 2)
+            ), 
+            SQRT(1 - (
+                POW(SIN((RADIANS($lat2) - RADIANS($lat1)) / 2), 2) +
+                COS(RADIANS($lat1)) * COS(RADIANS($lat2)) * 
+                POW(SIN((RADIANS($lon2) - RADIANS($lon1)) / 2), 2)
+            ))
+        )
+    )";
     }
+
+
 
     public static function calculateTimeToReach($lat1, $lon1, $lat2, $lon2)
     {
