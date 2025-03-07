@@ -45,11 +45,12 @@ class RestrauntController extends Controller
         $restaurants = Restraunt::active()->where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         $restaurantsWithinRange = [];
+        dd($restaurantsWithinRange);
+
         if ($address) {
             foreach ($restaurants as $restaurant) {
                 $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
                 if ($distance <= ($restaurant->radius * 1000)) {
-                    dd($restaurantsWithinRange);
                     $restaurantsWithinRange[] = $restaurant;
                 }
             }
