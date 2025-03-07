@@ -24,7 +24,7 @@ class HomeController extends Controller
         ->whereHas('restaurants', function ($query) use ($address) {
             $query->whereRaw("
             (
-                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
             )")
             ->where('status', RestrauntStatus::OPENED->value)
                 ->whereHas('menu_categories');
@@ -33,7 +33,7 @@ class HomeController extends Controller
                 'restaurants' => function ($query) use ($address) {
                     $query->whereRaw("
                 (
-                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
                 )")
                     ->where('status', RestrauntStatus::OPENED->value)
                         ->withAvg('ratings as rating', 'rating')
