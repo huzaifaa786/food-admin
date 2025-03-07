@@ -59,7 +59,7 @@ class HomeController extends Controller
             ")
                 ->where('status', RestrauntStatus::OPENED->value)
                 ->with(['menu_categories', 'category', 'category.restaurants']) // Ensure category is loaded
-                ->withAvg('ratings as rating', 'rating')
+                // ->withAvg('ratings as rating', 'rating')
                 ->get();
         } else {
             $restaurants = collect(); // Empty collection if no address
