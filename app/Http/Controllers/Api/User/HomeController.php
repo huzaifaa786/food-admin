@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
-
+dd($address);
         $restaurants = Category::whereHas('restaurants', function ($query) use ($address) {
             $query->where('status', RestrauntStatus::OPENED->value)
                 ->whereHas('menu_categories')
@@ -28,7 +28,6 @@ class HomeController extends Controller
                     (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
                 ");
         })->with('restaurants')->get();
-        dd($restaurants);
     
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
