@@ -46,6 +46,7 @@ class RestrauntController extends Controller
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         $restaurantsWithinRange = [];
         if ($address) {
+            dd($address);
             foreach ($restaurants as $restaurant) {
                 $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
                 if ($distance <= ($restaurant->radius * 1000)) {
