@@ -42,7 +42,8 @@ class RestrauntController extends Controller
 
     public function restaurantByCategory($id)
     {
-        $restaurants = Restraunt::where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
+        $restaurants = Restraunt::active()->where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
+        dd($restaurants);
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         $restaurantsWithinRange = [];
         if ($address) {
