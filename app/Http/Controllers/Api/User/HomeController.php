@@ -21,7 +21,6 @@ class HomeController extends Controller
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
         $restaurants = Category::with([
-            dd($address),
             'restaurants' => function ($query) use ($address) {
                 $query->where('status', RestrauntStatus::OPENED->value)
                     ->whereHas('menu_categories')
