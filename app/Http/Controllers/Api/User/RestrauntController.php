@@ -112,7 +112,7 @@ class RestrauntController extends Controller
                 $item->original_price = null;
                 $item->discount = 0.0;
                 $item->discount_till_date = null;
-                $item->discount_days = null;
+                $item->discount_days = '0';
             }
         }
 
