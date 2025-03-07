@@ -25,7 +25,7 @@ class HomeController extends Controller
                 ->whereHas('menu_categories')
                 ->withAvg('ratings as rating', 'rating')
                 ->whereRaw("
-                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000)
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
                 ");
         })->with('restaurants')->get();
     
