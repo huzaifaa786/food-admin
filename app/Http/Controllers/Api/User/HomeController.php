@@ -66,7 +66,7 @@ class HomeController extends Controller
                 (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
             ")
                 ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category']) // Ensure category is loaded
+                ->with(['menu_categories', 'category','category.restaurants']) // Ensure category is loaded
                 ->withAvg('ratings as rating', 'rating')
                 ->get();
         } else {
