@@ -62,16 +62,24 @@ class HomeController extends Controller
 
         // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
-            $restaurants = Restraunt::whereRaw("
-                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-            ")
+            $restaurants = Category::whereHas('restaurants', function ($query) use ($address) {
+                $query->whereRaw("
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+                ")
+                ->where('status', RestrauntStatus::OPENED->value);
+            })
+            ->with(['restaurants' => function ($query) use ($address) {
+                $query->whereRaw("
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+                ")
                 ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category','category.restaurants']) // Ensure category is loaded
-                ->withAvg('ratings as rating', 'rating')
-                ->get();
+                ->withAvg('ratings as rating', 'rating'); 
+            }])
+            ->get();
         } else {
-            $restaurants = collect(); // Empty collection if no address
+            $categories = collect(); // Empty collection if no address
         }
+        
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             if ($address) {
