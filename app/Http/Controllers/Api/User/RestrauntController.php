@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Enums\RestrauntStatus;
 use App\Helpers\Api;
 use App\Helpers\LocationHelper;
 use App\Http\Controllers\Controller;
@@ -42,32 +43,23 @@ class RestrauntController extends Controller
 
     public function restaurantByCategory($id)
     {
-        $restaurants = Restraunt::active()
-            ->where('category_id', $id)
+        $address = UserAddress::where('user_id', auth()->id())->where('active', true)->first();
+
+        if (!$address) {
+            return Api::setError('No active address found');
+        }
+
+        $restaurants = Restraunt::where('category_id', $id)
+            ->where('status', RestrauntStatus::OPENED->value)
             ->whereHas('menu_categories')
+            ->whereRaw("
+            " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+        ")
             ->withAvg('ratings as rating', 'rating')
             ->get();
 
-        $address = UserAddress::where('user_id', auth()->user()->id)->first();
-
-        $filteredRestaurants = [];
-
-        if ($address) {
-            foreach ($restaurants as $restaurant) {
-                $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-
-                if ($distance <= 5000) { // Sirf 5km (5000 meters) ke andar wale restaurants dikhayen
-                    $restaurant->distance = round($distance / 1000, 2); // Distance ko km mein convert karein
-                    $filteredRestaurants[] = $restaurant;
-                }
-            }
-        } else {
-            $filteredRestaurants = $restaurants; // Agar address na ho to sare restaurants return kar dein
-        }
-
-        return Api::setResponse('restaurants', $filteredRestaurants);
+        return Api::setResponse('restaurants', $restaurants);
     }
-
 
     public function restaurantInRange()
     {
