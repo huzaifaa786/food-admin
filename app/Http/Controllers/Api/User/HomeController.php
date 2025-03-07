@@ -40,7 +40,6 @@ class HomeController extends Controller
                 }
             ])
             ->get();
-        dd($restaurants);
 
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
