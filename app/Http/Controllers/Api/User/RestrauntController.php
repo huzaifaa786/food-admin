@@ -46,21 +46,19 @@ class RestrauntController extends Controller
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
         $restaurantsWithinRange = [];
 
-        if ($address) {
-            foreach ($restaurants as $restaurant) {
-                
-                $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-                if ($distance <= ($restaurant->radius * 1000)) {
-                    $restaurantsWithinRange[] = $restaurant;
-                }
-                
-            }
-        }
-         else {
-            $restaurantsWithinRange = $restaurants;
-        }
+        // if ($address) {
+        //     foreach ($restaurants as $restaurant) {
 
-        return Api::setResponse('restaurants', $restaurantsWithinRange);
+        //         $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+        //         if ($distance <= ($restaurant->radius * 1000)) {
+        //             $restaurantsWithinRange[] = $restaurant;
+        //         }
+        //     }
+        // } else {
+        //     $restaurantsWithinRange = $restaurants;
+        // }
+
+        return Api::setResponse('restaurants', $restaurants);
     }
 
     public function restaurantInRange()
@@ -83,25 +81,25 @@ class RestrauntController extends Controller
     }
 
 
-public function restaurantDetail($id)
-{
-    $restaurant = Restraunt::with([
-        'menu_categories' => function ($query) {
-            $query->has('menu_items');
+    public function restaurantDetail($id)
+    {
+        $restaurant = Restraunt::with([
+            'menu_categories' => function ($query) {
+                $query->has('menu_items');
+            }
+        ])->find($id);
+
+        if (!$restaurant) {
+            return Api::setError('Restaurant not found', 404);
         }
-    ])->find($id);
 
-    if (!$restaurant) {
-        return Api::setError('Restaurant not found', 404);
-    }
+        // Fetch all menu items
+        $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
+            return $category->menu_items;
+        });
 
-    // Fetch all menu items
-    $menuItems = $restaurant->menu_categories->flatMap(function ($category) {
-        return $category->menu_items;
-    });
-
-    // Loop through each menu item and apply the discount
-    foreach ($menuItems as $item) {
+        // Loop through each menu item and apply the discount
+        foreach ($menuItems as $item) {
             $currentDate = now()->toDateString();
 
             if (
@@ -110,25 +108,23 @@ public function restaurantDetail($id)
                 $currentDate <= $item->discount_till_date
             ) {
                 $item->original_price =  $item->price / (1 - $item->discount / 100);
-            }
-            else{
+            } else {
                 $item->original_price = null;
             }
+        }
+
+        // Add "All" category
+        $allCategory = new stdClass();
+        $allCategory->name = 'All';
+        $allCategory->ar_name = 'الجميع';
+        $allCategory->restraunt_id = $restaurant->id;
+        $allCategory->menu_items = $menuItems;
+
+        $restaurant->menu_categories->prepend($allCategory);
+
+        // Calculate average rating
+        $restaurant->rating = Rating::where('restraunt_id', $id)->avg('rating');
+
+        return Api::setResponse('restaurant', $restaurant);
     }
-
-    // Add "All" category
-    $allCategory = new stdClass();
-    $allCategory->name = 'All';
-    $allCategory->ar_name = 'الجميع';
-    $allCategory->restraunt_id = $restaurant->id;
-    $allCategory->menu_items = $menuItems;
-
-    $restaurant->menu_categories->prepend($allCategory);
-
-    // Calculate average rating
-    $restaurant->rating = Rating::where('restraunt_id', $id)->avg('rating');
-
-    return Api::setResponse('restaurant', $restaurant);
-}
-
 }
