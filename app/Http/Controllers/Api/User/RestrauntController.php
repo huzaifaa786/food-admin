@@ -110,6 +110,7 @@ class RestrauntController extends Controller
                 $item->original_price =  $item->price / (1 - $item->discount / 100);
             } else {
                 $item->original_price = null;
+                $item->discount = 0;
             }
         }
 
