@@ -9,8 +9,8 @@ class LocationHelper
         $earthRadius = 6371000;
 
         $dLat = deg2rad($lat2 - $lat1);
-        dd($dLat);
         $dLon = deg2rad($lon2 - $lon1);
+        dd($dLon);
 
         $a = sin($dLat / 2) * sin($dLat / 2) +
             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
