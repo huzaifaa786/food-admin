@@ -17,10 +17,11 @@ class LocationHelper
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
         $distance = $earthRadius * $c;
-        dd($distance);
+        
         
 
         return $distance;
+        dd($distance);
     }
     public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
     {
