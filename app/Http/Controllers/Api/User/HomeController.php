@@ -20,17 +20,15 @@ class HomeController extends Controller
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
-        if ($address) {
-            $restaurants = Restraunt::whereRaw("
-                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-            ")
-                ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category']) // Load category for each restaurant
+        $restaurants = Category::whereHas('restaurants', function ($query) use ($address) {
+            $query->where('status', RestrauntStatus::OPENED->value)
+                ->whereHas('menu_categories')
                 ->withAvg('ratings as rating', 'rating')
-                ->get();
-        } else {
-            $restaurants = collect(); // Empty collection if no address
-        }
+                ->whereRaw("
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000)
+                ");
+        })->with('restaurants')->get();
+    
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
