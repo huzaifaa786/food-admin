@@ -6,6 +6,7 @@ class LocationHelper
 {
     public static function calculateDistance($lat1, $lon1, $lat2, $lon2)
     {
+        dd($lat1, $lon1, $lat2, $lon2);
         $earthRadius = 6371000;
 
         $dLat = deg2rad($lat2 - $lat1);
@@ -17,7 +18,7 @@ class LocationHelper
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
         $distance = $earthRadius * $c;
-        dd($distance);
+        
 
         return $distance;
     }
