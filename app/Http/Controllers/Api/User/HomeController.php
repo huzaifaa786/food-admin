@@ -60,17 +60,16 @@ class HomeController extends Controller
 
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
-        // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
             $restaurants = Restraunt::whereRaw("
-            (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-        ")
+                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+            ")
                 ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category']) // Load category for each restaurant
+                ->with(['menu_categories', 'category','category.restaurants'])
                 ->withAvg('ratings as rating', 'rating')
                 ->get();
         } else {
-            $restaurants = collect(); // Empty collection if no address
+            $restaurants = collect();
         }
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
@@ -86,11 +85,10 @@ class HomeController extends Controller
             ->where('created_at', '>=', now()->subDay())
             ->get();
 
-        // Structure the response
         $response = new \stdClass();
-        $response->categories = $categories; // Categories with their restaurants
-        $response->restaurants = $restaurants; // Restaurants with their category
+        $response->categories = $categories;
         $response->posters = $posters;
+        $response->restaurants = $restaurants;
 
         return Api::setResponse('response', $response);
     }
