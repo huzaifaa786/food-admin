@@ -24,7 +24,7 @@ class HomeController extends Controller
     //             ->whereHas('menu_categories')
     //             ->withAvg('ratings as rating', 'rating');
     //     })->with('restaurants')->get();
-    
+
 
     //     $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
     //         $query->whereHas('menu_categories', function ($subQuery) use ($address) {
@@ -52,18 +52,23 @@ class HomeController extends Controller
 
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
-        // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
-            $restaurants = Category::whereRaw("
-                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-            ")
-                ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category', 'category.restaurants']) // Ensure category is loaded
-                // ->withAvg('ratings as rating', 'rating')
+            $categories = Category::whereHas('restaurants', function ($query) use ($address) {
+                $query->whereRaw("
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+                ");
+            })
+                ->with(['restaurants' => function ($query) use ($address) {
+                    $query->whereRaw("
+                    (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
+                ")
+                        ->withAvg('ratings as rating', 'rating');
+                }])
                 ->get();
         } else {
-            $restaurants = collect(); // Empty collection if no address
+            $categories = collect(); // Empty collection if no address
         }
+
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             if ($address) {
