@@ -27,7 +27,7 @@ class HomeController extends Controller
                 $subQuery->whereRaw("
                 " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
             ")
-                    ->where('status', RestrauntStatus::OPENED->value)->withAvg('ratings as rating', 'rating');
+                    ->where('status', RestrauntStatus::OPENED->value);
             });
         })->with('restaurants')->get();
 
