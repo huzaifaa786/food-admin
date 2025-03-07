@@ -44,18 +44,18 @@ class RestrauntController extends Controller
     {
         $restaurants = Restraunt::active()->where('category_id', $id)->whereHas('menu_categories')->withAvg('ratings as rating', 'rating')->get();
         $address = UserAddress::where('user_id', auth()->user()->id)->first();
-        // $restaurantsWithinRange = [];
+        $restaurantsWithinRange = [];
 
-        // if ($address) {
-        //     foreach ($restaurants as $restaurant) {
-        //         $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
-        //     }
-        // }
-        //  else {
-        //     $restaurantsWithinRange = $restaurants;
-        // }
+        if ($address) {
+            foreach ($restaurants as $restaurant) {
+                $distance = LocationHelper::calculateDistance($address->lat, $address->lng, $restaurant->lat, $restaurant->lng);
+            }
+        }
+         else {
+            $restaurantsWithinRange = $restaurants;
+        }
 
-        return Api::setResponse('restaurants', $restaurants);
+        return Api::setResponse('restaurants', $restaurantsWithinRange);
     }
 
     public function restaurantInRange()
