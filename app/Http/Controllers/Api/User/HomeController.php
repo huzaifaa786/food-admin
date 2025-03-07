@@ -96,7 +96,7 @@ class HomeController extends Controller
         $response = new \stdClass();
         $response->categories = $categories;
         $response->posters = $posters;
-        $response->restaurants = $restaurants;
+        $response->restaurants = $categories;
 
         return Api::setResponse('response', $response);
     }
