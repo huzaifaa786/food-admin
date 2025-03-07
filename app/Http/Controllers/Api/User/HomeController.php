@@ -56,17 +56,17 @@ class HomeController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with('restaurants')->get();
 
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
         // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
             $restaurants = Restraunt::whereRaw("
-                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-            ")
+            (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000)
+        ")
                 ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category','category.restaurants']) // Ensure category is loaded
+                ->with(['menu_categories', 'category']) // Load category for each restaurant
                 ->withAvg('ratings as rating', 'rating')
                 ->get();
         } else {
@@ -77,7 +77,7 @@ class HomeController extends Controller
             if ($address) {
                 $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                     $subQuery->whereRaw("
-                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
                 ")
                         ->where('status', RestrauntStatus::OPENED->value);
                 });
@@ -86,10 +86,11 @@ class HomeController extends Controller
             ->where('created_at', '>=', now()->subDay())
             ->get();
 
+        // Structure the response
         $response = new \stdClass();
-        $response->categories = $categories;
+        $response->categories = $categories; // Categories with their restaurants
+        $response->restaurants = $restaurants; // Restaurants with their category
         $response->posters = $posters;
-        $response->restaurants = $restaurants;
 
         return Api::setResponse('response', $response);
     }
