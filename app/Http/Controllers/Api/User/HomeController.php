@@ -63,7 +63,7 @@ class HomeController extends Controller
         // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
             $restaurants = Restraunt::whereRaw("
-            (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000)
+            (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
         ")
                 ->where('status', RestrauntStatus::OPENED->value)
                 ->with(['menu_categories', 'category']) // Load category for each restaurant
@@ -77,7 +77,7 @@ class HomeController extends Controller
             if ($address) {
                 $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                     $subQuery->whereRaw("
-                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restaurants.lat', 'restaurants.lng') . " <= restaurants.radius * 1000
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                 ")
                         ->where('status', RestrauntStatus::OPENED->value);
                 });
