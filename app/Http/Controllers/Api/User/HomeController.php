@@ -61,15 +61,16 @@ class HomeController extends Controller
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
 
         if ($address) {
-            $restaurants = Restraunt::whereRaw("
-                (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
-            ")
-                ->where('status', RestrauntStatus::OPENED->value)
-                ->with(['menu_categories', 'category','category.restaurants'])
-                ->withAvg('ratings as rating', 'rating')
-                ->get();
-        } else {
-            $restaurants = collect();
+            foreach ($categories as $category) {
+                $category->restaurants = $category->restaurants->filter(function ($restaurant) use ($address) {
+                    return LocationHelper::calculateDistance(
+                        $address->lat,
+                        $address->lng,
+                        $restaurant->lat,
+                        $restaurant->lng
+                    ) <= $restaurant->radius * 1000;
+                });
+            }
         }
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
