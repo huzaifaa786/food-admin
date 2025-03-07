@@ -54,7 +54,7 @@ class HomeController extends Controller
 
         // Ensure we have an address before proceeding with location-based filtering
         if ($address) {
-            $restaurants = Restraunt::whereRaw("
+            $restaurants = Category::whereRaw("
                 (" . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000)
             ")
                 ->where('status', RestrauntStatus::OPENED->value)
