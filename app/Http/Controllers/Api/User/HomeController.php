@@ -19,26 +19,28 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $address = UserAddress::where('user_id', auth()->user()->id)->where('active', true)->first();
+
         $restaurants = Category::with([
-            'restaurants' => function ($query) {
+            'restaurants' => function ($query) use ($address) {
                 $query->where('status', RestrauntStatus::OPENED->value)
                     ->whereHas('menu_categories')
-                    ->withAvg('ratings as rating', 'rating');
+                    ->withAvg('ratings as rating', 'rating')
+                    ->whereRaw("
+                    " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+                ");
             }
         ])->get();
-
 
         $posters = Poster::whereHas('restraunt', function ($query) use ($address) {
             $query->whereHas('menu_categories', function ($subQuery) use ($address) {
                 $subQuery->whereRaw("
-            " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
-        ")
+                " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
+            ")
                     ->where('status', RestrauntStatus::OPENED->value);
             });
         })
             ->where('created_at', '>=', now()->subDay())
             ->get();
-
 
         $response = new stdClass();
         $response->categories = $categories;
@@ -47,6 +49,7 @@ class HomeController extends Controller
 
         return Api::setResponse('response', $response);
     }
+
 
     // public function index()
     // {
