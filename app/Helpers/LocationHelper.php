@@ -18,10 +18,7 @@ class LocationHelper
 
         $distance = $earthRadius * $c;
         
-        
-
         return $distance;
-        dd($distance);
     }
     public static function calculateDistanceSql($lat1, $lon1, $lat2, $lon2)
     {
