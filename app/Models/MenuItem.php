@@ -46,7 +46,7 @@ class MenuItem extends Model
             $this->discount_till_date &&
             $currentDate <= $this->discount_till_date
         ) {
-            return $value - ($value * ($this->discount / 100));
+            $this->original_price =  $this->price / (1 - $this->discount / 100);
         } else {
             $this->original_price = null;
             $this->discount = 0.0;
@@ -54,7 +54,7 @@ class MenuItem extends Model
             $this->discount_days = '0';
         }
 
-        return $value;
+        // return $value;
     }
 
     public function getOriginalPriceAttribute()
@@ -66,7 +66,7 @@ class MenuItem extends Model
             $this->discount_till_date &&
             $currentDate <= $this->discount_till_date
         ) {
-            return $this->price / (1 - $this->discount / 100);
+            $this->original_price =  $this->price / (1 - $this->discount / 100);
         } else {
             $this->original_price = null;
             $this->discount = 0.0;
