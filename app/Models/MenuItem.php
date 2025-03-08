@@ -58,6 +58,11 @@ class MenuItem extends Model
             $currentDate <= $this->discount_till_date
         ) {
             return round($this->attributes['price'] / (1 - $this->discount / 100), 2);
+        } else {
+            $this->original_price = null;
+            $this->discount = 0.0;
+            $this->discount_till_date = null;
+            $this->discount_days = '0';
         }
 
         return $this->attributes['price']; // Return null if there's no discount
@@ -105,28 +110,29 @@ class MenuItem extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
         );
     }
 
     protected function image2(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
         );
     }
 
     protected function image3(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => asset($value),
-            set: fn (string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
+            get: fn(string $value) => asset($value),
+            set: fn(string $value) => ImageHelper::saveImageFromApi($value, 'images/menus')
         );
     }
 
-    public function orderitem(){
+    public function orderitem()
+    {
         return $this->hasMany(OrderItem::class);
     }
 }
