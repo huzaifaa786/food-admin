@@ -13,6 +13,10 @@ class MenuItem extends Model
 {
     use HasFactory;
 
+    protected $appends = [
+        'original_price'
+    ];
+
     protected $fillable = [
         'name',
         'restraunt_id',
