@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class MenuItem extends Model
 {
     use HasFactory;
+    protected $appends = ['original_price'];
 
     protected $fillable = [
         'name',
@@ -44,7 +45,6 @@ class MenuItem extends Model
         ) {
             return $value - ($value * ($this->discount / 100));
         }
-
         return $value;
     }
 
@@ -57,10 +57,10 @@ class MenuItem extends Model
             $this->discount_till_date &&
             $currentDate <= $this->discount_till_date
         ) {
-            return $this->price / (1 - $this->discount / 100); 
+            return round($this->attributes['price'] / (1 - $this->discount / 100), 2);
         }
 
-        return null; // Return null if there's no discount
+        return $this->attributes['price']; // Return null if there's no discount
     }
 
     /**
