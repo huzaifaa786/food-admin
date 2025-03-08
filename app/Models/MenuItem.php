@@ -14,7 +14,8 @@ class MenuItem extends Model
     use HasFactory;
 
     protected $appends = [
-        'original_price'
+        'original_price',
+        'final_price'
     ];
 
     protected $fillable = [
@@ -41,40 +42,28 @@ class MenuItem extends Model
     {
         $currentDate = now()->toDateString();
 
-        if (
-            $this->discount &&
-            $this->discount_till_date &&
-            $currentDate <= $this->discount_till_date
-        ) {
-            return $value - ($value * ($this->discount / 100));
-        } else {
-            $this->original_price = null;
-            $this->discount = 0.0;
-            $this->discount_till_date = null;
-            $this->discount_days = '0';
+        if ($this->discount && $this->discount_till_date && $currentDate <= $this->discount_till_date) {
+            return round($value - ($value * ($this->discount / 100)), 2);
         }
 
-        return $value;
+        // If discount has expired, reset to original price
+        return round($this->attributes['price'], 2);
     }
 
     public function getOriginalPriceAttribute()
     {
         $currentDate = now()->toDateString();
 
-        if (
-            $this->discount &&
-            $this->discount_till_date &&
-            $currentDate <= $this->discount_till_date
-        ) {
-            return $this->price / (1 - $this->discount / 100);
-        } else {
-            $this->original_price = null;
-            $this->discount = 0.0;
-            $this->discount_till_date = null;
-            $this->discount_days = '0';
+        if ($this->discount && $this->discount_till_date && $currentDate <= $this->discount_till_date) {
+            return round($this->attributes['price'], 2);
         }
 
-        return null; // Return null if there's no discount
+        return null; // No discount applied
+    }
+
+    public function getFinalPriceAttribute()
+    {
+        return $this->price; // This will return the final price, which is either discounted or original
     }
 
     /**
