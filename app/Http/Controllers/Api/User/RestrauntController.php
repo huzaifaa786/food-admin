@@ -58,7 +58,7 @@ class RestrauntController extends Controller
             $restaurantsWithinRange = $restaurants;
         }
 
-        return Api::setResponse('restaurants', $restaurants);
+        return Api::setResponse('restaurants', $restaurantsWithinRange);
     }
 
     public function restaurantInRange()
