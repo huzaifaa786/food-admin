@@ -46,7 +46,9 @@ class Restraunt extends Authenticatable
         'delivery_charges',
         'minimum_charges',
         'delivery_time',
-        ];
+        'stripe_account_id',
+        'onboarding_status',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

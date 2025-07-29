@@ -10,10 +10,19 @@ use App\Http\Controllers\Admin\RiderController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use App\Livewire\PusherTest;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', PusherTest::class);
+
+//Stripe Routes
+Route::get('/stripe/onboarding/{restaurantId}', [StripeController::class, 'connect'])->name('stripe.connect');
+Route::get('/stripe/onboard/callback', [StripeController::class, 'callback'])->name('stripe.callback');
+Route::get('/stripe/onboarding-success', function () {
+    return view('stripe.success');
+})->name('stripe.onboarding.success');
+
 
 Route::view('/', 'admin.login')->name('adminlogin');
 Route::post('admin.login', [AdminController::class, 'login'])->name('admin.login');

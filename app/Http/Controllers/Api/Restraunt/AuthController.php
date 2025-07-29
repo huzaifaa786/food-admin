@@ -33,7 +33,14 @@ class AuthController extends Controller
             }
 
             $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
-
+            $url = 'https://connect.stripe.com/oauth/authorize?' . http_build_query([
+                'response_type' => 'code',
+                'client_id' => config('services.stripe.client_id'),
+                'scope' => 'read_write',
+                'redirect_uri' => route('stripe.callback'),
+                'state' => $restraunt->id,
+            ]);
+            $restraunt->stripe_onboard_url = $url;
             return Api::setResponse('restraunt', $restraunt);
         } catch (\Throwable $th) {
             return Api::setError($th->getMessage());
@@ -56,7 +63,7 @@ class AuthController extends Controller
                 ]);
             }
             if ($restaurant->payment_status != "Paid") {
-            $restaurant->token = $restaurant->createToken("mobile", ['role:restraunt'])->plainTextToken;
+                $restaurant->token = $restaurant->createToken("mobile", ['role:restraunt'])->plainTextToken;
                 return Api::setResponse('restaurant', $restaurant);
             }
             if ($restaurant->is_approved == false) {
