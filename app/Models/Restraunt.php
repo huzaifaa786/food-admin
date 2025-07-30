@@ -48,6 +48,7 @@ class Restraunt extends Authenticatable
         'delivery_time',
         'stripe_account_id',
         'onboarding_status',
+        'stripe_onboard_url',
     ];
 
     /**

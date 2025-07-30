@@ -24,6 +24,9 @@ class StripeController extends Controller
             'state' => $restaurant->id,
         ]);
 
+        $restaurant->stripe_onboard_url = $url;
+        $restaurant->save();
+
         return redirect($url);
     }
 

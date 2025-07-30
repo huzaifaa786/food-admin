@@ -41,6 +41,7 @@ class AuthController extends Controller
                 'state' => $restraunt->id,
             ]);
             $restraunt->stripe_onboard_url = $url;
+            $restraunt->save();
             return Api::setResponse('restraunt', $restraunt);
         } catch (\Throwable $th) {
             return Api::setError($th->getMessage());
