@@ -32,7 +32,7 @@ class AuthController extends Controller
                 $restraunt->save();
             }
 
-            $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
+
             $url = 'https://connect.stripe.com/oauth/authorize?' . http_build_query([
                 'response_type' => 'code',
                 'client_id' => config('services.stripe.client_id'),
@@ -42,6 +42,7 @@ class AuthController extends Controller
             ]);
             $restraunt->stripe_onboard_url = $url;
             $restraunt->save();
+            $restraunt->token = $restraunt->createToken("mobile", ['role:restraunt'])->plainTextToken;
             return Api::setResponse('restraunt', $restraunt);
         } catch (\Throwable $th) {
             return Api::setError($th->getMessage());
