@@ -12,6 +12,7 @@ class RestaurantFee extends Model
     protected $fillable = [
         'amount',
         'service_charges',
-        'poster_charges'
+        'poster_charges',
+        'commission_percentage',
     ];
 }
