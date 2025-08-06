@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Api;
 use App\Models\RestaurantFee;
 use App\Models\Restraunt;
 use Illuminate\Http\Request;
@@ -77,7 +78,7 @@ class StripeController extends Controller
 
         ]);
 
-        return response()->json([
+        return Api::setResponse('data', [
             'client_secret' => $intent->client_secret,
             'payment_intent_id' => $intent->id,
         ]);
