@@ -56,31 +56,35 @@ class StripeController extends Controller
 
     public function createPaymentIntent(Request $request)
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+            Stripe::setApiKey(config('services.stripe.secret'));
 
-        $restaurant = Restraunt::findOrFail($request->restaurant_id);
+            $restaurant = Restraunt::findOrFail($request->restaurant_id);
 
-        $amount = $request->amount * 100;
+            $amount = $request->amount * 100;
 
-        $fee = RestaurantFee::first();
-        $commission = $fee ? $fee->commission_percentage : 0;
-        $applicationFee = (int)($commission * $amount / 100);
+            $fee = RestaurantFee::first();
+            $commission = $fee ? $fee->commission_percentage : 0;
+            $applicationFee = (int)($commission * $amount / 100);
 
-        $intent = \Stripe\PaymentIntent::create([
-            'amount' => $amount,
-            'currency' => 'aed',
-            'application_fee_amount' => $applicationFee,
-            'payment_method_types' => ['card'],
-            'transfer_data' => [
-                'destination' => $restaurant->stripe_account_id,
-            ],
-            'on_behalf_of' => $restaurant->stripe_account_id,
+            $intent = \Stripe\PaymentIntent::create([
+                'amount' => $amount,
+                'currency' => 'aed',
+                'application_fee_amount' => $applicationFee,
+                'payment_method_types' => ['card'],
+                'transfer_data' => [
+                    'destination' => $restaurant->stripe_account_id,
+                ],
+                'on_behalf_of' => $restaurant->stripe_account_id,
 
-        ]);
+            ]);
 
-        return Api::setResponse('data', [
-            'client_secret' => $intent->client_secret,
-            'payment_intent_id' => $intent->id,
-        ]);
+            return Api::setResponse('data', [
+                'client_secret' => $intent->client_secret,
+                'payment_intent_id' => $intent->id,
+            ]);
+        } catch (\Exception $e) {
+            return Api::setError('message', $e->getMessage());
+        }
     }
 }
