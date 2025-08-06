@@ -84,7 +84,7 @@ class StripeController extends Controller
                 'payment_intent_id' => $intent->id,
             ]);
         } catch (\Exception $e) {
-            return Api::setError('message', $e->getMessage());
+            return Api::setError('This restaurant is unable to process payments at the moment.');
         }
     }
 }
