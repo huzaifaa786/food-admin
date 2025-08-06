@@ -64,8 +64,7 @@ class StripeController extends Controller
         $fee = RestaurantFee::first();
         $commission = $fee ? $fee->commission_percentage : 0;
         $applicationFee = (int)($commission * $amount / 100);
-        dd($amount,$applicationFee);
-        
+
         $intent = \Stripe\PaymentIntent::create([
             'amount' => $amount,
             'currency' => 'aed',
