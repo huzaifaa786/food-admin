@@ -167,7 +167,7 @@ class Restraunt extends Authenticatable
 
     public function scopeActive($query)
     {
-        return $query->where('status', RestrauntStatus::OPENED->value);
+        return $query->where('status', RestrauntStatus::OPENED->value)->orWhere('status', RestrauntStatus::CLOSED->value)->orWhere('status', RestrauntStatus::BUSY->value);
     }
 
     public function resturantorders()
