@@ -34,7 +34,7 @@ class HomeController extends Controller
                 (
                     " . LocationHelper::calculateDistanceSql($address->lat, $address->lng, 'restraunts.lat', 'restraunts.lng') . " <= restraunts.radius * 1000
                 )")
-                        ->where('status', RestrauntStatus::OPENED->value)
+                        ->where('status', RestrauntStatus::OPENED->value)->orWhere('status', RestrauntStatus::CLOSED->value)->orWhere('status', RestrauntStatus::BUSY->value)
                         ->withAvg('ratings as rating', 'rating')
                         ->whereHas('menu_categories');
                 }
