@@ -67,10 +67,11 @@ class StripeController extends Controller
             $commission = $fee ? $fee->commission_percentage : 0;
             $applicationFee = $commission  + $serviceCharges;
 
+
             $intent = \Stripe\PaymentIntent::create([
                 'amount' => $amount,
                 'currency' => 'aed',
-                'application_fee_amount' => $applicationFee,
+                'application_fee_amount' => $applicationFee * 100,
                 'payment_method_types' => ['card'],
                 'transfer_data' => [
                     'destination' => $restaurant->stripe_account_id,
