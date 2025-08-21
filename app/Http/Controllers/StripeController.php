@@ -62,10 +62,10 @@ class StripeController extends Controller
             $restaurant = Restraunt::findOrFail($request->restaurant_id);
 
             $amount = $request->amount * 100;
-
             $fee = RestaurantFee::first();
+            $serviceCharges = $fee ? $fee->service_charges : 0;
             $commission = $fee ? $fee->commission_percentage : 0;
-            $applicationFee = (int)($commission * $amount / 100);
+            $applicationFee = $commission  + $serviceCharges;
 
             $intent = \Stripe\PaymentIntent::create([
                 'amount' => $amount,

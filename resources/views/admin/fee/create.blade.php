@@ -42,9 +42,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="category" class="form-label">Admin Commission Percentage (e.g. 15 for 15%)</label>
+                                        <label for="category" class="form-label">Admin Commission (e.g. 2 for 2 AED)</label>
                                         <input type="number" required class="form-control"
-                                            placeholder="Enter Admin Commission Percentage" name="commission_percentage"
+                                            placeholder="Enter Admin Commission " name="commission_percentage"
                                             value="{{ $fee->commission_percentage ?? 0 }}" id="category" required>
                                     </div>
                                 </div>
