@@ -71,6 +71,10 @@ class AuthController extends Controller
             if ($restaurant->is_approved == false) {
                 return Api::setError('Restaurant Approval Pending');
             }
+
+            if ($restaurant->stripe_account_id == null && $restaurant->onboarding_status != 'completed') {
+                return Api::setError('Your account has been created but not yet activated. Please complete the stripe onboarding process.');
+            }
             // Update or store FCM token
             if ($request->has('fcm_token')) {
                 $restaurant->fcm_token = $request->fcm_token;
