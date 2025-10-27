@@ -51,7 +51,15 @@ class MenuItemController extends Controller
     public function update($id, Request $request)
     {
         $menuItem = MenuItem::find($id);
+        
         $menuItem->update($request->all());
+
+        // If discount_days is present in the request, update discount_till_date accordingly
+        if ($request->has('discount_days')) {
+            $menuItem->update([
+                'discount_till_date' => Carbon::today()->addDays($request->discount_days)
+            ]);
+        }
 
         foreach ($menuItem->extras as $extra) {
             $extra->delete();
