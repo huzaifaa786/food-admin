@@ -47,11 +47,15 @@ class MenuItem extends Model
             $currentDate <= $this->discount_till_date
         ) {
             return $value - ($value * ($this->discount / 100));
-        } else {
-            $this->original_price = null;
-            $this->discount = 0.0;
-            $this->discount_till_date = null;
-            $this->discount_days = '0';
+        }
+
+        // Reset discount-related fields if discount has expired
+        if ($this->discount || $this->discount_till_date || $this->discount_days !== '0') {
+            $this->update([
+                'discount' => 0.0,
+                'discount_till_date' => null,
+                'discount_days' => '0'
+            ]);
         }
 
         return $value;
@@ -66,15 +70,10 @@ class MenuItem extends Model
             $this->discount_till_date &&
             $currentDate <= $this->discount_till_date
         ) {
-            return $this->price / (1 - $this->discount / 100);
-        } else {
-            $this->original_price = null;
-            $this->discount = 0.0;
-            $this->discount_till_date = null;
-            $this->discount_days = '0';
+            return $this->attributes['price'];
         }
 
-        return null; // Return null if there's no discount
+        return null;
     }
 
     /**
