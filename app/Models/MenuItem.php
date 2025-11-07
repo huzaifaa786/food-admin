@@ -53,7 +53,6 @@ class MenuItem extends Model
         if ($this->discount || $this->discount_till_date || $this->discount_days !== '0') {
             $this->update([
                 'discount' => 0.0,
-                'discount_till_date' => '',
                 'discount_days' => '0'
             ]);
         }
